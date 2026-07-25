@@ -8,6 +8,7 @@ import AuthHeader from "./AuthHeader";
 import AuthDivider from "./AuthDivider";
 import AuthFooter from "./AuthFooter";
 import AuthOAButtons from "./AuthOAButtons";
+import { initiateGoogleOAuth } from "../services/googleAuth/googleAuthService";
 import AuthError from "./AuthError";
 import SignupForm from "./SignupForm";
 import LoginForm from "./LoginForm";
@@ -175,7 +176,9 @@ const AuthLayout = ({
 
                     <AuthDivider />
 
-                    <AuthOAButtons />
+                    <AuthOAButtons
+                        onGoogleLogin={initiateGoogleOAuth}
+                    />
 
                     <AuthFooter />
                 </div>

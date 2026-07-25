@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 @theme {
-    --font-jetBrainsMono: "JetBrains Mono", monospace;
-    --font-inter:"Inter",sans-serif;
+  --font-jetBrainsMono: "JetBrains Mono", monospace;
+  --font-inter: "Inter", sans-serif;
   --font-geist: "Geist", "Inter", -apple-system, Roboto, Helvetica, sans-serif;
   --font-geist-mono: "Geist Mono", "JetBrains Mono", monospace;
   --color-brand: #f2902f;
   --color-brand-dark: #e06d09;
-   --breakpoint-x-sm: 480px;
+  --breakpoint-x-sm: 480px;
 }
 
 body {

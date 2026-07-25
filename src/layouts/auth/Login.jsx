@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
+import { useNavigate, useSearchParams } from "react-router";
 
 import AuthHero from "./components/AuthHero";
 import AuthLayout from "./components/AuthLayout";
@@ -9,79 +11,110 @@ import { handleLoginSubmit } from "./handlers/login/handleLoginSubmit";
 import { handleForgotPasswordRequest } from "./handlers/forgotPass/handleForgotPasswordRequest";
 import useAutoClearError from "./hooks/useAutoClearer";
 import { handleFormNavigation } from "./handlers/handleKeyDown";
-import { useNavigate } from "react-router";
-
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false)
-  const [error, setError] = useState("")
-  const navigate = useNavigate();
-  const formData = {
-    email,
-    password,
-    rememberMe
-  };
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+    const [rememberMe, setRememberMe] = useState(false);
+    const [error, setError] = useState("");
 
+    const navigate = useNavigate();
+    const [searchParams, setSearchParams] = useSearchParams();
 
-  const onSubmit = (e) =>
-    handleLoginSubmit(e, formData, setError, navigate);
+    useEffect(() => {
+        const oauthError = searchParams.get("error");
 
-  const handleKeyDown = (e) =>
-    handleFormNavigation(e, () => onSubmit(e));
+        if (!oauthError) return;
 
-  const handleForgotPassword = () =>
-    handleForgotPasswordRequest(
-      email,
-      setError,
-      navigate
+        const errorMessages = {
+            access_denied: "Google sign-in was cancelled.",
+            google_auth_failed: "Google sign-in failed. Please try again.",
+            oauth_failed: "Google sign-in failed. Please try again.",
+        };
+
+        const message =
+            errorMessages[oauthError] ||
+            `Google sign-in failed: ${oauthError}`;
+
+        toast.error(message);
+
+        // Remove ?error=... from URL
+        setSearchParams({}, { replace: true });
+    }, [searchParams, setSearchParams]);
+
+    const formData = {
+        email,
+        password,
+        rememberMe,
+    };
+
+    const onSubmit = (e) =>
+        handleLoginSubmit(
+            e,
+            formData,
+            setError,
+            navigate
+        );
+
+    const handleKeyDown = (e) =>
+        handleFormNavigation(
+            e,
+            () => onSubmit(e)
+        );
+
+    const handleForgotPassword = () =>
+        handleForgotPasswordRequest(
+            email,
+            setError,
+            navigate
+        );
+
+    useAutoClearError(
+        error,
+        setError
     );
 
-  useAutoClearError(error, setError)
+    return (
+        <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            className="flex h-screen flex-col overflow-hidden lg:flex-row"
+        >
+            <AuthHero />
 
-  return (
-    <motion.div
-      variants={fadeUp}
-      initial="hidden"
-      animate="visible"
-      className="flex h-screen flex-col lg:flex-row overflow-hidden"
-    >
+            <AuthLayout
+                mode="login"
 
+                headerTitle="Welcome back"
+                headerSubtitle="Sign in to continue to your TradeSift workspace."
 
-      <AuthHero />
-      <AuthLayout
-        mode="login"
+                email={email}
+                setEmail={setEmail}
 
-        headerTitle="Welcome back"
-        headerSubtitle="Sign in to continue to your TradeSift workspace."
+                password={password}
+                setPassword={setPassword}
 
-        email={email}
-        setEmail={setEmail}
+                showPassword={showPassword}
+                setShowPassword={setShowPassword}
 
-        password={password}
-        setPassword={setPassword}
+                rememberMe={rememberMe}
+                setRememberMe={setRememberMe}
 
-        showPassword={showPassword}
-        setShowPassword={setShowPassword}
+                error={error}
+                setError={setError}
 
-        rememberMe={rememberMe}
-        setRememberMe={setRememberMe}
+                submitBtnText="Sign In"
+                isSubmitBtnLoading={false}
 
-        error={error}
-        setError={setError}
+                handleSubmit={onSubmit}
+                handleKeyDown={handleKeyDown}
 
-        submitBtnText="Sign In"
-        isSubmitBtnLoading={false}
-
-        handleSubmit={onSubmit}
-        handleKeyDown={handleKeyDown}
-        // Add this
-        handleForgotPassword={handleForgotPassword}
-      
-          
-      />
-    </motion.div>
-  );
+                handleForgotPassword={
+                    handleForgotPassword
+                }
+            />
+        </motion.div>
+    );
 }
