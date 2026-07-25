@@ -5,25 +5,35 @@ import DashboardHeader from './components/layout/DashboardHeader'
 import RecentJobCard from './components/overview/RecentJobCard'
 import AIRecommendations from './components/overview/AIRecommendations'
 import ModulesGrid from './components/overview/ModulesGrid'
+import DashboardLoader from './components/layout/DashboardHeader/DashboardLoader'
 
 const Dashboard = () => {
+  const [showLoader, setShowLoader] = useState(true)
   const [showComingSoon, setShowComingSoon] = useState(false)
 
   return (
-    <div className="flex min-h-screen bg-[#FDFDFD] font-inter">
-      <Sidebar onSoonClick={() => setShowComingSoon(true)} />
+    <>
+      {showLoader && (
+        <DashboardLoader
+          onComplete={() => setShowLoader(false)}
+        />
+      )}
 
-      <main className="flex-1 px-10 py-10">
-        <div className="mx-auto flex max-w-[955px] flex-col gap-8">
-          <DashboardHeader />
-          <RecentJobCard />
-          <AIRecommendations />
-          <ModulesGrid onSoonClick={() => setShowComingSoon(true)} />
-        </div>
-      </main>
+      <div className="flex min-h-screen bg-[#FDFDFD] font-inter">
+        <Sidebar onSoonClick={() => setShowComingSoon(true)} />
 
-      <ComingSoonModal isOpen={showComingSoon} onClose={() => setShowComingSoon(false)} />
-    </div>
+        <main className="flex-1 px-10 py-10">
+          <div className="mx-auto flex max-w-[955px] flex-col gap-8">
+            <DashboardHeader />
+            <RecentJobCard />
+            <AIRecommendations />
+            <ModulesGrid onSoonClick={() => setShowComingSoon(true)} />
+          </div>
+        </main>
+
+        <ComingSoonModal isOpen={showComingSoon} onClose={() => setShowComingSoon(false)} />
+      </div>
+    </>
   )
 }
 
