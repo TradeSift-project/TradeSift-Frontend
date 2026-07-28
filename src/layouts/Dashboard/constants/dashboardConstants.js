@@ -15,16 +15,17 @@ import {
   Package,
   Settings2,
   Percent,
-  Play
+  Play,
+  Truck
 } from 'lucide-react'
 
 export const NAV_ITEMS = [
   { label: 'Overview', icon: LayoutDashboard, path: '/dashboard' },
-  { label: 'Documents', icon: FileText, path: '/dashboard/documents', soon: true },
-  { label: 'Import', icon: ArrowDownRight, path: '/dashboard/import', soon: true },
-  { label: 'Export', icon: ArrowUpRight, path: '/dashboard/export', soon: true },
+  { label: 'Documents', icon: FileText, path: '/dashboard/documents', soon: false },
+  { label: 'Import Operations', icon: ArrowDownRight, path: '/dashboard/import', soon: true },
+  { label: 'Export Operations', icon: ArrowUpRight, path: '/dashboard/export', soon: true },
+  { label: 'Gate Operations', icon: Truck, path: '/dashboard/gate', soon: true },
   { label: 'Integrations', icon: Link, path: '/dashboard/integrations', soon: true },
-  { label: 'Settings', icon: Settings, path: '/dashboard/settings', soon: true },
 ]
 
 export const DASHBOARD_STATS = [
@@ -154,6 +155,50 @@ export const ATTENTION_ITEMS = [
     type: 'info',
   },
 ]
+
+// Mock document data for extraction UI
+export const MOCK_EXTRACTED_DOCS = {
+  'DOC-90231': {
+    id: 'DOC-90231',
+    name: 'Invoice_CN_90321.pdf',
+    type: 'Commercial Invoice',
+    fields: [
+      { name: 'Invoice Number', value: 'INV-2026-90321', confidence: 'high' },
+      { name: 'Importer Name', value: 'AHMED WEBS LTD', confidence: 'high' },
+      { name: 'Consignee', value: 'AHMED WEBS LTD', confidence: 'review', message: 'Verify Consignee name matches BL' },
+      { name: 'Shipper', value: 'SHANGHAI MANUFACTURING CO.', confidence: 'high' },
+      { name: 'Port of Loading', value: 'SHANGHAI PORT', confidence: 'high' },
+      { name: 'Port of Discharge', value: 'KARACHI (KICT)', confidence: 'high' },
+      { name: 'Packages', value: '450 CARTONS', confidence: 'high' },
+      { name: 'Gross Weight', value: '23,800 KG', confidence: 'high' },
+      { name: 'Net Weight', value: '22,400 KG', confidence: 'high' },
+      { name: 'HS Code', value: '8504.40.90', confidence: 'high' },
+      { name: 'Country of Origin', value: 'CHINA', confidence: 'high' },
+      { name: 'Container Number', value: 'HLXU8902341', confidence: 'high' },
+      { name: 'BL Number', value: 'HJ9023841', confidence: 'high' }
+    ]
+  },
+  'DOC-90229': {
+    id: 'DOC-90229',
+    name: 'Weighment_Slip_WS-80.png',
+    type: 'Weighment Slip',
+    fields: [
+      { name: 'Invoice Number', value: 'INV-2026-90321', confidence: 'high' },
+      { name: 'Importer Name', value: 'AHMED WEBS LTD', confidence: 'high' },
+      { name: 'Consignee', value: '', confidence: 'missing', message: 'Consignee name is missing' },
+      { name: 'Shipper', value: 'SHANGHAI MANUFACTURING CO.', confidence: 'high' },
+      { name: 'Port of Loading', value: 'SHANGHAI PORT', confidence: 'high' },
+      { name: 'Port of Discharge', value: 'KARACHI (KICT)', confidence: 'high' },
+      { name: 'Packages', value: '450 CARTONS', confidence: 'high' },
+      { name: 'Gross Weight', value: '24,150 KG', confidence: 'review', message: 'Mismatched gross weight (PL states 23,800 KG)' },
+      { name: 'Net Weight', value: '22,750 KG', confidence: 'high' },
+      { name: 'HS Code', value: '8504.40.90', confidence: 'high' },
+      { name: 'Country of Origin', value: 'CHINA', confidence: 'high' },
+      { name: 'Container Number', value: 'HLXU8902341', confidence: 'high' },
+      { name: 'BL Number', value: 'HJ9023841', confidence: 'high' }
+    ]
+  }
+}
 
 // Keep legacy variables for route compilation safety
 export const TRADESHIELD_JOBS = [

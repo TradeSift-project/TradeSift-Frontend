@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Routes, Route } from 'react-router-dom'
 import ComingSoonModal from '../../components/modal/ComingSoonModal'
 import Sidebar from './components/layout/Sidebar'
 import DashboardHeader from './components/layout/DashboardHeader'
@@ -7,6 +8,8 @@ import WorkflowSummary from './components/overview/WorkflowSummary'
 import RecentDocuments from './components/overview/RecentDocuments'
 import AttentionRequired from './components/overview/AttentionRequired'
 import DashboardLoader from './components/layout/DashboardHeader/DashboardLoader'
+import Documents from './Documents'
+import DocumentReview from './DocumentReview'
 import { getMe } from '../../services/userService'
 
 const Dashboard = () => {
@@ -39,9 +42,9 @@ const Dashboard = () => {
 
   const getGreeting = () => {
     if (user) {
-      return `Good morning, ${user.firstName} ${user.lastName} 👋`
+      return `Good morning, ${user.firstName} 👋`
     }
-    return 'Good morning, Ahmed Raza 👋'
+    return 'Good morning, Ahmed 👋'
   }
 
   const getUserNameForLoader = () => {
@@ -78,18 +81,37 @@ const Dashboard = () => {
 
         <main className="flex-1 px-10 py-10">
           <div className="mx-auto flex max-w-[1000px] flex-col gap-8">
-            <DashboardHeader greeting={getGreeting()} />
-            <StatsGrid />
-            
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-              <div className="lg:col-span-2 flex flex-col gap-8">
-                <WorkflowSummary />
-                <RecentDocuments />
-              </div>
-              <div className="flex flex-col gap-8">
-                <AttentionRequired onResolveItem={() => setShowComingSoon(true)} />
-              </div>
-            </div>
+            <Routes>
+              {/* Overview Page */}
+              <Route
+                path=""
+                element={
+                  <>
+                    <DashboardHeader greeting={getGreeting()} />
+                    <StatsGrid />
+                    
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                      <div className="lg:col-span-2 flex flex-col gap-8">
+                        <WorkflowSummary />
+                        <RecentDocuments />
+                      </div>
+                      <div className="flex flex-col gap-8">
+                        <AttentionRequired onResolveItem={() => setShowComingSoon(true)} />
+                      </div>
+                    </div>
+                  </>
+                }
+              />
+
+              <Route
+                path="documents"
+                element={<Documents />}
+              />
+              <Route
+                path="documents/:documentId/review"
+                element={<DocumentReview />}
+              />
+            </Routes>
           </div>
         </main>
 

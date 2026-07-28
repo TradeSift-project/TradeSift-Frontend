@@ -19,7 +19,7 @@ const AppRoutes = () => {
       <Route path="/signup" element={<Signup />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/verify-otp" element={<OTP />} />
-      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/dashboard/*" element={<Dashboard />} />
       <Route path="/dashboard/tradeshield" element={<TradeShield />} />
       <Route path="/dashboard/tradeshield/:filingId" element={<TradeShieldFiling />} />
     </Routes>
