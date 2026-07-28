@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { fadeInOpacityOnly } from '../../../../../animations/variants'
 
-const DashboardLoader = ({ onComplete }) => {
+const DashboardLoader = ({ onComplete, userName = 'Ahmed Raza' }) => {
   const [stage, setStage] = useState('video')
 
   const handleVideoEnd = () => {
@@ -48,7 +48,7 @@ const DashboardLoader = ({ onComplete }) => {
           animate="visible"
           className="font-geist text-4xl font-semibold tracking-[-0.5px] text-[#0B0D12]"
         >
-          Welcome, Ahmed Raza
+          Welcome, {userName}
         </motion.h1>
       )}
     </motion.div>

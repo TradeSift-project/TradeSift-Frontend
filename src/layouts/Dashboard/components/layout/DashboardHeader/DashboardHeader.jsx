@@ -2,7 +2,7 @@ import HeaderActions from './HeaderActions'
 
 const DashboardHeader = ({
   greeting = 'Good morning, Ahmed Raza 👋',
-  subtitle = "Here's what's happening with your trade operations today.",
+  subtitle = "Here's what's happening with your document-to-data automation today.",
 }) => (
   <div className="flex items-start justify-between">
     <div className="flex flex-col gap-1.5">

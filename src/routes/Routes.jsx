@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 
-import Home from '../layouts/Landing/Home'
+
 import Login from '../layouts/auth/Login'
 import Signup from '../layouts/auth/Signup'
 import OTP from '../layouts/auth/OTP'
@@ -8,6 +8,7 @@ import Dashboard from '../layouts/Dashboard/Dashboard'
 import TradeShield from '../layouts/Dashboard/TradeShield'
 import TradeShieldFiling from '../layouts/Dashboard/TradeShieldFiling'
 import ResetPassword from '../layouts/auth/ResetPassword'
+import Home from '../layouts/Landing/Home'
 
 const AppRoutes = () => {
   return (

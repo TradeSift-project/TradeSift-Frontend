@@ -58,8 +58,8 @@ const AuthHero = () => {
                         <motion.p
                             variants={fadeUp}
                             className="text-base sm:text-[16px] text-neutral-400 font-normal leading-relaxed">
-                            Automate customs verification, recover tax credits,
-                            track shipments, and manage tenders from one
+                            Automate customs compliance, track shipments,
+                            and orchestrate trade operations from one
                             intelligent platform.
                         </motion.p>
 

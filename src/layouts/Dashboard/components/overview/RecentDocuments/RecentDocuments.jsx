@@ -1,0 +1,37 @@
+import DocumentRow from './DocumentRow'
+import { RECENT_DOCUMENTS } from '../../../constants/dashboardConstants'
+
+const RecentDocuments = ({ documents = RECENT_DOCUMENTS }) => {
+  const currentDocuments = documents || RECENT_DOCUMENTS
+
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="flex items-center justify-between">
+        <span className="text-[10px] font-bold uppercase tracking-[0.93px] text-[#686C72]">
+          Recent Processing Activity
+        </span>
+      </div>
+
+      <div className="overflow-x-auto rounded-[20px] border border-[#E5E6E8] bg-white shadow-[0_2px_8px_rgba(0,0,0,0.02)]">
+        <table className="min-w-full divide-y divide-neutral-100 text-left text-xs font-medium text-gray-500">
+          <thead className="bg-neutral-50 text-[10px] font-bold uppercase tracking-wider text-gray-400">
+            <tr>
+              <th className="px-6 py-4">Document Name</th>
+              <th className="px-6 py-4">Type</th>
+              <th className="px-6 py-4">Workflow</th>
+              <th className="px-6 py-4">Processed</th>
+              <th className="px-6 py-4 text-right">Status</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-neutral-100 bg-white">
+            {currentDocuments.map((doc) => (
+              <DocumentRow key={doc.id} {...doc} />
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )
+}
+
+export default RecentDocuments

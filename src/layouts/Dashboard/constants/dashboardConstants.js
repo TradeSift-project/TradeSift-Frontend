@@ -1,52 +1,161 @@
 import {
   LayoutDashboard,
-  ShieldCheck,
-  Trophy,
-  Calculator,
-  Truck,
-  TrendingUp,
+  FileText,
+  ArrowDownRight,
+  ArrowUpRight,
+  Link,
+  Settings,
   AlertTriangle,
+  CheckCircle,
+  Clock,
+  Activity,
+  FileCheck,
   MapPin,
   Globe,
   Package,
   Settings2,
   Percent,
-  FileText,
-  Clock,
+  Play
 } from 'lucide-react'
 
 export const NAV_ITEMS = [
-  { label: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
-  { label: 'TradeShield', icon: ShieldCheck, path: '/dashboard/tradeshield' },
-  { label: 'TenderWin', icon: Trophy, soon: true },
-  { label: 'TaxReconciler', icon: Calculator, soon: true },
-  { label: 'FreightSync', icon: Truck, soon: true },
+  { label: 'Overview', icon: LayoutDashboard, path: '/dashboard' },
+  { label: 'Documents', icon: FileText, path: '/dashboard/documents', soon: true },
+  { label: 'Import', icon: ArrowDownRight, path: '/dashboard/import', soon: true },
+  { label: 'Export', icon: ArrowUpRight, path: '/dashboard/export', soon: true },
+  { label: 'Integrations', icon: Link, path: '/dashboard/integrations', soon: true },
+  { label: 'Settings', icon: Settings, path: '/dashboard/settings', soon: true },
 ]
 
-export const RECOMMENDATIONS = [
+export const DASHBOARD_STATS = [
   {
-    icon: TrendingUp,
-    title: 'Potential savings of $12,450',
-    description: 'Optimize duty classification on Import — Electronics Components under CPFTA.',
-    badge: 'High',
-    badgeClass: 'text-[#F87103] border-[#F87103]/30',
+    id: 'processed',
+    label: 'Documents Processed',
+    value: '1,284',
+    description: '+12% from last week',
+    status: 'success',
+    icon: FileCheck,
   },
   {
-    icon: ShieldCheck,
-    title: 'FTA eligibility available',
-    description: 'Country of Origin meets criteria for reduced duty under China–Pakistan FTA.',
-    badge: 'Medium',
-    badgeClass: 'text-[#2BA162] border-[#2BA162]/30',
+    id: 'processing',
+    label: 'Processing',
+    value: '24',
+    description: 'Currently being processed',
+    status: 'info',
+    icon: Play,
   },
   {
+    id: 'review',
+    label: 'Needs Review',
+    value: '8',
+    description: 'Requires operator attention',
+    status: 'warning',
+    icon: Clock,
+  },
+  {
+    id: 'issues',
+    label: 'Issues Detected',
+    value: '3',
+    description: 'Extraction or validation issues',
+    status: 'error',
     icon: AlertTriangle,
-    title: 'Missing document detected',
-    description: 'Upload Certificate of Origin for filing TS-783804 to avoid PSW rejection.',
-    badge: 'Attention',
-    badgeClass: 'text-[#EF852E] border-[#EF852E]/40',
   },
 ]
 
+export const WORKFLOW_SUMMARY = [
+  {
+    id: 'import',
+    title: 'Import',
+    description: 'Automating gate-in validation, custom releases, and vessel manifests.',
+    processed: 842,
+    processing: 14,
+    review: 5,
+    icon: ArrowDownRight,
+  },
+  {
+    id: 'export',
+    title: 'Export',
+    description: 'Automating gate-out weight checks, shipping bills, and transport paperwork.',
+    processed: 442,
+    processing: 10,
+    review: 3,
+    icon: ArrowUpRight,
+  },
+]
+
+export const RECENT_DOCUMENTS = [
+  {
+    id: 'DOC-90231',
+    documentName: 'Invoice_CN_90321.pdf',
+    documentType: 'Commercial Invoice',
+    workflowType: 'Import',
+    status: 'Completed',
+    uploadedAt: '12 mins ago',
+  },
+  {
+    id: 'DOC-90230',
+    documentName: 'Packing_List_90321.pdf',
+    documentType: 'Packing List',
+    workflowType: 'Import',
+    status: 'Completed',
+    uploadedAt: '15 mins ago',
+  },
+  {
+    id: 'DOC-90229',
+    documentName: 'Weighment_Slip_WS-80.png',
+    documentType: 'Weighment Slip',
+    workflowType: 'Import',
+    status: 'Validation Issue',
+    uploadedAt: '22 mins ago',
+  },
+  {
+    id: 'DOC-90228',
+    documentName: 'BL_Hanjin_HJ9023.pdf',
+    documentType: 'Bill of Lading',
+    workflowType: 'Import',
+    status: 'Completed',
+    uploadedAt: '45 mins ago',
+  },
+  {
+    id: 'DOC-90227',
+    documentName: 'Export_Invoice_EXP-02.pdf',
+    documentType: 'Commercial Invoice',
+    workflowType: 'Export',
+    status: 'Needs Review',
+    uploadedAt: '1 hour ago',
+  },
+  {
+    id: 'DOC-90225',
+    documentName: 'Manifest_MX-0092.pdf',
+    documentType: 'Customs Documents',
+    workflowType: 'Export',
+    status: 'Processing',
+    uploadedAt: '2 hours ago',
+  },
+]
+
+export const ATTENTION_ITEMS = [
+  {
+    id: 'ATTN-01',
+    title: 'Commercial Invoice — Missing consignee information',
+    action: 'Review extracted data',
+    type: 'error',
+  },
+  {
+    id: 'ATTN-02',
+    title: 'Weighment Slip vs PL — Weight validation mismatch',
+    action: 'Resolve discrepancy',
+    type: 'warning',
+  },
+  {
+    id: 'ATTN-03',
+    title: 'Packing List — Low confidence extraction on package count',
+    action: 'Confirm values',
+    type: 'info',
+  },
+]
+
+// Keep legacy variables for route compilation safety
 export const TRADESHIELD_JOBS = [
   { title: 'Import — Electronics Components', filingId: 'TS-784512', status: 'in-progress', updatedText: '2 mins ago' },
   { title: 'Import — Electronics Components', filingId: 'TS-784512', status: 'completed', updatedText: '1 hour ago' },
@@ -80,32 +189,4 @@ export const FILING_INFO_ITEMS = [
   { icon: Percent, label: 'Completion', value: '46%' },
   { icon: FileText, label: 'Documents Uploaded', value: '6 files' },
   { icon: Clock, label: 'Est. Completion', value: '~ 18 mins' },
-]
-
-export const MODULES = [
-  {
-    icon: ShieldCheck,
-    name: 'TradeShield',
-    description: 'AI Customs Compliance',
-    status: 'active',
-    path: '/dashboard/tradeshield',
-  },
-  {
-    icon: Trophy,
-    name: 'TenderWin',
-    description: 'Tender & Bid Intelligence',
-    status: 'soon',
-  },
-  {
-    icon: Calculator,
-    name: 'TaxReconciler',
-    description: 'Tax Reconciliation',
-    status: 'soon',
-  },
-  {
-    icon: Truck,
-    name: 'FreightSync',
-    description: 'Freight & Logistics',
-    status: 'soon',
-  },
 ]

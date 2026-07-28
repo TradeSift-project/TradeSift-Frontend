@@ -1,6 +1,6 @@
 import { ChevronsLeft, User } from 'lucide-react'
 
-const SidebarFooter = ({ user = { name: 'Aun Uddin', role: 'Admin' } }) => (
+const SidebarFooter = ({ user = { name: 'Ahmed Raza', role: 'Terminal Operator' } }) => (
   <div className="flex flex-col gap-1 border-t border-[#E5E6E8] px-3 pt-3">
     <button
       type="button"
