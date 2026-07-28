@@ -24,6 +24,7 @@ const ModulesGrid = ({ modules = MOCK_MODULES, onSoonClick }) => {
             name={mod.name}
             description={mod.description}
             status={mod.status}
+            path={mod.path}
             onSoonClick={onSoonClick}
           />
         ))}

@@ -6,7 +6,7 @@ import AppRoutes from './routes/Routes'
 import { Toaster } from 'sonner'
 
 const STORAGE_KEY = 'tradesift_preview_shown'
-const EXCLUDED_PATHS = ['/dashboard']
+const EXCLUDED_PATHS = ['/dashboard', '/dashboard/tradeshield']
 
 const App = () => {
   const [modalOpen, setModalOpen] = useState(false)

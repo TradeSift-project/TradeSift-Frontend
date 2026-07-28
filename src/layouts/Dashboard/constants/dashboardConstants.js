@@ -6,11 +6,18 @@ import {
   Truck,
   TrendingUp,
   AlertTriangle,
+  MapPin,
+  Globe,
+  Package,
+  Settings2,
+  Percent,
+  FileText,
+  Clock,
 } from 'lucide-react'
 
 export const NAV_ITEMS = [
-  { label: 'Dashboard', icon: LayoutDashboard, active: true },
-  { label: 'TradeShield', icon: ShieldCheck },
+  { label: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
+  { label: 'TradeShield', icon: ShieldCheck, path: '/dashboard/tradeshield' },
   { label: 'TenderWin', icon: Trophy, soon: true },
   { label: 'TaxReconciler', icon: Calculator, soon: true },
   { label: 'FreightSync', icon: Truck, soon: true },
@@ -40,12 +47,48 @@ export const RECOMMENDATIONS = [
   },
 ]
 
+export const TRADESHIELD_JOBS = [
+  { title: 'Import — Electronics Components', filingId: 'TS-784512', status: 'in-progress', updatedText: '2 mins ago' },
+  { title: 'Import — Electronics Components', filingId: 'TS-784512', status: 'completed', updatedText: '1 hour ago' },
+  { title: 'Import — Electronics Components', filingId: 'TS-784512', status: 'completed', updatedText: '2 mins ago' },
+  { title: 'Import — Electronics Components', filingId: 'TS-784512', status: 'completed', updatedText: '1 hour ago' },
+  { title: 'Import — Electronics Components', filingId: 'TS-784512', status: 'completed', updatedText: '1 hour ago' },
+  { title: 'Import — Electronics Components', filingId: 'TS-784512', status: 'completed', updatedText: '1 hour ago' },
+  { title: 'Import — Electronics Components', filingId: 'TS-784512', status: 'completed', updatedText: '1 hour ago' },
+  { title: 'Import — Electronics Components', filingId: 'TS-784512', status: 'completed', updatedText: '1 hour ago' },
+  { title: 'Import — Electronics Components', filingId: 'TS-784512', status: 'completed', updatedText: '1 hour ago' },
+]
+
+export const FILING_WORKFLOW_STEPS = [
+  { label: 'Upload Documents' },
+  { label: 'HS Code Intelligence' },
+  { label: 'Document Intelligence' },
+  { label: 'Cross-Document' },
+  { label: 'Compliance Analysis' },
+  { label: 'Certificate of Origin' },
+  { label: 'Customs Risk Assessment' },
+  { label: 'Trade Optimization' },
+  { label: 'Permit & NOC Analysis' },
+  { label: 'Final Verification' },
+]
+
+export const FILING_INFO_ITEMS = [
+  { icon: MapPin, label: 'Importing Country', value: 'Pakistan' },
+  { icon: Globe, label: 'Exporting Country', value: 'China' },
+  { icon: Package, label: 'Shipment Type', value: 'Sea Freight · FCL' },
+  { icon: Settings2, label: 'Current Phase', value: 'Document Intelligence' },
+  { icon: Percent, label: 'Completion', value: '46%' },
+  { icon: FileText, label: 'Documents Uploaded', value: '6 files' },
+  { icon: Clock, label: 'Est. Completion', value: '~ 18 mins' },
+]
+
 export const MODULES = [
   {
     icon: ShieldCheck,
     name: 'TradeShield',
     description: 'AI Customs Compliance',
     status: 'active',
+    path: '/dashboard/tradeshield',
   },
   {
     icon: Trophy,

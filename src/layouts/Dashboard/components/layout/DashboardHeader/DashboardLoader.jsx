@@ -32,7 +32,7 @@ const DashboardLoader = ({ onComplete }) => {
           muted
           playsInline
           onEnded={handleVideoEnd}
-          className="h-full w-full object-contain"
+          className="h-full w-full object-cover"
         >
           <source
             src="../../../../../../assets/intro.mp4"

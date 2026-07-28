@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import ModuleStatusBadge from './ModuleStatusBadge'
 
 const ModuleCard = ({
@@ -5,11 +6,16 @@ const ModuleCard = ({
   name,
   description,
   status = 'soon',
+  path,
   onSoonClick,
 }) => {
+  const navigate = useNavigate()
+
   const handleClick = () => {
     if (status === 'soon') {
       onSoonClick?.()
+    } else if (path) {
+      navigate(path)
     }
   }
 
