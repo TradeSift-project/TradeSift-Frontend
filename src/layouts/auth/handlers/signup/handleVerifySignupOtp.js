@@ -38,7 +38,7 @@ export const handleVerifySignupOtpSubmit = async (
             response.message || "Registration complete."
         );
 
-        navigate("/login");
+        navigate("/dashboard");
 
         return true;
 

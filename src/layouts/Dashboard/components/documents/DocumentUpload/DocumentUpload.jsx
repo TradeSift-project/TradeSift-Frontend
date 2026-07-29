@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
-import { Upload, FileText, CheckCircle2, Clock, Trash2, AlertCircle } from 'lucide-react'
+import { Upload, Trash2 } from 'lucide-react'
 import { toast } from 'sonner'
+import ProcessingStatus from '../ProcessingStatus'
 
 const DocumentUpload = ({ onDocumentProcessed }) => {
   const [dragActive, setDragActive] = useState(false)
@@ -162,68 +163,22 @@ const DocumentUpload = ({ onDocumentProcessed }) => {
             Uploading & Processing
           </span>
 
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-4">
             {files.map((file) => (
-              <div
-                key={file.id}
-                className="flex items-center justify-between gap-4 p-4 rounded-2xl border border-[#E5E6E8] bg-white shadow-[0_2px_8px_rgba(0,0,0,0.015)]"
-              >
-                <div className="flex items-center gap-3 flex-1 min-w-0">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-neutral-50 border border-neutral-100 text-[#F87103] shrink-0">
-                    <FileText size={14} />
-                  </div>
-                  <div className="flex flex-col gap-1 flex-1 min-w-0">
-                    <div className="flex items-center justify-between text-xs font-semibold text-[#0B0D12]">
-                      <span className="truncate">{file.name}</span>
-                      <span className="text-[10px] text-gray-400 font-normal shrink-0 ml-2">{file.size}</span>
-                    </div>
-
-                    {file.status === 'Uploading' && (
-                      <div className="w-full bg-neutral-100 h-1 rounded-full overflow-hidden mt-1">
-                        <div
-                          className="bg-[#F87103] h-full transition-all duration-200"
-                          style={{ width: `${file.progress}%` }}
-                        />
-                      </div>
-                    )}
-
-                    {file.status !== 'Uploading' && (
-                      <div className="flex items-center gap-2 mt-0.5">
-                        <span className="text-[9.5px] font-bold uppercase tracking-[0.5px] font-mono text-gray-400">
-                          Status:
-                        </span>
-                        <span
-                          className={`text-[9.5px] font-bold uppercase tracking-[0.5px] ${
-                            file.status === 'Extracted'
-                              ? 'text-emerald-600'
-                              : file.status === 'Needs Review'
-                              ? 'text-amber-600'
-                              : 'text-blue-500 animate-pulse'
-                          }`}
-                        >
-                          {file.status}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2 shrink-0">
-                  {file.status === 'Processing' && (
-                    <Clock size={16} className="text-blue-500 animate-spin" />
-                  )}
-                  {file.status === 'Extracted' && (
-                    <CheckCircle2 size={16} className="text-emerald-500" />
-                  )}
-                  {file.status === 'Needs Review' && (
-                    <AlertCircle size={16} className="text-amber-500" />
-                  )}
+              <div key={file.id} className="flex flex-col gap-2">
+                <ProcessingStatus
+                  fileName={file.name}
+                  currentStatus={file.status}
+                  progress={file.progress}
+                />
+                <div className="flex justify-end px-2">
                   <button
                     type="button"
                     onClick={() => removeFile(file.id)}
-                    className="p-1 text-gray-400 hover:text-red-500 transition"
+                    className="flex items-center gap-1 text-[10px] font-bold text-gray-400 hover:text-red-500 uppercase tracking-[0.5px] transition"
                   >
-                    <Trash2 size={14} />
+                    <Trash2 size={12} />
+                    Cancel Pipeline
                   </button>
                 </div>
               </div>

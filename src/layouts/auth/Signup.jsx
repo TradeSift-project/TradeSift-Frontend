@@ -25,6 +25,8 @@ export default function Signup() {
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [error, setError] = useState("");
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const formData = {
     firstName,
     lastName,
@@ -38,11 +40,18 @@ export default function Signup() {
   const navigate = useNavigate();
 
   const onSubmit = async (e) => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+
     const success = await handleSignupSubmit(
       e,
       formData,
       setError
     );
+
+    setTimeout(() => {
+      setIsSubmitting(false);
+    }, 2000);
 
     if (!success) return;
 
@@ -57,17 +66,7 @@ export default function Signup() {
   };
 
   const handleKeyDown = (e) =>
-    handleFormNavigation(e, () => onSubmit(e,
-      {
-        firstName,
-        lastName,
-        organizationName,
-        email,
-        password,
-        confirmPassword,
-        agreedToTerms,
-      }
-    ));
+    handleFormNavigation(e, () => onSubmit(e));
 
   useAutoClearError(error, setError)
 
@@ -118,7 +117,7 @@ export default function Signup() {
         setError={setError}
 
         submitBtnText="Create Account"
-        isSubmitBtnLoading={false}
+        isSubmitBtnLoading={isSubmitting}
 
         handleSubmit={onSubmit}
         handleKeyDown={handleKeyDown}

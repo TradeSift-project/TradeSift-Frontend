@@ -86,3 +86,34 @@ export const MOCK_EXTRACTIONS = {
     ]
   }
 }
+
+export const MOCK_CROSS_DOC_ISSUES = {
+  'DOC-001': [
+    {
+      id: 'ISS-001',
+      type: 'Weight Discrepancy',
+      message: 'Gross weight on Weighment Slip (24,150 KG) differs from Packing List / Commercial Invoice (24,300 KG) by 150 KG.',
+      affectedDocs: ['Weighment_Slip_WS-902.png', 'invoice_INV-2026-00452.pdf'],
+      field: 'Gross Weight',
+      actionLabel: 'Verify scale calibrate record'
+    },
+    {
+      id: 'ISS-002',
+      type: 'Reference Mismatch',
+      message: 'Container number HLXU8902341 in Weighment Slip differs from MSCU1234567 in Commercial Invoice.',
+      affectedDocs: ['Weighment_Slip_WS-902.png', 'invoice_INV-2026-00452.pdf'],
+      field: 'Container Number',
+      actionLabel: 'Resolve Container mismatch'
+    }
+  ],
+  'DOC-003': [
+    {
+      id: 'ISS-003',
+      type: 'Document Mismatch',
+      message: 'Weight validation mismatch between Weighment Slip vs packing lists.',
+      affectedDocs: ['Weighment_Slip_WS-902.png', 'Packing_List_90321.pdf'],
+      field: 'Gross Weight',
+      actionLabel: 'Resolve discrepancy'
+    }
+  ]
+}

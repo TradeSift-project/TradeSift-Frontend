@@ -58,16 +58,14 @@ const AuthHero = () => {
                         <motion.p
                             variants={fadeUp}
                             className="text-base sm:text-[16px] text-neutral-400 font-normal leading-relaxed">
-                            Automate customs compliance, track shipments,
-                            and orchestrate trade operations from one
-                            intelligent platform.
+                            TradeSift is a business automation platform for Pakistan's off-dock terminal operators and customs-related operations.
                         </motion.p>
 
                         {/* Orange Accent Divider Line */}
                         <div className="h-[2px] w-12 bg-amber-500 rounded-full" />
 
-                        <motion.p className="text-sm sm:text-base text-neutral-400 font-normal leading-relaxed max-w-[400px]">
-                            Built for customs brokers, importers and enterprise teams.
+                        <motion.p className="text-sm sm:text-base text-neutral-400 font-normal leading-relaxed max-w-[450px]">
+                            AI-powered document extraction and data mapping to help terminal operators automate gate-in/gate-out workflows and minimize errors.
                         </motion.p>
                     </motion.div>
                 </motion.main>

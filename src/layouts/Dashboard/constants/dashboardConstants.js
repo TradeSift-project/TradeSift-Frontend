@@ -84,6 +84,45 @@ export const WORKFLOW_SUMMARY = [
   },
 ]
 
+export const ACTIVE_WORKFLOWS = [
+  {
+    id: 'JOB-9023',
+    type: 'Import Gate-In',
+    description: 'Electronics board cargo from Vessel PACIFIC HARMONY',
+    docCount: 4,
+    stage: 'AI Field Extraction',
+    status: 'Needs Review',
+    updatedAt: '2 mins ago',
+  },
+  {
+    id: 'JOB-9022',
+    type: 'Export Gate-Out',
+    description: 'Textile export items for vessel KARACHI EXPRESS',
+    docCount: 3,
+    stage: 'Weighment Validation',
+    status: 'Processing',
+    updatedAt: '12 mins ago',
+  },
+  {
+    id: 'JOB-9021',
+    type: 'Import Gate-Out',
+    description: 'Machinery components release for THAL OPERATORS',
+    docCount: 5,
+    stage: 'ERP Field Mapping',
+    status: 'Completed',
+    updatedAt: '1 hour ago',
+  },
+  {
+    id: 'JOB-9020',
+    type: 'Export Gate-In',
+    description: 'Industrial chemicals storage consignments',
+    docCount: 2,
+    stage: 'Document Ingestion',
+    status: 'Completed',
+    updatedAt: '2 hours ago',
+  }
+]
+
 export const RECENT_DOCUMENTS = [
   {
     id: 'DOC-90231',

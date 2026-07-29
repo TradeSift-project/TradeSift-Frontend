@@ -1,21 +1,54 @@
 import { useState, useEffect } from 'react'
-import { AlertTriangle, AlertCircle, Save, ArrowLeft, Database } from 'lucide-react'
-import { MOCK_EXTRACTIONS } from '../../../constants/documentExtractionConstants'
+import { AlertTriangle, AlertCircle, Save, ArrowLeft, Database, CheckCircle } from 'lucide-react'
+import { MOCK_EXTRACTIONS, MOCK_CROSS_DOC_ISSUES } from '../../../constants/documentExtractionConstants'
 import DocumentPreview from '../DocumentPreview'
 import ExtractionSection from './ExtractionSection'
 import ExtractionSummary from './ExtractionSummary'
+import ValidationIssues from '../ValidationIssues'
+import StructuredDataPreview from '../StructuredDataPreview'
 import { toast } from 'sonner'
 
 const ExtractionReview = ({ documentId = 'DOC-001', onBack, onSave }) => {
   const docData = MOCK_EXTRACTIONS[documentId] || MOCK_EXTRACTIONS['DOC-001']
   const [sections, setSections] = useState([])
   const [validationResult, setValidationResult] = useState(null)
+  const [crossDocIssues, setCrossDocIssues] = useState([])
+  const [showPreview, setShowPreview] = useState(false)
 
   useEffect(() => {
     if (docData && docData.sections) {
       setSections(JSON.parse(JSON.stringify(docData.sections))) // Deep copy
     }
+    const issues = MOCK_CROSS_DOC_ISSUES[documentId] || []
+    setCrossDocIssues(JSON.parse(JSON.stringify(issues)))
+    setValidationResult(null)
   }, [documentId])
+
+  const handleConfirmAll = () => {
+    setSections((prev) =>
+      prev.map((sec) => ({
+        ...sec,
+        fields: sec.fields.map((f) => {
+          if (!f.value || f.value.trim() === '') {
+            return f // Don't verify empty fields
+          }
+          return {
+            ...f,
+            status: 'verified',
+            confidence: 1.0,
+            message: '',
+          }
+        })
+      }))
+    )
+    setCrossDocIssues([])
+    toast.success('All populated fields confirmed!')
+  }
+
+  const handleResolveIssue = (issue) => {
+    setCrossDocIssues((prev) => prev.filter((i) => i.id !== issue.id))
+    toast.success(`Resolved discrepancy: ${issue.type}`)
+  }
 
   const handleFieldChange = (sectionId, fieldId, value) => {
     setSections((prev) =>
@@ -72,7 +105,7 @@ const ExtractionReview = ({ documentId = 'DOC-001', onBack, onSave }) => {
       sec.fields.forEach((f) => {
         if (!f.value || f.value.trim() === '') {
           missingCount++
-        } else if (f.status === 'needs-review' || f.status === 'missing') {
+        } else if (f.status === 'needs-review' || f.status === 'missing' || f.status === 'mismatch') {
           reviewCount++
         }
       })
@@ -83,7 +116,7 @@ const ExtractionReview = ({ documentId = 'DOC-001', onBack, onSave }) => {
       setValidationResult({ success: false, message: msg })
       toast.error(msg)
     } else if (reviewCount > 0) {
-      const msg = `Validation passed with ${reviewCount} low-confidence warning alerts.`
+      const msg = `Validation passed with ${reviewCount} warnings requiring review.`
       setValidationResult({ success: true, warning: true, message: msg })
       toast.warning(msg)
     } else {
@@ -95,9 +128,8 @@ const ExtractionReview = ({ documentId = 'DOC-001', onBack, onSave }) => {
 
   const handleSaveAndMap = () => {
     handleValidate()
-    onSave?.(sections)
-    toast.success('Extracted document successfully saved!')
-    onBack?.()
+    // Open structured data preview modal before exit
+    setShowPreview(true)
   }
 
   return (
@@ -125,6 +157,13 @@ const ExtractionReview = ({ documentId = 'DOC-001', onBack, onSave }) => {
 
         {/* Action Button Panel */}
         <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={handleConfirmAll}
+            className="inline-flex items-center justify-center gap-1.5 rounded-full border border-neutral-200 bg-white px-4 py-2 text-xs font-semibold text-gray-700 transition hover:bg-neutral-50"
+          >
+            Confirm All
+          </button>
           <button
             type="button"
             onClick={handleValidate}
@@ -183,6 +222,17 @@ const ExtractionReview = ({ documentId = 'DOC-001', onBack, onSave }) => {
 
         {/* Right Column: Editable fields forms */}
         <div className="flex flex-col gap-6 rounded-[24px] border border-[#E5E6E8] bg-white p-5 shadow-sm max-h-[570px] overflow-y-auto">
+          
+          {/* Cross-Document Validation Issues Alerts */}
+          {crossDocIssues.length > 0 && (
+            <div className="pb-2 border-b border-neutral-100">
+              <ValidationIssues
+                issues={crossDocIssues}
+                onResolveIssue={handleResolveIssue}
+              />
+            </div>
+          )}
+
           {sections.map((section) => (
             <ExtractionSection
               key={section.id}
@@ -209,6 +259,22 @@ const ExtractionReview = ({ documentId = 'DOC-001', onBack, onSave }) => {
         </div>
 
       </div>
+
+      {/* Structured Operational Data Preview Modal */}
+      <StructuredDataPreview
+        isOpen={showPreview}
+        onClose={() => {
+          setShowPreview(false)
+          onSave?.(sections)
+          onBack?.()
+        }}
+        documentName={docData.fileName}
+        documentType={docData.documentType}
+        fields={sections.flatMap((s) => s.fields)}
+        onExport={(format) => {
+          toast.success(`Successfully exported document schema as ${format.toUpperCase()}!`)
+        }}
+      />
 
     </div>
   )

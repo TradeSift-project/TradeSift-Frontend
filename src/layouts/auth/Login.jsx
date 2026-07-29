@@ -43,19 +43,29 @@ export default function Login() {
         setSearchParams({}, { replace: true });
     }, [searchParams, setSearchParams]);
 
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     const formData = {
         email,
         password,
         rememberMe,
     };
 
-    const onSubmit = (e) =>
-        handleLoginSubmit(
+    const onSubmit = async (e) => {
+        if (isSubmitting) return;
+        setIsSubmitting(true);
+
+        const success = await handleLoginSubmit(
             e,
             formData,
             setError,
             navigate
         );
+
+        setTimeout(() => {
+            setIsSubmitting(false);
+        }, 2000);
+    };
 
     const handleKeyDown = (e) =>
         handleFormNavigation(
@@ -106,7 +116,7 @@ export default function Login() {
                 setError={setError}
 
                 submitBtnText="Sign In"
-                isSubmitBtnLoading={false}
+                isSubmitBtnLoading={isSubmitting}
 
                 handleSubmit={onSubmit}
                 handleKeyDown={handleKeyDown}

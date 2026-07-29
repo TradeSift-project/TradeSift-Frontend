@@ -1,18 +1,21 @@
 import { useState, useEffect } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useNavigate } from 'react-router-dom'
+import { toast } from 'sonner'
 import ComingSoonModal from '../../components/modal/ComingSoonModal'
 import Sidebar from './components/layout/Sidebar'
 import DashboardHeader from './components/layout/DashboardHeader'
 import StatsGrid from './components/overview/StatsGrid'
-import WorkflowSummary from './components/overview/WorkflowSummary'
 import RecentDocuments from './components/overview/RecentDocuments'
-import AttentionRequired from './components/overview/AttentionRequired'
+import ActiveWorkflows from './components/overview/ActiveWorkflows'
+import OperationalAlerts from './components/overview/OperationalAlerts'
+import QuickActions from './components/overview/QuickActions'
 import DashboardLoader from './components/layout/DashboardHeader/DashboardLoader'
 import Documents from './Documents'
 import DocumentReview from './DocumentReview'
-import { getMe } from '../../services/userService'
+import { getMe, logoutUser } from '../../services/userService'
 
 const Dashboard = () => {
+  const navigate = useNavigate()
   const [showLoader, setShowLoader] = useState(true)
   const [showComingSoon, setShowComingSoon] = useState(false)
   const [user, setUser] = useState(null)
@@ -39,6 +42,18 @@ const Dashboard = () => {
       isMounted = false
     }
   }, [])
+
+  const handleLogout = async () => {
+    try {
+      await logoutUser()
+      toast.success('Logged out successfully.')
+      navigate('/login')
+    } catch (err) {
+      console.error('Failed to log out:', err)
+      // Clear session locally and redirect anyway
+      navigate('/login')
+    }
+  }
 
   const getGreeting = () => {
     if (user) {
@@ -77,7 +92,7 @@ const Dashboard = () => {
       )}
 
       <div className="flex min-h-screen bg-[#FDFDFD] font-inter">
-        <Sidebar user={getSidebarUser()} onSoonClick={() => setShowComingSoon(true)} />
+        <Sidebar user={getSidebarUser()} onSoonClick={() => setShowComingSoon(true)} onLogout={handleLogout} />
 
         <main className="flex-1 px-10 py-10">
           <div className="mx-auto flex max-w-[1000px] flex-col gap-8">
@@ -92,11 +107,12 @@ const Dashboard = () => {
                     
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
                       <div className="lg:col-span-2 flex flex-col gap-8">
-                        <WorkflowSummary />
+                        <ActiveWorkflows />
                         <RecentDocuments />
                       </div>
                       <div className="flex flex-col gap-8">
-                        <AttentionRequired onResolveItem={() => setShowComingSoon(true)} />
+                        <QuickActions onStartWorkflow={() => setShowComingSoon(true)} />
+                        <OperationalAlerts onResolveItem={() => setShowComingSoon(true)} />
                       </div>
                     </div>
                   </>

@@ -1,14 +1,14 @@
-import ConfidenceIndicator from './ConfidenceIndicator'
+import FieldStatusBadge from './FieldStatusBadge'
 import ExtractionFieldEditor from './ExtractionFieldEditor'
 
 const ExtractionField = ({ field, onValueSave }) => {
   const percentage = Math.round(field.confidence * 100)
   
   const getBorderColor = () => {
-    if (field.status === 'missing' || field.confidence === 0) {
+    if (field.status === 'missing' || field.status === 'mismatch' || field.confidence === 0) {
       return 'border-rose-150 bg-rose-50/5 text-rose-800'
     }
-    if (percentage >= 90) {
+    if (percentage >= 90 && field.status === 'verified') {
       return 'border-emerald-100 bg-emerald-50/5 text-emerald-800'
     }
     return 'border-amber-150 bg-amber-50/5 text-amber-800'
@@ -20,7 +20,7 @@ const ExtractionField = ({ field, onValueSave }) => {
         <label className="text-[10px] font-bold text-gray-500 uppercase tracking-[0.5px]">
           {field.label}
         </label>
-        <ConfidenceIndicator confidence={field.confidence} status={field.status} />
+        <FieldStatusBadge status={field.status} confidence={field.confidence} />
       </div>
 
       <ExtractionFieldEditor
