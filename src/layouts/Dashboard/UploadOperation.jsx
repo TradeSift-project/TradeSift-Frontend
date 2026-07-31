@@ -35,7 +35,7 @@ const UploadOperation = () => {
     <div className="flex flex-col gap-6 w-full max-w-5xl mx-auto pb-12 pt-4">
       {job && (
         <div className="mb-4">
-          <JobContextHeader job={job} backTo="/dashboard" />
+          <JobContextHeader job={job} backTo={`/dashboard/operations/${operationId}`} />
         </div>
       )}
       

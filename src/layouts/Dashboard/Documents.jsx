@@ -5,7 +5,6 @@ import DocumentsStats from './components/documents/DocumentsStats'
 import DocumentsToolbar from './components/documents/DocumentsToolbar'
 import DocumentsTable from './components/documents/DocumentsTable'
 import DocumentEmptyState from './components/documents/DocumentEmptyState'
-import DocumentUpload from './components/documents/DocumentUpload'
 import { MOCK_DOCUMENTS } from './constants/documentConstants'
 import { X, Cpu, RefreshCw, FileText, CheckCircle2 } from 'lucide-react'
 import { toast } from 'sonner'
@@ -20,11 +19,6 @@ const Documents = () => {
   const [reviewFilter, setReviewFilter] = useState('All')
   
   const [detailDoc, setDetailDoc] = useState(null)
-  const [showUploadModal, setShowUploadModal] = useState(false)
-
-  const handleDocumentProcessed = (newDoc) => {
-    setDocuments((prev) => [newDoc, ...prev])
-  }
 
   const handleDelete = (id) => {
     setDocuments((prev) => prev.filter((d) => d.id !== id))
@@ -73,7 +67,7 @@ const Documents = () => {
     <div className="flex flex-col gap-6 relative min-h-screen">
       
       {/* Header */}
-      <DocumentsHeader onUploadClick={() => setShowUploadModal(true)} />
+      <DocumentsHeader />
 
       {/* Stats */}
       <DocumentsStats />
@@ -102,37 +96,6 @@ const Documents = () => {
         />
       ) : (
         <DocumentEmptyState onReset={handleResetFilters} />
-      )}
-
-      {/* File Upload Modal Overlay */}
-      {showUploadModal && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-[32px] border border-neutral-150 p-6 w-full max-w-xl shadow-2xl relative">
-            <button
-              type="button"
-              onClick={() => setShowUploadModal(false)}
-              className="absolute top-5 right-5 p-2 rounded-full hover:bg-neutral-50 text-gray-400 hover:text-gray-600 transition"
-            >
-              <X size={16} />
-            </button>
-
-            <div className="mb-6">
-              <h3 className="font-geist text-lg font-bold text-[#0B0D12]">
-                Upload Cargo Paperwork
-              </h3>
-              <p className="text-xs text-gray-400 mt-1">
-                Upload shipping invoices, packing lists, and weighment slips to begin AI parsing.
-              </p>
-            </div>
-
-            <DocumentUpload
-              onDocumentProcessed={(newDoc) => {
-                handleDocumentProcessed(newDoc)
-                setShowUploadModal(false)
-              }}
-            />
-          </div>
-        </div>
       )}
 
       {/* Document Details Drawer Panel */}

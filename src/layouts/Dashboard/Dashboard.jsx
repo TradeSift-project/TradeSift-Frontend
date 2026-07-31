@@ -18,15 +18,17 @@ import ApprovedData from './ApprovedData'
 import Mapping from './Mapping'
 import Export from './Export'
 import UploadOperation from './UploadOperation'
+import OperationsList from './OperationsList'
+import OperationWorkspace from './OperationWorkspace'
 import { getMe, logoutUser } from '../../services/userService'
-import { createOperation } from '../../services/operationService'
+import NewOperationModal from '../../components/modal/NewOperationModal'
 
 const Dashboard = () => {
   const navigate = useNavigate()
   const [showLoader, setShowLoader] = useState(true)
   const [showComingSoon, setShowComingSoon] = useState(false)
+  const [showNewOpModal, setShowNewOpModal] = useState(false)
   const [user, setUser] = useState(null)
-  const [loadingProfile, setLoadingProfile] = useState(true)
 
   useEffect(() => {
     let isMounted = true
@@ -38,11 +40,6 @@ const Dashboard = () => {
       })
       .catch((err) => {
         console.error('Failed to fetch user profile:', err)
-      })
-      .finally(() => {
-        if (isMounted) {
-          setLoadingProfile(false)
-        }
       })
 
     return () => {
@@ -119,22 +116,9 @@ const Dashboard = () => {
                       </div>
                       <div className="flex flex-col gap-8">
                         <QuickActions 
-                          onStartWorkflow={async (type) => {
-                            try {
-                              toast.info(`Initializing ${type} operation...`)
-                              const res = await createOperation({
-                                operationType: type === 'Import' ? 'GATE_IN' : 'GATE_OUT',
-                                notes: `${type} Operation initiated from dashboard`
-                              })
-                              if (res.success && res.data) {
-                                navigate(`/dashboard/upload/${res.data.id}`)
-                              } else {
-                                toast.error('Failed to initialize job.')
-                              }
-                            } catch (err) {
-                              console.error(err)
-                              toast.error('Failed to connect to backend.')
-                            }
+                          onStartWorkflow={() => {
+                            // Can pre-select type in future, for now just open modal
+                            setShowNewOpModal(true)
                           }} 
                         />
                         <OperationalAlerts onResolveItem={() => setShowComingSoon(true)} />
@@ -144,6 +128,14 @@ const Dashboard = () => {
                 }
               />
 
+              <Route
+                path="operations"
+                element={<OperationsList />}
+              />
+              <Route
+                path="operations/:operationId"
+                element={<OperationWorkspace />}
+              />
               <Route
                 path="upload/:operationId"
                 element={<UploadOperation />}
@@ -181,6 +173,7 @@ const Dashboard = () => {
         </main>
 
         <ComingSoonModal isOpen={showComingSoon} onClose={() => setShowComingSoon(false)} />
+        <NewOperationModal isOpen={showNewOpModal} onClose={() => setShowNewOpModal(false)} />
       </div>
     </>
   )

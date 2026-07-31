@@ -22,8 +22,7 @@ import {
 export const NAV_ITEMS = [
   { label: 'Overview', icon: LayoutDashboard, path: '/dashboard' },
   { label: 'Documents', icon: FileText, path: '/dashboard/documents', soon: false },
-  { label: 'Import Operations', icon: ArrowDownRight, path: '/dashboard/import', soon: true },
-  { label: 'Export Operations', icon: ArrowUpRight, path: '/dashboard/export', soon: true },
+  { label: 'Operations', icon: Package, path: '/dashboard/operations', soon: false },
   { label: 'Gate Operations', icon: Truck, path: '/dashboard/gate', soon: true },
   { label: 'Integrations', icon: Link, path: '/dashboard/integrations', soon: true },
 ]

@@ -58,7 +58,7 @@ const DocumentTableRow = ({
           </span>
           {doc.operationId ? (
             <button 
-              onClick={() => navigate(`/dashboard/processing/${doc.operationId}`)}
+              onClick={() => navigate(`/dashboard/operations/${doc.operationId}`)}
               className="text-[10px] text-gray-500 font-mono hover:text-[#F87103] hover:underline text-left transition"
             >
               {doc.reference || doc.operationId}

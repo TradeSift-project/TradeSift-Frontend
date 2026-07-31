@@ -10,7 +10,7 @@ const DocumentEmptyState = ({ onReset }) => {
         No documents found
       </h3>
       <p className="text-xs text-[#686C72] mt-1 max-w-xs leading-relaxed">
-        Try adjusting your filters, query terms, or upload new files to see results.
+        Try adjusting your filters or query terms to see results.
       </p>
 
       {onReset && (
