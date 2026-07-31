@@ -13,6 +13,7 @@ import { mockUnifiedJob } from './constants/workflowConstants'
 
 import { useParams } from 'react-router-dom'
 import { getOperationById } from '../../services/operationService'
+import { approvedDataService } from '../../services/approvedDataService'
 import OperationNotFound from './components/shared/OperationNotFound'
 
 const ApprovedData = () => {
@@ -40,6 +41,17 @@ const ApprovedData = () => {
         }
 
         if (!isMounted) return
+
+        // Merge with approved data from backend (currently mock placeholder)
+        let approvedPayload = null
+        try {
+          const approvedRes = await approvedDataService.getApprovedData(jobId)
+          if (approvedRes.success) {
+            approvedPayload = approvedRes.data
+          }
+        } catch (err) {
+          console.error('Failed to get approved data', err)
+        }
 
         const mergedJob = {
           ...mockUnifiedJob,

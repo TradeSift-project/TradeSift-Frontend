@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Activity, Clock } from 'lucide-react'
 import ActivityItem from './ActivityItem'
-import { MOCK_ACTIVITIES } from '../../../constants/activityConstants'
+import { activityService } from '../../../../../services/activityService'
 
 // Framer motion variants
 const containerVariant = {
@@ -28,17 +28,19 @@ const ActivityLog = ({ operationId }) => {
     let isMounted = true
     
     const fetchActivity = async () => {
-      setLoading(true)
-      // Simulate API call for now. Replace with real API when available.
-      // e.g. const res = await getOperationActivity(operationId)
-      
-      await new Promise(resolve => setTimeout(resolve, 800))
-      
-      if (isMounted) {
-        // Filter mock activities by conceptually matching operation ID if we wanted,
-        // but for mock purposes we just show the constants.
-        setActivities(MOCK_ACTIVITIES)
-        setLoading(false)
+      try {
+        setLoading(true)
+        const res = await activityService.getOperationActivity(operationId)
+        
+        if (isMounted) {
+          if (res.success) {
+            setActivities(res.data)
+          }
+        }
+      } catch (err) {
+        console.error('Failed to fetch activity log:', err)
+      } finally {
+        if (isMounted) setLoading(false)
       }
     }
 

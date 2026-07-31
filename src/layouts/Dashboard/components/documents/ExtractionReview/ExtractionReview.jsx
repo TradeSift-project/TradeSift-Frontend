@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { AlertTriangle, AlertCircle, Save, ArrowLeft, Database, CheckCircle } from 'lucide-react'
+import { reviewService } from '../../../../../services/reviewService'
 import { MOCK_EXTRACTIONS, MOCK_CROSS_DOC_ISSUES } from '../../../constants/documentExtractionConstants'
 import DocumentPreview from '../DocumentPreview'
 import ExtractionSection from './ExtractionSection'
@@ -14,14 +15,36 @@ const ExtractionReview = ({ documentId = 'DOC-001', onBack, onSave }) => {
   const [validationResult, setValidationResult] = useState(null)
   const [crossDocIssues, setCrossDocIssues] = useState([])
   const [showPreview, setShowPreview] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (docData && docData.sections) {
-      setSections(JSON.parse(JSON.stringify(docData.sections))) // Deep copy
+    let isMounted = true
+    
+    const fetchExtractionData = async () => {
+      try {
+        setLoading(true)
+        // Note: the backend will eventually return sections and cross-doc issues directly.
+        // For now we still fall back to mock constants while calling the placeholder service.
+        const res = await reviewService.getExtractionData(documentId)
+        
+        if (isMounted) {
+          if (docData && docData.sections) {
+            setSections(JSON.parse(JSON.stringify(docData.sections)))
+          }
+          const issues = MOCK_CROSS_DOC_ISSUES[documentId] || []
+          setCrossDocIssues(JSON.parse(JSON.stringify(issues)))
+          setValidationResult(null)
+        }
+      } catch (err) {
+        console.error('Failed to fetch extraction data:', err)
+      } finally {
+        if (isMounted) setLoading(false)
+      }
     }
-    const issues = MOCK_CROSS_DOC_ISSUES[documentId] || []
-    setCrossDocIssues(JSON.parse(JSON.stringify(issues)))
-    setValidationResult(null)
+
+    fetchExtractionData()
+
+    return () => { isMounted = false }
   }, [documentId])
 
   const handleConfirmAll = () => {
@@ -130,6 +153,15 @@ const ExtractionReview = ({ documentId = 'DOC-001', onBack, onSave }) => {
     handleValidate()
     // Open structured data preview modal before exit
     setShowPreview(true)
+  }
+
+  if (loading) {
+    return (
+      <div className="flex flex-col flex-1 items-center justify-center min-h-[400px]">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#F87103]"></div>
+        <p className="mt-4 text-sm text-gray-500">Loading document extraction data...</p>
+      </div>
+    )
   }
 
   return (

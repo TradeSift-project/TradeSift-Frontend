@@ -14,6 +14,7 @@ import { mockUnifiedJob } from './constants/workflowConstants'
 
 import { getOperationById } from '../../services/operationService'
 import { documentService } from '../../services/documentService'
+import { processingService } from '../../services/processingService'
 import OperationNotFound from './components/shared/OperationNotFound'
 
 const Processing = () => {
@@ -81,11 +82,21 @@ const Processing = () => {
         }
 
         setJob(mergedJob)
-        
-        // Simulate moving to "Needs Review" after a few seconds
-        setTimeout(() => {
-          if (isMounted) setJob(prev => ({ ...prev, status: 'Needs Review' }))
-        }, 3000)
+        // Simulate merging processing pipeline status from the backend service
+        try {
+          const processingRes = await processingService.getProcessingStatus(jobId)
+          if (processingRes.success) {
+            // Apply backend statuses to our pipeline
+            // setJob(prev => ({ ...prev, status: processingRes.data.status }))
+            
+            // For now, simulate delay then set status to Needs Review
+            setTimeout(() => {
+              if (isMounted) setJob(prev => ({ ...prev, status: processingRes.data.status }))
+            }, 3000)
+          }
+        } catch (err) {
+          console.error('Failed to get processing status:', err)
+        }
 
       } catch (err) {
         console.error('Failed to load job context:', err)

@@ -2,13 +2,30 @@ import { Download, Server, Settings2 } from 'lucide-react'
 import ExportButton from './ExportButton'
 import { toast } from 'sonner'
 import { useNavigate, useParams } from 'react-router-dom'
+import { useState } from 'react'
+import { exportService } from '../../../../../services/exportService'
 
 const ExportSection = () => {
   const navigate = useNavigate()
   const { jobId } = useParams()
 
-  const handleExportExcel = () => {
-    toast.success('Downloading structured Excel file...')
+  const [isExporting, setIsExporting] = useState(false)
+
+  const handleExportExcel = async () => {
+    setIsExporting(true)
+    try {
+      const res = await exportService.exportOperationData(jobId, 'EXCEL')
+      if (res.success) {
+        toast.success(res.data.message || 'Export generated successfully!')
+        if (res.data.downloadUrl && res.data.downloadUrl !== '#') {
+          window.open(res.data.downloadUrl, '_blank')
+        }
+      }
+    } catch (err) {
+      toast.error('Failed to export data')
+    } finally {
+      setIsExporting(false)
+    }
   }
 
   const handleExportERP = () => {
@@ -25,10 +42,11 @@ const ExportSection = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <ExportButton 
           icon={Download}
-          title="Export to Excel"
+          title={isExporting ? "Generating..." : "Export to Excel"}
           description="Download the fully mapped dataset as a formatted Excel spreadsheet."
           primary={true}
           onClick={handleExportExcel}
+          disabled={isExporting}
         />
         <ExportButton 
           icon={Settings2}
