@@ -3,8 +3,8 @@ import { Server, Settings2 } from 'lucide-react'
 const TargetSelector = ({ systems, selectedSystem, onSelect }) => {
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between border-b border-gray-100 pb-2">
-        <span className="text-[10px] font-bold uppercase tracking-[0.93px] text-[#686C72]">
+      <div className="flex items-center justify-between border-b border-gray-100 pb-2 dark:border-neutral-800">
+        <span className="text-[10px] font-bold uppercase tracking-[0.93px] text-[#686C72] dark:text-gray-400">
           Target Integration System
         </span>
       </div>
@@ -18,7 +18,7 @@ const TargetSelector = ({ systems, selectedSystem, onSelect }) => {
               selectedSystem === sys.id 
                 ? 'bg-[#FDF6F0] border-[#F87103] text-[#F87103] shadow-sm'
                 : 'bg-white border-gray-200 text-gray-700 hover:border-gray-300 hover:bg-gray-50'
-            }`}
+            } dark:text-gray-300 dark:border-neutral-700`}
           >
             <div className={`flex items-center justify-center p-1.5 rounded-lg ${
               selectedSystem === sys.id ? 'bg-white' : 'bg-gray-100'

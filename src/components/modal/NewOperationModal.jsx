@@ -56,21 +56,21 @@ const NewOperationModal = ({ isOpen, onClose }) => {
           initial={{ opacity: 0, scale: 0.95, y: 10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 10 }}
-          className="bg-white rounded-[24px] w-full max-w-lg shadow-2xl flex flex-col overflow-hidden"
+          className="bg-white rounded-[24px] w-full max-w-lg shadow-2xl flex flex-col overflow-hidden dark:bg-neutral-900"
         >
-          <div className="flex items-center justify-between p-6 border-b border-gray-100">
+          <div className="flex items-center justify-between p-6 border-b border-gray-100 dark:border-neutral-800">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#FDF6F0] text-[#F87103]">
                 <PackageOpen size={20} />
               </div>
               <div>
-                <h3 className="font-geist text-lg font-bold text-[#0B0D12]">New Operation</h3>
-                <p className="text-xs text-gray-500">Create a parent workflow container</p>
+                <h3 className="font-geist text-lg font-bold text-[#0B0D12] dark:text-white">New Operation</h3>
+                <p className="text-xs text-gray-500 dark:text-gray-400">Create a parent workflow container</p>
               </div>
             </div>
             <button 
               onClick={onClose}
-              className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-50 text-gray-500 hover:bg-gray-100 transition"
+              className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-50 text-gray-500 hover:bg-gray-100 transition dark:bg-neutral-800/50 dark:text-gray-400 dark:hover:bg-neutral-700"
               disabled={loading}
             >
               <X size={16} />
@@ -79,7 +79,7 @@ const NewOperationModal = ({ isOpen, onClose }) => {
 
           <form onSubmit={handleSubmit} className="flex flex-col p-6 gap-5">
             <div className="flex flex-col gap-2">
-              <label className="text-[10px] font-bold uppercase tracking-[0.93px] text-[#686C72]">
+              <label className="text-[10px] font-bold uppercase tracking-[0.93px] text-[#686C72] dark:text-gray-400">
                 Operation Type *
               </label>
               <div className="grid grid-cols-2 gap-3">
@@ -90,7 +90,7 @@ const NewOperationModal = ({ isOpen, onClose }) => {
                     formData.operationType === 'GATE_IN' 
                       ? 'border-[#F87103] bg-[#FDF6F0] text-[#F87103]' 
                       : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300'
-                  }`}
+                  } dark:bg-neutral-900 dark:text-gray-400`}
                 >
                   Import Gate-In
                 </button>
@@ -101,7 +101,7 @@ const NewOperationModal = ({ isOpen, onClose }) => {
                     formData.operationType === 'GATE_OUT' 
                       ? 'border-[#F87103] bg-[#FDF6F0] text-[#F87103]' 
                       : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300'
-                  }`}
+                  } dark:bg-neutral-900 dark:text-gray-400`}
                 >
                   Export Gate-Out
                 </button>
@@ -109,7 +109,7 @@ const NewOperationModal = ({ isOpen, onClose }) => {
             </div>
 
             <div className="flex flex-col gap-2">
-              <label htmlFor="referenceNo" className="text-[10px] font-bold uppercase tracking-[0.93px] text-[#686C72]">
+              <label htmlFor="referenceNo" className="text-[10px] font-bold uppercase tracking-[0.93px] text-[#686C72] dark:text-gray-400">
                 Reference Number (Optional)
               </label>
               <input 
@@ -118,12 +118,12 @@ const NewOperationModal = ({ isOpen, onClose }) => {
                 placeholder="e.g. IMP-2026-00124"
                 value={formData.referenceNo}
                 onChange={(e) => setFormData({ ...formData, referenceNo: e.target.value })}
-                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-[#F87103] focus:outline-none focus:ring-1 focus:ring-[#F87103] transition"
+                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-[#F87103] focus:outline-none focus:ring-1 focus:ring-[#F87103] transition dark:border-neutral-700"
               />
             </div>
 
             <div className="flex flex-col gap-2">
-              <label htmlFor="notes" className="text-[10px] font-bold uppercase tracking-[0.93px] text-[#686C72]">
+              <label htmlFor="notes" className="text-[10px] font-bold uppercase tracking-[0.93px] text-[#686C72] dark:text-gray-400">
                 Notes (Optional)
               </label>
               <textarea 
@@ -132,7 +132,7 @@ const NewOperationModal = ({ isOpen, onClose }) => {
                 rows={3}
                 value={formData.notes}
                 onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-[#F87103] focus:outline-none focus:ring-1 focus:ring-[#F87103] transition resize-none custom-scrollbar"
+                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-[#F87103] focus:outline-none focus:ring-1 focus:ring-[#F87103] transition resize-none custom-scrollbar dark:border-neutral-700"
               />
             </div>
 
@@ -140,7 +140,7 @@ const NewOperationModal = ({ isOpen, onClose }) => {
               <button
                 type="button"
                 onClick={onClose}
-                className="px-5 py-2.5 rounded-full text-sm font-bold text-gray-500 hover:bg-gray-50 transition"
+                className="px-5 py-2.5 rounded-full text-sm font-bold text-gray-500 hover:bg-gray-50 transition dark:text-gray-400 dark:hover:bg-neutral-800"
                 disabled={loading}
               >
                 Cancel

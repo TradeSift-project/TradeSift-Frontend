@@ -79,7 +79,7 @@ const ApprovedData = () => {
     return (
       <div className="flex flex-col flex-1 items-center justify-center min-h-[500px]">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#F87103]"></div>
-        <p className="mt-4 text-sm text-gray-500">Loading approved dataset...</p>
+        <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">Loading approved dataset...</p>
       </div>
     )
   }

@@ -11,9 +11,9 @@ const ApprovalStatCard = ({ title, value, variant = 'default' }) => {
   }
 
   return (
-    <div className={`flex flex-col p-4 rounded-xl border border-gray-100 ${bgColor}`}>
+    <div className={`flex flex-col p-4 rounded-xl border border-gray-100 ${bgColor} dark:border-neutral-800`}>
       <span className={`text-2xl font-black ${textColor}`}>{value}</span>
-      <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">{title}</span>
+      <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1 dark:text-gray-400">{title}</span>
     </div>
   )
 }

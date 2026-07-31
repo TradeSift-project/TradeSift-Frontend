@@ -91,7 +91,7 @@ const Mapping = () => {
     return (
       <div className="flex flex-col flex-1 items-center justify-center min-h-[500px]">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#F87103]"></div>
-        <p className="mt-4 text-sm text-gray-500">Loading terminal mapping schema...</p>
+        <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">Loading terminal mapping schema...</p>
       </div>
     )
   }
@@ -105,7 +105,7 @@ const Mapping = () => {
       animate="animate"
       className="flex flex-col gap-6 w-full max-w-[1200px] mx-auto min-h-screen pb-6"
     >
-      <div className="flex flex-col gap-2 border-b border-gray-150 pb-4">
+      <div className="flex flex-col gap-2 border-b border-gray-150 pb-4 dark:border-neutral-800">
         <div className="flex items-center gap-2 mb-2">
           <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-bold uppercase tracking-wider w-fit">
             <CheckCircle2 size={14} />

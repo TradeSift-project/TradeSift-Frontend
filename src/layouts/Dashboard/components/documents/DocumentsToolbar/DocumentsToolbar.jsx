@@ -14,7 +14,7 @@ const DocumentsToolbar = ({
   onReviewFilterChange,
 }) => {
   return (
-    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-neutral-50/50 border border-neutral-150 rounded-[20px] p-4.5">
+    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-neutral-50/50 border border-neutral-150 rounded-[20px] p-4.5 dark:bg-neutral-800/30 dark:border-neutral-800">
       <DocumentSearch value={search} onChange={onSearchChange} />
       <DocumentFilters
         typeFilter={typeFilter}

@@ -4,7 +4,7 @@ import { Check, CircleDot, Circle, AlertCircle, XCircle } from 'lucide-react'
 
 const ProcessingPipeline = ({ stages }) => {
   return (
-    <motion.div variants={fadeUp} className="bg-white border border-gray-200 rounded-[24px] p-6 shadow-sm overflow-x-auto">
+    <motion.div variants={fadeUp} className="bg-white border border-gray-200 rounded-[24px] p-6 shadow-sm overflow-x-auto dark:bg-neutral-900 dark:border-neutral-700">
       <div className="flex items-center min-w-max">
         {stages.map((stage, idx) => {
           const isLast = idx === stages.length - 1

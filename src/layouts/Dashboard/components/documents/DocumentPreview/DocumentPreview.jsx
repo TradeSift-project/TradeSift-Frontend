@@ -10,12 +10,12 @@ const DocumentPreview = ({ docName = 'document.pdf', type = 'Commercial Invoice'
   const handleRotate = () => setRotate((prev) => (prev + 90) % 360)
 
   return (
-    <div className="flex flex-col gap-3 rounded-[24px] border border-[#E5E6E8] bg-white p-5 shadow-sm h-full">
+    <div className="flex flex-col gap-3 rounded-[24px] border border-[#E5E6E8] bg-white p-5 shadow-sm h-full dark:bg-neutral-900 dark:border-neutral-800">
       {/* Top Toolbar */}
-      <div className="flex items-center justify-between border-b border-gray-100 pb-3 mb-2">
+      <div className="flex items-center justify-between border-b border-gray-100 pb-3 mb-2 dark:border-neutral-800">
         <div className="flex items-center gap-2">
           <FileText size={16} className="text-[#F87103]" />
-          <span className="text-xs font-bold text-gray-800 truncate max-w-[150px]">
+          <span className="text-xs font-bold text-gray-800 truncate max-w-[150px] dark:text-gray-200">
             {docName}
           </span>
         </div>
@@ -25,18 +25,18 @@ const DocumentPreview = ({ docName = 'document.pdf', type = 'Commercial Invoice'
           <button
             type="button"
             onClick={handleZoomOut}
-            className="p-1.5 text-gray-400 hover:text-gray-600 transition hover:bg-neutral-50 rounded-lg"
+            className="p-1.5 text-gray-400 hover:text-gray-600 transition hover:bg-neutral-50 rounded-lg dark:hover:bg-neutral-800"
             title="Zoom Out"
           >
             <ZoomOut size={13} />
           </button>
-          <span className="text-[10px] font-mono font-semibold text-gray-500 w-8 text-center">
+          <span className="text-[10px] font-mono font-semibold text-gray-500 w-8 text-center dark:text-gray-400">
             {zoom}%
           </span>
           <button
             type="button"
             onClick={handleZoomIn}
-            className="p-1.5 text-gray-400 hover:text-gray-600 transition hover:bg-neutral-50 rounded-lg"
+            className="p-1.5 text-gray-400 hover:text-gray-600 transition hover:bg-neutral-50 rounded-lg dark:hover:bg-neutral-800"
             title="Zoom In"
           >
             <ZoomIn size={13} />
@@ -45,14 +45,14 @@ const DocumentPreview = ({ docName = 'document.pdf', type = 'Commercial Invoice'
           <button
             type="button"
             onClick={handleRotate}
-            className="p-1.5 text-gray-400 hover:text-gray-600 transition hover:bg-neutral-50 rounded-lg"
+            className="p-1.5 text-gray-400 hover:text-gray-600 transition hover:bg-neutral-50 rounded-lg dark:hover:bg-neutral-800"
             title="Rotate"
           >
             <RotateCw size={13} />
           </button>
           <button
             type="button"
-            className="p-1.5 text-gray-400 hover:text-gray-600 transition hover:bg-neutral-50 rounded-lg"
+            className="p-1.5 text-gray-400 hover:text-gray-600 transition hover:bg-neutral-50 rounded-lg dark:hover:bg-neutral-800"
             title="Fullscreen"
           >
             <Maximize2 size={13} />
@@ -61,15 +61,15 @@ const DocumentPreview = ({ docName = 'document.pdf', type = 'Commercial Invoice'
       </div>
 
       {/* Mock Document Render */}
-      <div className="flex-1 bg-neutral-50 rounded-xl border border-neutral-150 p-6 overflow-auto max-h-[500px] flex items-start justify-center">
+      <div className="flex-1 bg-neutral-50 rounded-xl border border-neutral-150 p-6 overflow-auto max-h-[500px] flex items-start justify-center dark:bg-neutral-800/50 dark:border-neutral-800">
         <div
-          className="bg-white border border-gray-200 shadow-sm p-6 w-full max-w-[340px] font-mono text-[9px] text-gray-500 leading-relaxed transition-all"
+          className="bg-white border border-gray-200 shadow-sm p-6 w-full max-w-[340px] font-mono text-[9px] text-gray-500 leading-relaxed transition-all dark:bg-neutral-900 dark:text-gray-400 dark:border-neutral-700"
           style={{
             transform: `scale(${zoom / 100}) rotate(${rotate}deg)`,
             transformOrigin: 'top center',
           }}
         >
-          <p className="text-gray-900 font-bold mb-4 text-center tracking-wider border-b border-gray-150 pb-2 text-[10px]">
+          <p className="text-gray-900 font-bold mb-4 text-center tracking-wider border-b border-gray-150 pb-2 text-[10px] dark:text-white dark:border-neutral-800">
             {type.toUpperCase()}
           </p>
           <p className="my-1.5">SENDER/SHIPPER: SINO GLOBAL MANUFACTURING LTD</p>
@@ -87,7 +87,7 @@ const DocumentPreview = ({ docName = 'document.pdf', type = 'Commercial Invoice'
           <p className="my-1.5">INVOICE VALUE: USD 42,500.00 // INCOTERMS: FOB</p>
           <p className="my-1.5">TARIFF HEADING / HS CODE: 8504.40.90</p>
           <p className="my-1.5">COUNTRY OF ORIGIN: CHINA</p>
-          <p className="text-center text-gray-400 mt-4 border-t border-gray-100 pt-2 text-[8px]">
+          <p className="text-center text-gray-400 mt-4 border-t border-gray-100 pt-2 text-[8px] dark:border-neutral-800">
             PAGE 1 OF 1
           </p>
         </div>

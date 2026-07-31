@@ -26,7 +26,7 @@ const ActivityItem = ({ activity, isLast }) => {
     <div className="relative flex gap-4 w-full">
       {/* Timeline track */}
       {!isLast && (
-        <div className="absolute left-4 top-8 bottom-[-16px] w-[2px] bg-gray-100 -ml-[1px]"></div>
+        <div className="absolute left-4 top-8 bottom-[-16px] w-[2px] bg-gray-100 -ml-[1px] dark:bg-neutral-800"></div>
       )}
 
       {/* Icon */}
@@ -38,10 +38,10 @@ const ActivityItem = ({ activity, isLast }) => {
       <div className="flex-1 pb-8">
         <div className="flex flex-col gap-1 w-full max-w-xl">
           <div className="flex items-start justify-between gap-4">
-            <span className="text-sm font-bold text-gray-900">{activity.title}</span>
+            <span className="text-sm font-bold text-gray-900 dark:text-white">{activity.title}</span>
           </div>
 
-          <p className="text-sm text-gray-600 leading-relaxed">
+          <p className="text-sm text-gray-600 leading-relaxed dark:text-gray-400">
             {activity.description}
           </p>
 
@@ -50,10 +50,10 @@ const ActivityItem = ({ activity, isLast }) => {
             <div className="mt-3 bg-red-50/50 rounded-xl border border-red-100 p-3 space-y-2">
               {activity.metadata.details.map((detail, idx) => (
                 <div key={idx} className="flex flex-col gap-0.5">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-gray-500">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
                     {detail.label}
                   </span>
-                  <span className="text-sm font-semibold text-gray-900">
+                  <span className="text-sm font-semibold text-gray-900 dark:text-white">
                     {detail.value}
                   </span>
                 </div>
@@ -82,11 +82,11 @@ const ActivityItem = ({ activity, isLast }) => {
             {activity.actor && (
               <>
                 <span className="text-[10px] text-gray-300">•</span>
-                <span className="text-[11px] font-semibold text-gray-500">
+                <span className="text-[11px] font-semibold text-gray-500 dark:text-gray-400">
                   {activity.actor.name}
                 </span>
                 {activity.actor.role && (
-                  <span className="text-[11px] font-medium text-gray-400 bg-gray-50 px-1.5 py-0.5 rounded border border-gray-100">
+                  <span className="text-[11px] font-medium text-gray-400 bg-gray-50 px-1.5 py-0.5 rounded border border-gray-100 dark:bg-neutral-800/50 dark:border-neutral-800">
                     {activity.actor.role}
                   </span>
                 )}

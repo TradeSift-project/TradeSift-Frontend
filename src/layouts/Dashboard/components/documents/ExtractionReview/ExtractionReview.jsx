@@ -159,7 +159,7 @@ const ExtractionReview = ({ documentId = 'DOC-001', onBack, onSave }) => {
     return (
       <div className="flex flex-col flex-1 items-center justify-center min-h-[400px]">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#F87103]"></div>
-        <p className="mt-4 text-sm text-gray-500">Loading document extraction data...</p>
+        <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">Loading document extraction data...</p>
       </div>
     )
   }
@@ -168,18 +168,18 @@ const ExtractionReview = ({ documentId = 'DOC-001', onBack, onSave }) => {
     <div className="flex flex-col gap-6">
       
       {/* Top Header Navigation */}
-      <div className="flex items-center justify-between border-b border-gray-150 pb-4">
+      <div className="flex items-center justify-between border-b border-gray-150 pb-4 dark:border-neutral-800">
         <div className="flex items-center gap-3">
           <button
             type="button"
             onClick={onBack}
-            className="flex h-8 w-8 items-center justify-center rounded-full border border-neutral-200 bg-white hover:bg-neutral-50 transition"
+            className="flex h-8 w-8 items-center justify-center rounded-full border border-neutral-200 bg-white hover:bg-neutral-50 transition dark:bg-neutral-900 dark:border-neutral-700 dark:hover:bg-neutral-800"
           >
-            <ArrowLeft size={14} className="text-[#0B0D12]" />
+            <ArrowLeft size={14} className="text-[#0B0D12] dark:text-white" />
           </button>
           <div className="flex flex-col">
-            <h2 className="font-geist text-base font-bold text-[#0B0D12] flex items-center gap-2">
-              Review Extraction: <span className="text-gray-500 font-normal">{docData.fileName}</span>
+            <h2 className="font-geist text-base font-bold text-[#0B0D12] flex items-center gap-2 dark:text-white">
+              Review Extraction: <span className="text-gray-500 font-normal dark:text-gray-400">{docData.fileName}</span>
             </h2>
             <p className="text-[10px] text-gray-400">
               Verify values mapped to ERP destination fields
@@ -192,14 +192,14 @@ const ExtractionReview = ({ documentId = 'DOC-001', onBack, onSave }) => {
           <button
             type="button"
             onClick={handleConfirmAll}
-            className="inline-flex items-center justify-center gap-1.5 rounded-full border border-neutral-200 bg-white px-4 py-2 text-xs font-semibold text-gray-700 transition hover:bg-neutral-50"
+            className="inline-flex items-center justify-center gap-1.5 rounded-full border border-neutral-200 bg-white px-4 py-2 text-xs font-semibold text-gray-700 transition hover:bg-neutral-50 dark:bg-neutral-900 dark:text-gray-300 dark:border-neutral-700 dark:hover:bg-neutral-800"
           >
             Confirm All
           </button>
           <button
             type="button"
             onClick={handleValidate}
-            className="inline-flex items-center justify-center gap-1.5 rounded-full border border-neutral-200 bg-white px-4 py-2 text-xs font-semibold text-[#0B0D12] transition hover:bg-neutral-50"
+            className="inline-flex items-center justify-center gap-1.5 rounded-full border border-neutral-200 bg-white px-4 py-2 text-xs font-semibold text-[#0B0D12] transition hover:bg-neutral-50 dark:bg-neutral-900 dark:text-white dark:border-neutral-700 dark:hover:bg-neutral-800"
           >
             Validate Document
           </button>
@@ -253,11 +253,11 @@ const ExtractionReview = ({ documentId = 'DOC-001', onBack, onSave }) => {
         <DocumentPreview docName={docData.fileName} type={docData.documentType} />
 
         {/* Right Column: Editable fields forms */}
-        <div className="flex flex-col gap-6 rounded-[24px] border border-[#E5E6E8] bg-white p-5 shadow-sm max-h-[570px] overflow-y-auto">
+        <div className="flex flex-col gap-6 rounded-[24px] border border-[#E5E6E8] bg-white p-5 shadow-sm max-h-[570px] overflow-y-auto dark:bg-neutral-900 dark:border-neutral-800">
           
           {/* Cross-Document Validation Issues Alerts */}
           {crossDocIssues.length > 0 && (
-            <div className="pb-2 border-b border-neutral-100">
+            <div className="pb-2 border-b border-neutral-100 dark:border-neutral-800">
               <ValidationIssues
                 issues={crossDocIssues}
                 onResolveIssue={handleResolveIssue}
@@ -274,7 +274,7 @@ const ExtractionReview = ({ documentId = 'DOC-001', onBack, onSave }) => {
           ))}
 
           {/* ERP Integration Preparations */}
-          <div className="border-t border-neutral-100 pt-5 mt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="border-t border-neutral-100 pt-5 mt-2 flex flex-col sm:flex-row items-center justify-between gap-4 dark:border-neutral-800">
             <div className="flex items-center gap-2 text-[10.5px] text-gray-400">
               <Database size={12} className="text-[#F87103]" />
               <span>Target Destination: Operational ERP System</span>
@@ -282,7 +282,7 @@ const ExtractionReview = ({ documentId = 'DOC-001', onBack, onSave }) => {
             <button
               type="button"
               disabled
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 rounded-full bg-gray-100 border border-neutral-200 px-5 py-2 text-xs font-bold text-gray-400 cursor-not-allowed uppercase tracking-wider"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 rounded-full bg-gray-100 border border-neutral-200 px-5 py-2 text-xs font-bold text-gray-400 cursor-not-allowed uppercase tracking-wider dark:bg-neutral-800 dark:border-neutral-700"
             >
               Map to ERP (Coming Soon)
             </button>

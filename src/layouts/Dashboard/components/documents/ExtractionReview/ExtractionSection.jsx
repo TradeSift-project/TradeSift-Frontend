@@ -3,7 +3,7 @@ import ExtractionField from './ExtractionField'
 const ExtractionSection = ({ section, onFieldChange }) => {
   return (
     <div className="flex flex-col gap-3">
-      <span className="text-[10px] font-bold uppercase tracking-[0.93px] text-[#686C72] border-b border-gray-50 pb-2">
+      <span className="text-[10px] font-bold uppercase tracking-[0.93px] text-[#686C72] border-b border-gray-50 pb-2 dark:text-gray-400">
         {section.title}
       </span>
 

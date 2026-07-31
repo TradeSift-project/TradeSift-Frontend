@@ -17,7 +17,7 @@ const ExtractionField = ({ field, onValueSave }) => {
   return (
     <div className={`flex flex-col gap-1.5 p-3.5 rounded-xl border ${getBorderColor()}`}>
       <div className="flex items-center justify-between">
-        <label className="text-[10px] font-bold text-gray-500 uppercase tracking-[0.5px]">
+        <label className="text-[10px] font-bold text-gray-500 uppercase tracking-[0.5px] dark:text-gray-400">
           {field.label}
         </label>
         <FieldStatusBadge status={field.status} confidence={field.confidence} />

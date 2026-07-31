@@ -122,7 +122,7 @@ const Review = () => {
     return (
       <div className="flex flex-col flex-1 items-center justify-center min-h-[500px]">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#F87103]"></div>
-        <p className="mt-4 text-sm text-gray-500">Consolidating structured dataset...</p>
+        <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">Consolidating structured dataset...</p>
       </div>
     )
   }

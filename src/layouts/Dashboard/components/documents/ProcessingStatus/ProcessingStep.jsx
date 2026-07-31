@@ -39,7 +39,7 @@ const ProcessingStep = ({ label, status, progress }) => {
   const Icon = styles.icon
 
   return (
-    <div className={`flex flex-col gap-2 p-3.5 rounded-2xl border bg-white ${styles.border} transition`}>
+    <div className={`flex flex-col gap-2 p-3.5 rounded-2xl border bg-white ${styles.border} transition dark:bg-neutral-900`}>
       <div className="flex items-center justify-between">
         <span className={`text-xs ${styles.text}`}>
           {label}
@@ -50,7 +50,7 @@ const ProcessingStep = ({ label, status, progress }) => {
       </div>
 
       {status === 'active' && progress !== undefined && (
-        <div className="w-full bg-neutral-100 h-1 rounded-full overflow-hidden mt-1">
+        <div className="w-full bg-neutral-100 h-1 rounded-full overflow-hidden mt-1 dark:bg-neutral-800">
           <div
             className="bg-[#F87103] h-full transition-all duration-200"
             style={{ width: `${progress}%` }}

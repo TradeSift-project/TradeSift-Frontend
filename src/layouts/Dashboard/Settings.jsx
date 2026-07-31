@@ -223,7 +223,7 @@ const Settings = () => {
                   onClick={() => handleNotifToggle('emailAlerts')}
                   className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${notifPrefs.emailAlerts ? 'bg-amber-500' : 'bg-gray-200 dark:bg-neutral-700'}`}
                 >
-                  <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition ${notifPrefs.emailAlerts ? 'translate-x-4' : 'translate-x-1'}`} />
+                  <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition ${notifPrefs.emailAlerts ? 'translate-x-4' : 'translate-x-1'} dark:bg-neutral-900`} />
                 </button>
               </div>
 
@@ -236,7 +236,7 @@ const Settings = () => {
                   onClick={() => handleNotifToggle('desktopAlerts')}
                   className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${notifPrefs.desktopAlerts ? 'bg-amber-500' : 'bg-gray-200 dark:bg-neutral-700'}`}
                 >
-                  <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition ${notifPrefs.desktopAlerts ? 'translate-x-4' : 'translate-x-1'}`} />
+                  <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition ${notifPrefs.desktopAlerts ? 'translate-x-4' : 'translate-x-1'} dark:bg-neutral-900`} />
                 </button>
               </div>
             </div>

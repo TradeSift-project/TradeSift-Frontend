@@ -4,9 +4,9 @@ const ValidationIssues = ({ issues = [], onResolveIssue }) => {
   if (!issues || issues.length === 0) return null
 
   return (
-    <div className="flex flex-col gap-4 rounded-[22px] border border-[#E5E6E8] bg-white p-5 shadow-[0_2px_8px_rgba(0,0,0,0.015)]">
+    <div className="flex flex-col gap-4 rounded-[22px] border border-[#E5E6E8] bg-white p-5 shadow-[0_2px_8px_rgba(0,0,0,0.015)] dark:bg-neutral-900 dark:border-neutral-800">
       <div className="flex items-center justify-between border-b border-gray-50 pb-2">
-        <span className="text-[10px] font-bold uppercase tracking-[0.93px] text-[#686C72]">
+        <span className="text-[10px] font-bold uppercase tracking-[0.93px] text-[#686C72] dark:text-gray-400">
           Cross-Document Validation Alerts
         </span>
         <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-amber-50 text-[10px] font-bold text-amber-600">

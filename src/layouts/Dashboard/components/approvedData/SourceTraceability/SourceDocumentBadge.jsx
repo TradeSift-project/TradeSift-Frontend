@@ -4,7 +4,7 @@ const SourceDocumentBadge = ({ sourceName }) => {
   if (!sourceName) return null
   
   return (
-    <div className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-gray-50 border border-gray-150 rounded text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-colors cursor-default" title={`Source Document: ${sourceName}`}>
+    <div className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-gray-50 border border-gray-150 rounded text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-colors cursor-default dark:bg-neutral-800/50 dark:text-gray-400 dark:border-neutral-800 dark:hover:bg-neutral-700" title={`Source Document: ${sourceName}`}>
       <FileText size={10} />
       <span className="text-[9px] font-semibold uppercase tracking-wider truncate max-w-[120px]">
         {sourceName}

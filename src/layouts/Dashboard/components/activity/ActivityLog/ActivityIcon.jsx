@@ -40,13 +40,13 @@ const ActivityIcon = ({ type }) => {
       )
     case 'EXPORT':
       return (
-        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-gray-700 shadow-sm border border-white">
+        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-gray-700 shadow-sm border border-white dark:bg-neutral-800 dark:text-gray-300">
           <ArrowRightLeft size={14} />
         </div>
       )
     default:
       return (
-        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-50 text-gray-400 shadow-sm border border-white">
+        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-50 text-gray-400 shadow-sm border border-white dark:bg-neutral-800/50">
           <Package size={14} />
         </div>
       )

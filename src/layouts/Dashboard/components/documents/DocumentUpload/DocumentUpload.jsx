@@ -149,10 +149,10 @@ const DocumentUpload = ({ onDocumentProcessed, operationId }) => {
             <Upload size={24} />
           </div>
 
-          <h3 className="font-geist text-base font-bold text-[#0B0D12]">
+          <h3 className="font-geist text-base font-bold text-[#0B0D12] dark:text-white">
             Add Documents
           </h3>
-          <p className="text-xs text-[#686C72] mt-1.5 max-w-sm leading-relaxed mb-6">
+          <p className="text-xs text-[#686C72] mt-1.5 max-w-sm leading-relaxed mb-6 dark:text-gray-400">
             Supports Commercial Invoices, Packing Lists, Bill of Lading, and Weighment Slips (PDF, PNG, JPG up to 10MB)
           </p>
 
@@ -190,13 +190,13 @@ const DocumentUpload = ({ onDocumentProcessed, operationId }) => {
       {/* Upload list UI */}
       {files.length > 0 && (
         <div className="flex flex-col gap-3 mt-4">
-          <span className="text-[10px] font-bold uppercase tracking-[0.93px] text-[#686C72]">
+          <span className="text-[10px] font-bold uppercase tracking-[0.93px] text-[#686C72] dark:text-gray-400">
             Uploading Documents
           </span>
 
           <div className="flex flex-col gap-3 max-h-[180px] overflow-y-auto pr-2 custom-scrollbar">
             {files.map((file) => (
-              <div key={file.id} className="flex flex-col bg-white border border-gray-100 rounded-xl p-4 shadow-sm relative overflow-hidden">
+              <div key={file.id} className="flex flex-col bg-white border border-gray-100 rounded-xl p-4 shadow-sm relative overflow-hidden dark:bg-neutral-900 dark:border-neutral-800">
                 <div 
                   className="absolute left-0 top-0 bottom-0 bg-[#FDF6F0] transition-all duration-300"
                   style={{ width: `${file.progress}%` }}
@@ -204,8 +204,8 @@ const DocumentUpload = ({ onDocumentProcessed, operationId }) => {
                 
                 <div className="flex items-center justify-between z-10">
                   <div className="flex items-center gap-3">
-                    <span className="text-sm font-semibold text-gray-900">{file.name}</span>
-                    <span className="text-xs text-gray-500">{file.size}</span>
+                    <span className="text-sm font-semibold text-gray-900 dark:text-white">{file.name}</span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">{file.size}</span>
                     <span className="text-[10px] font-bold text-[#F87103] bg-[#FDF6F0] px-2 py-0.5 rounded-full uppercase tracking-wider">
                       {file.name.startsWith('camera_capture_') ? 'Camera' : 'Device Upload'}
                     </span>

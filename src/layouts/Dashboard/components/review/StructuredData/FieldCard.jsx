@@ -4,11 +4,11 @@ import StatusBadge from '../StatusBadge'
 
 const FieldCard = ({ field, onChange }) => {
   return (
-    <div className="grid grid-cols-12 gap-4 py-3 border-b border-gray-100 items-center hover:bg-gray-50/50 transition-colors px-2 rounded-lg group">
+    <div className="grid grid-cols-12 gap-4 py-3 border-b border-gray-100 items-center hover:bg-gray-50/50 transition-colors px-2 rounded-lg group dark:border-neutral-800">
       
       {/* Field Name */}
       <div className="col-span-3">
-        <span className="text-xs font-bold text-gray-700 uppercase tracking-wider block truncate" title={field.name}>
+        <span className="text-xs font-bold text-gray-700 uppercase tracking-wider block truncate dark:text-gray-300" title={field.name}>
           {field.name}
         </span>
         <span className="text-[10px] font-medium text-gray-400 truncate mt-0.5 block">
@@ -27,7 +27,7 @@ const FieldCard = ({ field, onChange }) => {
 
       {/* AI Original Value */}
       <div className="col-span-3 px-2">
-        <span className="text-sm font-medium text-gray-500 truncate block opacity-70 group-hover:opacity-100 transition-opacity">
+        <span className="text-sm font-medium text-gray-500 truncate block opacity-70 group-hover:opacity-100 transition-opacity dark:text-gray-400">
           {field.aiValue || <span className="italic text-gray-300">Empty</span>}
         </span>
         <span className="text-[10px] text-gray-400 block mt-0.5">AI Extracted</span>

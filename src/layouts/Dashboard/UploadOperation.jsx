@@ -39,16 +39,16 @@ const UploadOperation = () => {
         </div>
       )}
       
-      <div className="bg-white sm:rounded-[32px] rounded-2xl border border-neutral-150 p-5 sm:p-8 shadow-sm">
+      <div className="bg-white sm:rounded-[32px] rounded-2xl border border-neutral-150 p-5 sm:p-8 shadow-sm dark:bg-neutral-900 dark:border-neutral-800">
         <div className="mb-8 flex items-start gap-4">
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#FDF6F0] text-[#F87103] shrink-0">
             <FileText size={24} />
           </div>
           <div>
-            <h2 className="font-geist text-xl font-bold text-[#0B0D12]">
+            <h2 className="font-geist text-xl font-bold text-[#0B0D12] dark:text-white">
               Upload Cargo Documents
             </h2>
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="text-sm text-gray-500 mt-1 dark:text-gray-400">
               Upload documents for this operation to begin AI extraction.
             </p>
           </div>

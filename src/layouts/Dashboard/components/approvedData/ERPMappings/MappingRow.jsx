@@ -5,10 +5,10 @@ const MappingRow = ({ mapping }) => {
   const isUnmapped = !mapping.status || mapping.status !== 'mapped'
   
   return (
-    <div className="flex flex-col sm:flex-row sm:items-center gap-4 py-3 border-b border-gray-100 last:border-0 hover:bg-gray-50/50 px-3 transition-colors">
+    <div className="flex flex-col sm:flex-row sm:items-center gap-4 py-3 border-b border-gray-100 last:border-0 hover:bg-gray-50/50 px-3 transition-colors dark:border-neutral-800">
       
       <div className="flex-1 min-w-0">
-        <span className="text-xs font-bold text-gray-700 uppercase tracking-wider block truncate">
+        <span className="text-xs font-bold text-gray-700 uppercase tracking-wider block truncate dark:text-gray-300">
           {mapping.sourceField || mapping.label}
         </span>
         <span className="text-[10px] text-gray-400 font-medium">TradeSift Field</span>

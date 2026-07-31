@@ -36,7 +36,7 @@ const ProcessingStatus = ({ fileName, currentStatus, progress }) => {
   }
 
   return (
-    <div className="flex flex-col gap-4 p-5 rounded-3xl border border-[#E5E6E8] bg-white shadow-[0_2px_8px_rgba(0,0,0,0.015)]">
+    <div className="flex flex-col gap-4 p-5 rounded-3xl border border-[#E5E6E8] bg-white shadow-[0_2px_8px_rgba(0,0,0,0.015)] dark:bg-neutral-900 dark:border-neutral-800">
       
       {/* File Info Header */}
       <div className="flex items-center gap-3">
@@ -44,7 +44,7 @@ const ProcessingStatus = ({ fileName, currentStatus, progress }) => {
           <FileText size={18} />
         </div>
         <div className="flex flex-col gap-0.5 min-w-0">
-          <h4 className="font-geist text-sm font-bold text-[#0B0D12] truncate">
+          <h4 className="font-geist text-sm font-bold text-[#0B0D12] truncate dark:text-white">
             {fileName}
           </h4>
           <span className="text-[10px] text-gray-400 font-semibold uppercase tracking-[0.5px]">

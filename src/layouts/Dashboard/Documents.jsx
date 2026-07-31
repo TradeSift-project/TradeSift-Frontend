@@ -100,23 +100,23 @@ const Documents = () => {
 
       {/* Document Details Drawer Panel */}
       {detailDoc && (
-        <div className="fixed inset-y-0 right-0 w-full sm:w-[440px] bg-white border-l border-neutral-200 shadow-2xl z-40 p-6 flex flex-col justify-between transition-transform duration-300">
+        <div className="fixed inset-y-0 right-0 w-full sm:w-[440px] bg-white border-l border-neutral-200 shadow-2xl z-40 p-6 flex flex-col justify-between transition-transform duration-300 dark:bg-neutral-900 dark:border-neutral-700">
           <div>
-            <div className="flex items-center justify-between border-b border-gray-100 pb-4 mb-6">
+            <div className="flex items-center justify-between border-b border-gray-100 pb-4 mb-6 dark:border-neutral-800">
               <div className="flex items-center gap-2">
                 <FileText size={16} className="text-[#F87103]" />
-                <h3 className="font-geist text-base font-bold text-gray-900">Document Information</h3>
+                <h3 className="font-geist text-base font-bold text-gray-900 dark:text-white">Document Information</h3>
               </div>
               <button
                 type="button"
                 onClick={() => setDetailDoc(null)}
-                className="p-1 rounded-full hover:bg-neutral-50 text-gray-400 hover:text-gray-600 transition"
+                className="p-1 rounded-full hover:bg-neutral-50 text-gray-400 hover:text-gray-600 transition dark:hover:bg-neutral-800"
               >
                 <X size={16} />
               </button>
             </div>
 
-            <div className="space-y-4 text-xs font-semibold text-gray-500">
+            <div className="space-y-4 text-xs font-semibold text-gray-500 dark:text-gray-400">
               <div className="flex justify-between border-b border-neutral-50 pb-2">
                 <span>File Name:</span>
                 <span className="text-[#0b0d12] truncate max-w-[220px]">{detailDoc.name}</span>
@@ -146,8 +146,8 @@ const Documents = () => {
                 <span className="text-[#0b0d12] font-normal">{detailDoc.reviewStatus}</span>
               </div>
               
-              <div className="pt-4 mt-4 border-t border-neutral-100">
-                <span className="text-[10px] font-bold uppercase tracking-[0.5px] text-[#686C72]">Associated Cargo Details</span>
+              <div className="pt-4 mt-4 border-t border-neutral-100 dark:border-neutral-800">
+                <span className="text-[10px] font-bold uppercase tracking-[0.5px] text-[#686C72] dark:text-gray-400">Associated Cargo Details</span>
                 <div className="space-y-3 mt-3">
                   <div className="flex justify-between">
                     <span>Container ID:</span>
@@ -172,7 +172,7 @@ const Documents = () => {
                 </div>
               </div>
 
-              <div className="pt-4 mt-4 border-t border-neutral-100 flex items-center justify-between">
+              <div className="pt-4 mt-4 border-t border-neutral-100 flex items-center justify-between dark:border-neutral-800">
                 <span>AI Confidence Score:</span>
                 <span className="flex items-center gap-1 text-emerald-600 font-bold text-sm bg-emerald-50 px-2 py-0.5 rounded-full">
                   <CheckCircle2 size={12} />
@@ -182,7 +182,7 @@ const Documents = () => {
             </div>
           </div>
 
-          <div className="flex gap-3 pt-6 border-t border-gray-100">
+          <div className="flex gap-3 pt-6 border-t border-gray-100 dark:border-neutral-800">
             <button
               type="button"
               onClick={() => {
@@ -197,7 +197,7 @@ const Documents = () => {
             <button
               type="button"
               onClick={() => setDetailDoc(null)}
-              className="flex-1 rounded-full border border-neutral-200 py-2.5 text-xs font-semibold text-gray-700 transition hover:bg-neutral-50 uppercase tracking-wider text-center"
+              className="flex-1 rounded-full border border-neutral-200 py-2.5 text-xs font-semibold text-gray-700 transition hover:bg-neutral-50 uppercase tracking-wider text-center dark:text-gray-300 dark:border-neutral-700 dark:hover:bg-neutral-800"
             >
               Close
             </button>

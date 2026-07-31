@@ -13,17 +13,17 @@ const ValidationIssueCard = ({ issue, onResolve }) => {
           <span className="text-[10px] font-bold uppercase tracking-[0.5px] text-amber-600 font-mono">
             {issue.type || 'Cross-Document Alert'}
           </span>
-          <p className="text-xs font-bold text-gray-900 leading-normal">
+          <p className="text-xs font-bold text-gray-900 leading-normal dark:text-white">
             {issue.message}
           </p>
         </div>
       </div>
 
       {/* Details Row */}
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[10.5px] text-gray-500 font-semibold border-t border-amber-50 pt-2.5 mt-0.5">
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[10.5px] text-gray-500 font-semibold border-t border-amber-50 pt-2.5 mt-0.5 dark:text-gray-400">
         <div className="flex items-center gap-1">
           <FileText size={12} className="text-gray-400" />
-          <span>Docs: <span className="text-[#0B0D12]">{issue.affectedDocs.join(' ⇄ ')}</span></span>
+          <span>Docs: <span className="text-[#0B0D12] dark:text-white">{issue.affectedDocs.join(' ⇄ ')}</span></span>
         </div>
         <div className="flex items-center gap-1">
           <span>Field: <span className="text-red-500">{issue.field}</span></span>

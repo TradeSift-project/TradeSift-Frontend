@@ -102,7 +102,7 @@ const Export = () => {
     return (
       <div className="flex flex-col flex-1 items-center justify-center min-h-[500px]">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#F87103]"></div>
-        <p className="mt-4 text-sm text-gray-500">Preparing export environment...</p>
+        <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">Preparing export environment...</p>
       </div>
     )
   }
@@ -118,22 +118,22 @@ const Export = () => {
         <div className="w-24 h-24 rounded-full bg-emerald-50 text-emerald-500 flex items-center justify-center mb-6">
           <CheckCircle2 size={48} />
         </div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Export Complete</h1>
-        <p className="text-lg text-gray-500 mb-8">
-          Structured data for operation <span className="font-mono text-gray-800">{job.id}</span> has been successfully delivered.
+        <h1 className="text-3xl font-bold text-gray-900 mb-2 dark:text-white">Export Complete</h1>
+        <p className="text-lg text-gray-500 mb-8 dark:text-gray-400">
+          Structured data for operation <span className="font-mono text-gray-800 dark:text-gray-200">{job.id}</span> has been successfully delivered.
         </p>
         
-        <div className="bg-white border border-gray-200 rounded-[24px] p-6 w-full shadow-sm mb-8 text-left">
+        <div className="bg-white border border-gray-200 rounded-[24px] p-6 w-full shadow-sm mb-8 text-left dark:bg-neutral-900 dark:border-neutral-700">
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-1">
-              <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Destination</span>
-              <span className="text-sm font-semibold text-gray-900">
+              <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider dark:text-gray-400">Destination</span>
+              <span className="text-sm font-semibold text-gray-900 dark:text-white">
                 {EXPORT_DESTINATIONS.find(d => d.id === selectedDestination)?.name}
               </span>
             </div>
             <div className="flex flex-col gap-1">
-              <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Fields Exported</span>
-              <span className="text-sm font-semibold text-gray-900">{MOCK_EXPORT_DATA.summary.fieldsMapped} Fields</span>
+              <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider dark:text-gray-400">Fields Exported</span>
+              <span className="text-sm font-semibold text-gray-900 dark:text-white">{MOCK_EXPORT_DATA.summary.fieldsMapped} Fields</span>
             </div>
           </div>
         </div>
@@ -147,7 +147,7 @@ const Export = () => {
           </button>
           <button
             onClick={() => setExportComplete(false)}
-            className="px-8 py-3 rounded-full border border-gray-200 text-gray-700 font-bold text-sm hover:bg-gray-50 transition"
+            className="px-8 py-3 rounded-full border border-gray-200 text-gray-700 font-bold text-sm hover:bg-gray-50 transition dark:text-gray-300 dark:border-neutral-700 dark:hover:bg-neutral-800"
           >
             Export Again
           </button>
@@ -167,13 +167,13 @@ const Export = () => {
         <div className="w-24 h-24 rounded-full bg-red-50 text-red-500 flex items-center justify-center mb-6">
           <AlertTriangle size={48} />
         </div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Export Failed</h1>
-        <p className="text-lg text-gray-500 mb-8">
-          The destination system could not accept the data for operation <span className="font-mono text-gray-800">{job.id}</span>.
+        <h1 className="text-3xl font-bold text-gray-900 mb-2 dark:text-white">Export Failed</h1>
+        <p className="text-lg text-gray-500 mb-8 dark:text-gray-400">
+          The destination system could not accept the data for operation <span className="font-mono text-gray-800 dark:text-gray-200">{job.id}</span>.
         </p>
         
-        <div className="bg-white border border-gray-200 rounded-[24px] p-6 w-full shadow-sm mb-8 text-left">
-          <p className="text-sm text-gray-700">Please review the mapping configuration and try again. Ensure all required fields are correctly formatted.</p>
+        <div className="bg-white border border-gray-200 rounded-[24px] p-6 w-full shadow-sm mb-8 text-left dark:bg-neutral-900 dark:border-neutral-700">
+          <p className="text-sm text-gray-700 dark:text-gray-300">Please review the mapping configuration and try again. Ensure all required fields are correctly formatted.</p>
         </div>
 
         <div className="flex gap-4">
@@ -185,7 +185,7 @@ const Export = () => {
           </button>
           <button
             onClick={() => navigate(`/dashboard/mapping/${job.id}`)}
-            className="px-8 py-3 rounded-full border border-gray-200 text-gray-700 font-bold text-sm hover:bg-gray-50 transition"
+            className="px-8 py-3 rounded-full border border-gray-200 text-gray-700 font-bold text-sm hover:bg-gray-50 transition dark:text-gray-300 dark:border-neutral-700 dark:hover:bg-neutral-800"
           >
             Review Mapping
           </button>
@@ -201,7 +201,7 @@ const Export = () => {
       animate="animate"
       className="flex flex-col gap-6 w-full max-w-[1200px] mx-auto min-h-screen pb-6"
     >
-      <div className="flex flex-col gap-2 border-b border-gray-150 pb-4">
+      <div className="flex flex-col gap-2 border-b border-gray-150 pb-4 dark:border-neutral-800">
         <JobContextHeader 
           job={{ ...job, workflowType: `Export Data - ${job.workflowType}` }} 
           backTo={`/dashboard/mapping/${job.id}`} 

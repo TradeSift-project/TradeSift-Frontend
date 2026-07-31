@@ -3,18 +3,18 @@ import SourceDocumentBadge from '../SourceTraceability/SourceDocumentBadge'
 
 const FieldValueRow = ({ field }) => {
   return (
-    <div className="grid grid-cols-12 gap-4 py-2.5 border-b border-gray-100 last:border-0 hover:bg-gray-50/50 transition-colors px-2 items-center">
+    <div className="grid grid-cols-12 gap-4 py-2.5 border-b border-gray-100 last:border-0 hover:bg-gray-50/50 transition-colors px-2 items-center dark:border-neutral-800">
       
       {/* Field Label */}
       <div className="col-span-12 sm:col-span-3">
-        <span className="text-xs font-bold text-gray-700 uppercase tracking-wider block truncate">
+        <span className="text-xs font-bold text-gray-700 uppercase tracking-wider block truncate dark:text-gray-300">
           {field.label}
         </span>
       </div>
 
       {/* Normalized Value */}
       <div className="col-span-12 sm:col-span-4">
-        <span className="text-sm font-semibold text-gray-900 truncate block">
+        <span className="text-sm font-semibold text-gray-900 truncate block dark:text-white">
           {field.value}
         </span>
       </div>

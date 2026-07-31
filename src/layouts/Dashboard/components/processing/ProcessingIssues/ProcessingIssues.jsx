@@ -20,7 +20,7 @@ const ProcessingIssueCard = ({ issue }) => {
         </div>
         <div className="flex flex-col">
           <span className={`text-sm font-bold ${text}`}>{issue.type} - {issue.documentName}</span>
-          <span className="text-xs text-gray-700 mt-1">
+          <span className="text-xs text-gray-700 mt-1 dark:text-gray-300">
             <span className="font-semibold">Field: {issue.field}</span> — {issue.description}
           </span>
         </div>
@@ -28,7 +28,7 @@ const ProcessingIssueCard = ({ issue }) => {
       <div className="mt-4 md:mt-0 ml-9 md:ml-0">
         <button 
           onClick={() => navigate(`/dashboard/review/${issue.documentId}`)}
-          className="text-xs font-bold px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-full hover:bg-gray-50 transition-colors shadow-sm"
+          className="text-xs font-bold px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-full hover:bg-gray-50 transition-colors shadow-sm dark:bg-neutral-900 dark:text-gray-300 dark:border-neutral-700 dark:hover:bg-neutral-800"
         >
           {issue.actionLabel}
         </button>
@@ -46,7 +46,7 @@ const ProcessingIssues = ({ issues }) => {
         <AlertCircle size={16} />
         Issues Requiring Review ({issues.length})
       </h3>
-      <div className="flex flex-col gap-3 bg-white rounded-[24px] border border-gray-200 p-4 shadow-sm">
+      <div className="flex flex-col gap-3 bg-white rounded-[24px] border border-gray-200 p-4 shadow-sm dark:bg-neutral-900 dark:border-neutral-700">
         {issues.map(issue => (
           <ProcessingIssueCard key={issue.id} issue={issue} />
         ))}

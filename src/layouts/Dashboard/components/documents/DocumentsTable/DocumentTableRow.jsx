@@ -23,13 +23,13 @@ const DocumentTableRow = ({
   const action = getAction()
 
   return (
-    <tr className="hover:bg-neutral-50/50 transition">
+    <tr className="hover:bg-neutral-50/50 transition dark:hover:bg-neutral-800/50">
       {/* Name & ID */}
-      <td className="whitespace-nowrap px-4 md:px-6 py-4 font-semibold text-[#0B0D12]">
+      <td className="whitespace-nowrap px-4 md:px-6 py-4 font-semibold text-[#0B0D12] dark:text-white">
         <div className="flex items-center gap-3">
           <DocumentTypeIcon type={doc.type} />
           <div className="flex flex-col gap-0.5">
-            <span className="text-xs font-semibold text-[#0B0D12] truncate max-w-[200px]">
+            <span className="text-xs font-semibold text-[#0B0D12] truncate max-w-[200px] dark:text-white">
               {doc.name}
             </span>
             <span className="text-[10px] text-gray-400 font-normal">
@@ -40,7 +40,7 @@ const DocumentTableRow = ({
       </td>
 
       {/* Doc Type */}
-      <td className="whitespace-nowrap px-4 md:px-6 py-4 text-xs text-[#686C72] hidden sm:table-cell">
+      <td className="whitespace-nowrap px-4 md:px-6 py-4 text-xs text-[#686C72] hidden sm:table-cell dark:text-gray-400">
         {doc.type}
       </td>
 
@@ -59,12 +59,12 @@ const DocumentTableRow = ({
           {doc.operationId ? (
             <button 
               onClick={() => navigate(`/dashboard/operations/${doc.operationId}`)}
-              className="text-[10px] text-gray-500 font-mono hover:text-[#F87103] hover:underline text-left transition"
+              className="text-[10px] text-gray-500 font-mono hover:text-[#F87103] hover:underline text-left transition dark:text-gray-400"
             >
               {doc.reference || doc.operationId}
             </button>
           ) : (
-            <span className="text-[10px] text-gray-500 font-mono">
+            <span className="text-[10px] text-gray-500 font-mono dark:text-gray-400">
               {doc.reference || 'No Ref'}
             </span>
           )}
@@ -102,7 +102,7 @@ const DocumentTableRow = ({
           <button
             type="button"
             onClick={() => navigate(action.path)}
-            className="inline-flex items-center gap-1 rounded-full border border-neutral-200 bg-white px-2 md:px-3 py-1.5 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.5px] text-[#0B0D12] transition hover:bg-neutral-50 hover:border-neutral-300"
+            className="inline-flex items-center gap-1 rounded-full border border-neutral-200 bg-white px-2 md:px-3 py-1.5 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.5px] text-[#0B0D12] transition hover:bg-neutral-50 hover:border-neutral-300 dark:bg-neutral-900 dark:text-white dark:border-neutral-700 dark:hover:bg-neutral-800"
           >
             {action.label}
           </button>
@@ -112,7 +112,7 @@ const DocumentTableRow = ({
             <button
               type="button"
               onClick={() => setShowMenu((prev) => !prev)}
-              className="p-1.5 text-gray-400 hover:text-gray-600 transition rounded-full hover:bg-neutral-50"
+              className="p-1.5 text-gray-400 hover:text-gray-600 transition rounded-full hover:bg-neutral-50 dark:hover:bg-neutral-800"
             >
               <MoreVertical size={14} />
             </button>
@@ -120,14 +120,14 @@ const DocumentTableRow = ({
             {showMenu && (
               <>
                 <div className="fixed inset-0 z-10" onClick={() => setShowMenu(false)} />
-                <div className="absolute right-0 mt-1 w-36 rounded-xl border border-neutral-150 bg-white p-1 shadow-lg z-20 text-left">
+                <div className="absolute right-0 mt-1 w-36 rounded-xl border border-neutral-150 bg-white p-1 shadow-lg z-20 text-left dark:bg-neutral-900 dark:border-neutral-800">
                   <button
                     type="button"
                     onClick={() => {
                       setShowMenu(false)
                       onViewDetails(doc)
                     }}
-                    className="flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-[11px] font-semibold text-gray-700 hover:bg-neutral-50"
+                    className="flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-[11px] font-semibold text-gray-700 hover:bg-neutral-50 dark:text-gray-300 dark:hover:bg-neutral-800"
                   >
                     <Eye size={12} />
                     View Details
@@ -138,7 +138,7 @@ const DocumentTableRow = ({
                       setShowMenu(false)
                       onReview(doc.id)
                     }}
-                    className="flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-[11px] font-semibold text-gray-700 hover:bg-neutral-50"
+                    className="flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-[11px] font-semibold text-gray-700 hover:bg-neutral-50 dark:text-gray-300 dark:hover:bg-neutral-800"
                   >
                     <FileEdit size={12} />
                     Edit Fields

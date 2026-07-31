@@ -31,7 +31,7 @@ const MappingStatusBadge = ({ status }) => {
           bg: 'bg-neutral-50',
           text: 'text-gray-600',
           border: 'border-neutral-200',
-          icon: <HelpCircle size={12} className="text-gray-500" />
+          icon: <HelpCircle size={12} className="text-gray-500 dark:text-gray-400" />
         }
     }
   }

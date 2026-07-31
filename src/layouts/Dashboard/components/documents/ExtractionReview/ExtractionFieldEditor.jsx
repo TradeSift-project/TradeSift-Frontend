@@ -23,7 +23,7 @@ const ExtractionFieldEditor = ({ initialValue, placeholder, onSave }) => {
           value={tempValue}
           onChange={(e) => setTempValue(e.target.value)}
           placeholder={placeholder}
-          className="flex-1 bg-white border border-neutral-300 rounded-lg px-3 py-1.5 text-xs font-semibold text-[#0B0D12] focus:outline-none focus:ring-2 focus:ring-[#F87103]/15 focus:border-[#F87103]/50 transition"
+          className="flex-1 bg-white border border-neutral-300 rounded-lg px-3 py-1.5 text-xs font-semibold text-[#0B0D12] focus:outline-none focus:ring-2 focus:ring-[#F87103]/15 focus:border-[#F87103]/50 transition dark:bg-neutral-900 dark:text-white"
           autoFocus
         />
         <button
@@ -37,7 +37,7 @@ const ExtractionFieldEditor = ({ initialValue, placeholder, onSave }) => {
         <button
           type="button"
           onClick={handleCancel}
-          className="p-2 border border-neutral-200 text-gray-500 hover:bg-neutral-50 transition rounded-lg shrink-0"
+          className="p-2 border border-neutral-200 text-gray-500 hover:bg-neutral-50 transition rounded-lg shrink-0 dark:text-gray-400 dark:border-neutral-700 dark:hover:bg-neutral-800"
           title="Cancel"
         >
           <X size={12} strokeWidth={2.5} />
@@ -47,14 +47,14 @@ const ExtractionFieldEditor = ({ initialValue, placeholder, onSave }) => {
   }
 
   return (
-    <div className="flex items-center justify-between gap-3 w-full mt-1.5 p-1 rounded-lg hover:bg-neutral-50/50 group transition">
+    <div className="flex items-center justify-between gap-3 w-full mt-1.5 p-1 rounded-lg hover:bg-neutral-50/50 group transition dark:hover:bg-neutral-800/50">
       <span className={`text-xs font-semibold ${initialValue ? 'text-[#0B0D12]' : 'text-gray-400 italic'}`}>
         {initialValue || placeholder || 'Not detected'}
       </span>
       <button
         type="button"
         onClick={() => setIsEditing(true)}
-        className="opacity-0 group-hover:opacity-100 flex items-center gap-1 text-[10px] font-bold text-gray-500 hover:text-black uppercase tracking-[0.5px] transition px-2 py-1 rounded border border-neutral-200 bg-white"
+        className="opacity-0 group-hover:opacity-100 flex items-center gap-1 text-[10px] font-bold text-gray-500 hover:text-black uppercase tracking-[0.5px] transition px-2 py-1 rounded border border-neutral-200 bg-white dark:bg-neutral-900 dark:text-gray-400 dark:border-neutral-700"
       >
         <Edit2 size={9} />
         Edit

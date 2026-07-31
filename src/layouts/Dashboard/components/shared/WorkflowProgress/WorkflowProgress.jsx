@@ -12,7 +12,7 @@ const WorkflowStep = ({ step, isLast }) => {
     icon = <Check size={14} className="text-emerald-500" />
     textColor = 'text-gray-900'
   } else if (isCurrent) {
-    icon = <div className="w-3.5 h-3.5 rounded-full bg-[#F87103] flex items-center justify-center"><div className="w-1.5 h-1.5 bg-white rounded-full"></div></div>
+    icon = <div className="w-3.5 h-3.5 rounded-full bg-[#F87103] flex items-center justify-center"><div className="w-1.5 h-1.5 bg-white rounded-full dark:bg-neutral-900"></div></div>
     textColor = 'text-[#F87103]'
     weight = 'font-bold'
   }

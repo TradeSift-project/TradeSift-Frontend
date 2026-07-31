@@ -34,7 +34,7 @@ const AlertCard = ({ title, action, type, onResolve }) => {
   return (
     <div className={`flex flex-col gap-3 rounded-2xl border p-4 shadow-[0_2px_8px_rgba(0,0,0,0.01)] ${styles.border}`}>
       <div className="flex items-start gap-3">
-        <div className={`flex h-8 w-8 items-center justify-center rounded-lg border border-neutral-100 shrink-0 ${styles.iconColor}`}>
+        <div className={`flex h-8 w-8 items-center justify-center rounded-lg border border-neutral-100 shrink-0 ${styles.iconColor} dark:border-neutral-800`}>
           <Icon size={14} />
         </div>
         <div className="flex flex-col gap-0.5 min-w-0">
@@ -48,7 +48,7 @@ const AlertCard = ({ title, action, type, onResolve }) => {
         <button
           type="button"
           onClick={onResolve}
-          className="inline-flex items-center gap-1 text-[10px] font-bold text-gray-500 hover:text-black uppercase tracking-[0.5px] transition"
+          className="inline-flex items-center gap-1 text-[10px] font-bold text-gray-500 hover:text-black uppercase tracking-[0.5px] transition dark:text-gray-400"
         >
           {action}
           <ArrowRight size={10} />

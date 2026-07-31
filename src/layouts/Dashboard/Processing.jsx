@@ -115,7 +115,7 @@ const Processing = () => {
     return (
       <div className="flex flex-col flex-1 items-center justify-center min-h-[500px]">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#F87103]"></div>
-        <p className="mt-4 text-sm text-gray-500">Loading processing status...</p>
+        <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">Loading processing status...</p>
       </div>
     )
   }
@@ -127,7 +127,7 @@ const Processing = () => {
       animate="animate"
       className="flex flex-col gap-6 w-full max-w-7xl mx-auto pb-12"
     >
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-150 py-2">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-150 py-2 dark:border-neutral-800">
         <div className="flex-1">
           <JobContextHeader job={job} backTo="/dashboard" />
         </div>

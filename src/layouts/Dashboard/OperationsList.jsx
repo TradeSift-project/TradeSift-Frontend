@@ -58,8 +58,8 @@ const OperationsList = () => {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-[#0B0D12] tracking-tight">Operations</h1>
-          <p className="text-sm text-gray-500 mt-1">Manage all your terminal workflows and document sets.</p>
+          <h1 className="text-2xl font-bold text-[#0B0D12] tracking-tight dark:text-white">Operations</h1>
+          <p className="text-sm text-gray-500 mt-1 dark:text-gray-400">Manage all your terminal workflows and document sets.</p>
         </div>
         
         <button
@@ -72,7 +72,7 @@ const OperationsList = () => {
       </div>
 
       {/* Filters */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-2 rounded-2xl border border-gray-100 shadow-sm">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-2 rounded-2xl border border-gray-100 shadow-sm dark:bg-neutral-900 dark:border-neutral-800">
         <div className="relative w-full sm:w-96">
           <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
           <input 
@@ -80,7 +80,7 @@ const OperationsList = () => {
             placeholder="Search by reference or ID..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-gray-50/50 border border-transparent focus:bg-white focus:border-[#F87103] rounded-xl pl-10 pr-4 py-2.5 text-sm outline-none transition"
+            className="w-full bg-gray-50/50 border border-transparent focus:bg-white focus:border-[#F87103] rounded-xl pl-10 pr-4 py-2.5 text-sm outline-none transition dark:bg-neutral-800/30"
           />
         </div>
         <div className="flex items-center gap-2 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0 custom-scrollbar">
@@ -101,7 +101,7 @@ const OperationsList = () => {
       </div>
 
       {/* List */}
-      <div className="bg-white rounded-[24px] border border-gray-100 shadow-sm overflow-hidden flex flex-col min-h-[400px]">
+      <div className="bg-white rounded-[24px] border border-gray-100 shadow-sm overflow-hidden flex flex-col min-h-[400px] dark:bg-neutral-900 dark:border-neutral-800">
         {loading ? (
           <div className="flex flex-1 flex-col items-center justify-center p-12 text-gray-400">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#F87103] mb-4"></div>
@@ -110,14 +110,14 @@ const OperationsList = () => {
         ) : error ? (
           <div className="flex flex-1 flex-col items-center justify-center p-12 text-center">
             <AlertCircle size={40} className="text-red-400 mb-4" />
-            <h3 className="font-bold text-gray-900 mb-1">Unable to load operations</h3>
-            <p className="text-sm text-gray-500">{error}</p>
+            <h3 className="font-bold text-gray-900 mb-1 dark:text-white">Unable to load operations</h3>
+            <p className="text-sm text-gray-500 dark:text-gray-400">{error}</p>
           </div>
         ) : filteredOperations.length === 0 ? (
           <div className="flex flex-1 flex-col items-center justify-center p-12 text-center">
             <Package size={40} className="text-gray-300 mb-4" />
-            <h3 className="font-bold text-gray-900 mb-1">No operations found</h3>
-            <p className="text-sm text-gray-500 max-w-sm">
+            <h3 className="font-bold text-gray-900 mb-1 dark:text-white">No operations found</h3>
+            <p className="text-sm text-gray-500 max-w-sm dark:text-gray-400">
               {search || statusFilter !== 'ALL' 
                 ? 'Try adjusting your search or filters to find what you are looking for.' 
                 : 'Get started by creating your first operation.'}
@@ -125,7 +125,7 @@ const OperationsList = () => {
             {(!search && statusFilter === 'ALL') && (
               <button
                 onClick={() => setShowNewOpModal(true)}
-                className="mt-6 flex items-center gap-2 rounded-full border border-gray-200 px-6 py-2.5 text-sm font-bold text-gray-700 transition hover:bg-gray-50"
+                className="mt-6 flex items-center gap-2 rounded-full border border-gray-200 px-6 py-2.5 text-sm font-bold text-gray-700 transition hover:bg-gray-50 dark:text-gray-300 dark:border-neutral-700 dark:hover:bg-neutral-800"
               >
                 Create Operation
               </button>
@@ -134,7 +134,7 @@ const OperationsList = () => {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
-              <thead className="bg-gray-50/50 text-[10px] uppercase tracking-wider text-gray-500 border-b border-gray-100">
+              <thead className="bg-gray-50/50 text-[10px] uppercase tracking-wider text-gray-500 border-b border-gray-100 dark:bg-neutral-800/30 dark:text-gray-400 dark:border-neutral-800">
                 <tr>
                   <th className="px-4 md:px-6 py-4 font-bold">Operation Details</th>
                   <th className="px-4 md:px-6 py-4 font-bold hidden sm:table-cell">Type</th>
@@ -162,7 +162,7 @@ const OperationsList = () => {
                     >
                       <td className="px-4 md:px-6 py-4">
                         <div className="flex flex-col">
-                          <span className="font-bold text-gray-900">
+                          <span className="font-bold text-gray-900 dark:text-white">
                             {op.referenceNo || 'Untitled Operation'}
                           </span>
                           <span className="text-xs text-gray-400 font-mono mt-0.5 max-w-[120px] sm:max-w-none truncate">
@@ -179,7 +179,7 @@ const OperationsList = () => {
                         </div>
                       </td>
                       <td className="px-4 md:px-6 py-4 hidden md:table-cell">
-                        <div className="flex items-center gap-2 text-gray-600">
+                        <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
                           <FileText size={16} className="text-gray-400" />
                           <span className="font-semibold">{op.documents?.length || 0}</span>
                           <span className="text-xs text-gray-400">/ 20</span>
@@ -190,7 +190,7 @@ const OperationsList = () => {
                           {op.status || 'DRAFT'}
                         </span>
                       </td>
-                      <td className="px-4 md:px-6 py-4 text-right text-gray-500 whitespace-nowrap hidden lg:table-cell">
+                      <td className="px-4 md:px-6 py-4 text-right text-gray-500 whitespace-nowrap hidden lg:table-cell dark:text-gray-400">
                         {op.updatedAt ? new Date(op.updatedAt).toLocaleDateString() : 'Just now'}
                       </td>
                     </tr>

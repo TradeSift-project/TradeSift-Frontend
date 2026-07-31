@@ -5,20 +5,20 @@ const MappingSummary = ({ summary }) => {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between border-b border-gray-100 pb-2">
-        <span className="text-[10px] font-bold uppercase tracking-[0.93px] text-[#686C72]">
+      <div className="flex items-center justify-between border-b border-gray-100 pb-2 dark:border-neutral-800">
+        <span className="text-[10px] font-bold uppercase tracking-[0.93px] text-[#686C72] dark:text-gray-400">
           Mapping Summary
         </span>
       </div>
       
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
         {/* Total Fields */}
-        <div className="flex flex-col gap-1 p-4 rounded-[16px] bg-white border border-gray-100 shadow-sm">
-          <span className="text-[10px] font-bold uppercase tracking-[0.5px] text-gray-500 flex items-center gap-1.5">
+        <div className="flex flex-col gap-1 p-4 rounded-[16px] bg-white border border-gray-100 shadow-sm dark:bg-neutral-900 dark:border-neutral-800">
+          <span className="text-[10px] font-bold uppercase tracking-[0.5px] text-gray-500 flex items-center gap-1.5 dark:text-gray-400">
             <FileType size={12} />
             Total Fields
           </span>
-          <span className="text-xl font-bold text-[#0B0D12]">{summary.totalFields}</span>
+          <span className="text-xl font-bold text-[#0B0D12] dark:text-white">{summary.totalFields}</span>
         </div>
 
         {/* Mapped */}

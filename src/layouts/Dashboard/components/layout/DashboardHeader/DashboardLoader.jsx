@@ -24,7 +24,7 @@ const DashboardLoader = ({ onComplete, userName = 'Ahmed Raza' }) => {
           onComplete()
         }
       }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-white"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-white dark:bg-neutral-900"
     >
       {stage === 'video' && (
         <video
@@ -46,7 +46,7 @@ const DashboardLoader = ({ onComplete, userName = 'Ahmed Raza' }) => {
           variants={fadeInOpacityOnly}
           initial="hidden"
           animate="visible"
-          className="font-geist text-4xl font-semibold tracking-[-0.5px] text-[#0B0D12]"
+          className="font-geist text-4xl font-semibold tracking-[-0.5px] text-[#0B0D12] dark:text-white"
         >
           Welcome, {userName}
         </motion.h1>

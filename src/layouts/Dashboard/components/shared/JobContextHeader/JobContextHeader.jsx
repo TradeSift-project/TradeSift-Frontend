@@ -21,19 +21,19 @@ const JobContextHeader = ({ job, backTo }) => {
   }
 
   return (
-    <motion.div variants={fadeUp} className="flex flex-col md:flex-row md:items-center md:justify-between py-6 border-b border-gray-150">
+    <motion.div variants={fadeUp} className="flex flex-col md:flex-row md:items-center md:justify-between py-6 border-b border-gray-150 dark:border-neutral-800">
       <div className="flex items-center gap-4">
         {backTo && (
           <Link 
             to={backTo}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-white hover:bg-gray-50 transition-colors shadow-sm shrink-0"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-white hover:bg-gray-50 transition-colors shadow-sm shrink-0 dark:bg-neutral-900 dark:border-neutral-700 dark:hover:bg-neutral-800"
           >
-            <ArrowLeft size={16} className="text-gray-600" />
+            <ArrowLeft size={16} className="text-gray-600 dark:text-gray-400" />
           </Link>
         )}
         <div>
           <div className="flex items-center gap-3">
-            <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
+            <h1 className="text-2xl font-bold text-gray-900 tracking-tight dark:text-white">
               {job.workflowType}
             </h1>
             <div className={`flex items-center gap-1.5 px-2.5 py-1 border rounded-full ${statusColor}`}>
@@ -41,8 +41,8 @@ const JobContextHeader = ({ job, backTo }) => {
               <span className="text-[10px] font-bold uppercase tracking-wider">{job.status}</span>
             </div>
           </div>
-          <div className="flex flex-wrap items-center gap-3 text-sm text-gray-500 mt-1">
-            <span className="font-semibold text-gray-700">Job ID: {job.id}</span>
+          <div className="flex flex-wrap items-center gap-3 text-sm text-gray-500 mt-1 dark:text-gray-400">
+            <span className="font-semibold text-gray-700 dark:text-gray-300">Job ID: {job.id}</span>
             <span className="hidden sm:inline">•</span>
             <span>{job.description}</span>
             <span className="hidden sm:inline">•</span>

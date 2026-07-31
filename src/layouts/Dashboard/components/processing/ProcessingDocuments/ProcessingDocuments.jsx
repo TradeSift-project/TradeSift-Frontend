@@ -41,14 +41,14 @@ const ProcessingDocumentCard = ({ document }) => {
   const navigate = useNavigate()
 
   return (
-    <div className="flex flex-col md:flex-row md:items-center justify-between p-4 bg-white border border-gray-100 rounded-xl hover:shadow-sm transition-shadow">
+    <div className="flex flex-col md:flex-row md:items-center justify-between p-4 bg-white border border-gray-100 rounded-xl hover:shadow-sm transition-shadow dark:bg-neutral-900 dark:border-neutral-800">
       <div className="flex items-center gap-4">
-        <div className="h-10 w-10 flex items-center justify-center rounded-lg bg-gray-50 border border-gray-200">
+        <div className="h-10 w-10 flex items-center justify-center rounded-lg bg-gray-50 border border-gray-200 dark:bg-neutral-800/50 dark:border-neutral-700">
           <FileText size={18} className="text-gray-400" />
         </div>
         <div className="flex flex-col">
-          <span className="text-sm font-semibold text-gray-900">{document.name}</span>
-          <span className="text-xs text-gray-500">{document.fileName} • Uploaded {document.uploadedAt}</span>
+          <span className="text-sm font-semibold text-gray-900 dark:text-white">{document.name}</span>
+          <span className="text-xs text-gray-500 dark:text-gray-400">{document.fileName} • Uploaded {document.uploadedAt}</span>
         </div>
       </div>
       
@@ -79,7 +79,7 @@ const ProcessingDocumentCard = ({ document }) => {
               Review
             </button>
           ) : (
-            <button className="text-xs font-bold px-4 py-2 bg-gray-100 text-gray-400 rounded-full cursor-not-allowed">
+            <button className="text-xs font-bold px-4 py-2 bg-gray-100 text-gray-400 rounded-full cursor-not-allowed dark:bg-neutral-800">
               Review
             </button>
           )}
@@ -92,8 +92,8 @@ const ProcessingDocumentCard = ({ document }) => {
 const ProcessingDocuments = ({ documents }) => {
   return (
     <motion.div variants={fadeUp} className="flex flex-col gap-4">
-      <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider ml-1">Documents in Pipeline</h3>
-      <div className="flex flex-col gap-3 bg-white rounded-[24px] border border-gray-200 p-2 shadow-sm">
+      <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider ml-1 dark:text-white">Documents in Pipeline</h3>
+      <div className="flex flex-col gap-3 bg-white rounded-[24px] border border-gray-200 p-2 shadow-sm dark:bg-neutral-900 dark:border-neutral-700">
         {documents.map(doc => (
           <ProcessingDocumentCard key={doc.id} document={doc} />
         ))}

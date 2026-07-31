@@ -116,7 +116,7 @@ const Dashboard = () => {
         )}
 
         {/* Sidebar Container */}
-        <div className={`fixed inset-y-0 left-0 z-50 transform bg-white transition-transform duration-300 ease-in-out lg:static lg:translate-x-0 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        <div className={`fixed inset-y-0 left-0 z-50 transform bg-white transition-transform duration-300 ease-in-out lg:static lg:translate-x-0 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} dark:bg-neutral-900`}>
           <Sidebar 
             user={getSidebarUser()} 
             onSoonClick={() => setShowComingSoon(true)} 
@@ -129,7 +129,7 @@ const Dashboard = () => {
           {/* Global Header */}
           <div className="sticky top-0 z-30 bg-[#FDFDFD]/80 backdrop-blur-md px-6 py-4 flex items-center justify-between lg:justify-end border-b border-[#E5E6E8] lg:border-none lg:bg-transparent lg:px-10 dark:bg-neutral-950/80 dark:border-neutral-800">
             <button 
-              className="lg:hidden p-2 -ml-2 text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg transition"
+              className="lg:hidden p-2 -ml-2 text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg transition dark:text-gray-400"
               onClick={() => setIsMobileMenuOpen(true)}
             >
               <Menu size={20} />

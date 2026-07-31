@@ -2,9 +2,9 @@ import { CheckCircle2, AlertTriangle, Check, LayoutTemplate, FileText } from 'lu
 
 const ExportReadiness = ({ summary, isReady }) => {
   return (
-    <div className="flex flex-col gap-4 bg-white rounded-[24px] border border-gray-150 p-6 shadow-sm">
-      <div className="flex items-center justify-between border-b border-gray-100 pb-4">
-        <span className="text-[10px] font-bold uppercase tracking-[0.93px] text-[#686C72]">
+    <div className="flex flex-col gap-4 bg-white rounded-[24px] border border-gray-150 p-6 shadow-sm dark:bg-neutral-900 dark:border-neutral-800">
+      <div className="flex items-center justify-between border-b border-gray-100 pb-4 dark:border-neutral-800">
+        <span className="text-[10px] font-bold uppercase tracking-[0.93px] text-[#686C72] dark:text-gray-400">
           Operational Readiness
         </span>
         {isReady ? (
@@ -26,8 +26,8 @@ const ExportReadiness = ({ summary, isReady }) => {
             <Check size={16} />
           </div>
           <div className="flex flex-col">
-            <span className="text-sm font-bold text-gray-900">Processing Complete</span>
-            <span className="text-xs text-gray-500">{summary.documents} documents</span>
+            <span className="text-sm font-bold text-gray-900 dark:text-white">Processing Complete</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">{summary.documents} documents</span>
           </div>
         </div>
 
@@ -36,8 +36,8 @@ const ExportReadiness = ({ summary, isReady }) => {
             <Check size={16} />
           </div>
           <div className="flex flex-col">
-            <span className="text-sm font-bold text-gray-900">Data Reviewed</span>
-            <span className="text-xs text-gray-500">{summary.fieldsApproved} fields approved</span>
+            <span className="text-sm font-bold text-gray-900 dark:text-white">Data Reviewed</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">{summary.fieldsApproved} fields approved</span>
           </div>
         </div>
 
@@ -46,20 +46,20 @@ const ExportReadiness = ({ summary, isReady }) => {
             {isReady ? <Check size={16} /> : <AlertTriangle size={16} />}
           </div>
           <div className="flex flex-col">
-            <span className="text-sm font-bold text-gray-900">Terminal Mapping</span>
-            <span className="text-xs text-gray-500">
+            <span className="text-sm font-bold text-gray-900 dark:text-white">Terminal Mapping</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">
               {isReady ? `${summary.fieldsMapped} fields mapped` : `${summary.requiredRemaining} required missing`}
             </span>
           </div>
         </div>
 
-        <div className="flex items-center gap-3 lg:border-l border-gray-100 lg:pl-4">
-          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-50 text-gray-600 shrink-0 border border-gray-200">
+        <div className="flex items-center gap-3 lg:border-l border-gray-100 lg:pl-4 dark:border-neutral-800">
+          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-50 text-gray-600 shrink-0 border border-gray-200 dark:bg-neutral-800/50 dark:text-gray-400 dark:border-neutral-700">
             <LayoutTemplate size={16} />
           </div>
           <div className="flex flex-col">
-            <span className="text-sm font-bold text-gray-900">Target System</span>
-            <span className="text-xs text-gray-500">{summary.targetSystem}</span>
+            <span className="text-sm font-bold text-gray-900 dark:text-white">Target System</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">{summary.targetSystem}</span>
           </div>
         </div>
       </div>

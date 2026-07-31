@@ -42,7 +42,7 @@ const ThemeToggle = () => {
       {isDark ? (
         <Sun size={16} strokeWidth={1.6} className="text-amber-500" />
       ) : (
-        <Moon size={16} strokeWidth={1.6} className="text-[#686C72]" />
+        <Moon size={16} strokeWidth={1.6} className="text-[#686C72] dark:text-gray-400" />
       )}
     </button>
   )

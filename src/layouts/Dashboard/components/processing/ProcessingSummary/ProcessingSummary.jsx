@@ -30,16 +30,16 @@ const ProcessingSummary = ({ documents }) => {
           <motion.div
             key={card.id}
             variants={fadeUp}
-            className="flex items-center gap-4 bg-white border border-gray-200 rounded-2xl p-4 shadow-sm"
+            className="flex items-center gap-4 bg-white border border-gray-200 rounded-2xl p-4 shadow-sm dark:bg-neutral-900 dark:border-neutral-700"
           >
             <div className={`flex items-center justify-center h-12 w-12 rounded-xl ${card.bg} ${card.color}`}>
               <Icon size={24} />
             </div>
             <div className="flex flex-col">
-              <span className="text-2xl font-bold text-gray-900 leading-none">
+              <span className="text-2xl font-bold text-gray-900 leading-none dark:text-white">
                 {stats[card.id]}
               </span>
-              <span className="text-sm font-medium text-gray-500 mt-1">
+              <span className="text-sm font-medium text-gray-500 mt-1 dark:text-gray-400">
                 {card.label}
               </span>
             </div>

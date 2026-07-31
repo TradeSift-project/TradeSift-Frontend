@@ -11,7 +11,7 @@ const DocumentSearch = ({ value, onChange }) => {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder="Search documents, containers, BL numbers..."
-        className="w-full bg-white border border-neutral-200 rounded-full pl-9.5 pr-4 py-2 text-xs font-semibold text-[#0B0D12] placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#F87103]/10 focus:border-[#F87103]/50 transition"
+        className="w-full bg-white border border-neutral-200 rounded-full pl-9.5 pr-4 py-2 text-xs font-semibold text-[#0B0D12] placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#F87103]/10 focus:border-[#F87103]/50 transition dark:bg-neutral-900 dark:text-white dark:border-neutral-700"
       />
     </div>
   )

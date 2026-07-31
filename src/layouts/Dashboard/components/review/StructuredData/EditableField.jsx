@@ -7,7 +7,7 @@ const EditableField = ({ value, onChange, status }) => {
       type="text"
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className={`w-full px-2.5 py-1.5 text-sm font-semibold text-gray-900 rounded-md border focus:outline-none focus:ring-2 focus:ring-[#F87103]/20 focus:border-[#F87103] transition-colors ${inputBorder}`}
+      className={`w-full px-2.5 py-1.5 text-sm font-semibold text-gray-900 rounded-md border focus:outline-none focus:ring-2 focus:ring-[#F87103]/20 focus:border-[#F87103] transition-colors ${inputBorder} dark:text-white`}
       placeholder="Empty"
     />
   )

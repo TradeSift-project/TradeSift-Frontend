@@ -23,7 +23,7 @@ const DocumentTypeIcon = ({ type }) => {
   const Icon = getIcon()
 
   return (
-    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-neutral-50 border border-neutral-100 text-neutral-500 shrink-0">
+    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-neutral-50 border border-neutral-100 text-neutral-500 shrink-0 dark:bg-neutral-800/50 dark:border-neutral-800">
       <Icon size={14} />
     </div>
   )

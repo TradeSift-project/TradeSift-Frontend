@@ -65,7 +65,7 @@ const OperationWorkspace = () => {
     return (
       <div className="flex flex-col items-center justify-center min-h-[500px]">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#F87103] mb-4"></div>
-        <p className="text-sm text-gray-500">Loading operation workspace...</p>
+        <p className="text-sm text-gray-500 dark:text-gray-400">Loading operation workspace...</p>
       </div>
     )
   }
@@ -74,8 +74,8 @@ const OperationWorkspace = () => {
     return (
       <div className="flex flex-col items-center justify-center min-h-[500px] text-center">
         <AlertCircle size={48} className="text-red-400 mb-4" />
-        <h2 className="text-xl font-bold text-gray-900 mb-2">Operation Not Found</h2>
-        <p className="text-sm text-gray-500 mb-6">{error || 'The requested operation does not exist.'}</p>
+        <h2 className="text-xl font-bold text-gray-900 mb-2 dark:text-white">Operation Not Found</h2>
+        <p className="text-sm text-gray-500 mb-6 dark:text-gray-400">{error || 'The requested operation does not exist.'}</p>
         <button
           onClick={() => navigate('/dashboard/operations')}
           className="px-6 py-2.5 rounded-full bg-black text-white text-sm font-bold hover:bg-neutral-800 transition"
@@ -107,11 +107,11 @@ const OperationWorkspace = () => {
         >
           ← Back to Operations
         </button>
-        <h1 className="text-2xl font-bold text-[#0B0D12]">Operation Workspace</h1>
+        <h1 className="text-2xl font-bold text-[#0B0D12] dark:text-white">Operation Workspace</h1>
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-1 bg-white p-1 rounded-xl border border-gray-100 shadow-sm w-fit">
+      <div className="flex items-center gap-1 bg-white p-1 rounded-xl border border-gray-100 shadow-sm w-fit dark:bg-neutral-900 dark:border-neutral-800">
         <button
           onClick={() => setActiveTab('overview')}
           className={`px-6 py-2 rounded-lg text-sm font-bold transition ${
@@ -137,9 +137,9 @@ const OperationWorkspace = () => {
       {activeTab === 'overview' ? (
         <>
           {/* Operation Summary Card */}
-      <div className="bg-white rounded-[24px] border border-gray-100 shadow-sm overflow-hidden flex flex-col md:flex-row">
+      <div className="bg-white rounded-[24px] border border-gray-100 shadow-sm overflow-hidden flex flex-col md:flex-row dark:bg-neutral-900 dark:border-neutral-800">
         {/* Left Side: Summary */}
-        <div className="p-8 flex-1 border-b md:border-b-0 md:border-r border-gray-100">
+        <div className="p-8 flex-1 border-b md:border-b-0 md:border-r border-gray-100 dark:border-neutral-800">
           <div className="flex items-center gap-3 mb-6">
             <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold ${
               isImport ? 'bg-blue-50 text-blue-700' : 'bg-purple-50 text-purple-700'
@@ -153,15 +153,15 @@ const OperationWorkspace = () => {
           </div>
           
           <div className="flex flex-col gap-1 mb-6">
-            <span className="text-[10px] font-bold uppercase tracking-[0.93px] text-[#686C72]">Reference Number</span>
-            <span className="text-lg font-bold text-gray-900">{operation.referenceNo || 'No reference provided'}</span>
+            <span className="text-[10px] font-bold uppercase tracking-[0.93px] text-[#686C72] dark:text-gray-400">Reference Number</span>
+            <span className="text-lg font-bold text-gray-900 dark:text-white">{operation.referenceNo || 'No reference provided'}</span>
             <span className="text-xs text-gray-400 font-mono mt-1">ID: {operation.id}</span>
           </div>
           
           {operation.notes && (
             <div className="flex flex-col gap-1">
-              <span className="text-[10px] font-bold uppercase tracking-[0.93px] text-[#686C72]">Notes</span>
-              <p className="text-sm text-gray-700 leading-relaxed bg-gray-50/50 p-3 rounded-xl border border-gray-100">
+              <span className="text-[10px] font-bold uppercase tracking-[0.93px] text-[#686C72] dark:text-gray-400">Notes</span>
+              <p className="text-sm text-gray-700 leading-relaxed bg-gray-50/50 p-3 rounded-xl border border-gray-100 dark:bg-neutral-800/30 dark:text-gray-300 dark:border-neutral-800">
                 {operation.notes}
               </p>
             </div>
@@ -175,10 +175,10 @@ const OperationWorkspace = () => {
               <FileText size={28} />
             </div>
             <div className="flex flex-col">
-              <span className="text-3xl font-bold text-gray-900">
+              <span className="text-3xl font-bold text-gray-900 dark:text-white">
                 {docCount} <span className="text-lg text-gray-400">/ {maxDocuments}</span>
               </span>
-              <span className="text-[11px] font-bold uppercase tracking-[0.93px] text-[#686C72] mt-1">Documents Uploaded</span>
+              <span className="text-[11px] font-bold uppercase tracking-[0.93px] text-[#686C72] mt-1 dark:text-gray-400">Documents Uploaded</span>
             </div>
           </div>
 
@@ -214,11 +214,11 @@ const OperationWorkspace = () => {
       {/* Documents List */}
       <div className="flex flex-col gap-4 mt-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-bold text-[#0B0D12]">Operation Documents</h2>
+          <h2 className="text-lg font-bold text-[#0B0D12] dark:text-white">Operation Documents</h2>
         </div>
         
         {docCount > 0 ? (
-          <div className="bg-white rounded-[24px] border border-gray-100 overflow-hidden shadow-sm">
+          <div className="bg-white rounded-[24px] border border-gray-100 overflow-hidden shadow-sm dark:bg-neutral-900 dark:border-neutral-800">
             <DocumentsTable 
               documents={documents}
               onReview={(id) => navigate(`/dashboard/documents/${id}/review`)}
@@ -238,15 +238,15 @@ const OperationWorkspace = () => {
             />
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center bg-white rounded-[24px] border border-gray-100 p-12 text-center shadow-sm">
+          <div className="flex flex-col items-center justify-center bg-white rounded-[24px] border border-gray-100 p-12 text-center shadow-sm dark:bg-neutral-900 dark:border-neutral-800">
             <Package size={40} className="text-gray-300 mb-4" />
-            <h3 className="font-bold text-gray-900 mb-1">No documents yet</h3>
-            <p className="text-sm text-gray-500 mb-6 max-w-sm">
+            <h3 className="font-bold text-gray-900 mb-1 dark:text-white">No documents yet</h3>
+            <p className="text-sm text-gray-500 mb-6 max-w-sm dark:text-gray-400">
               Upload commercial invoices, packing lists, and weighment slips to begin AI extraction for this operation.
             </p>
             <button
               onClick={() => navigate(`/dashboard/upload/${operation.id}`)}
-              className="flex items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-6 py-2.5 text-sm font-bold text-gray-700 transition hover:bg-gray-50 shadow-sm"
+              className="flex items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-6 py-2.5 text-sm font-bold text-gray-700 transition hover:bg-gray-50 shadow-sm dark:bg-neutral-900 dark:text-gray-300 dark:border-neutral-700 dark:hover:bg-neutral-800"
             >
               <UploadCloud size={16} />
               Upload First Document

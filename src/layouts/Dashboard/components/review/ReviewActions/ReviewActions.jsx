@@ -6,7 +6,7 @@ const ReviewActions = ({ onApprove, onReject, onReprocess, onSave }) => {
   return (
     <motion.div 
       variants={fadeUp}
-      className="sticky bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 px-6 py-4 flex flex-col md:flex-row items-center justify-between shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]"
+      className="sticky bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 px-6 py-4 flex flex-col md:flex-row items-center justify-between shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] dark:bg-neutral-900 dark:border-neutral-700"
     >
       <div className="flex items-center gap-3 mb-4 md:mb-0 w-full md:w-auto">
         <button
@@ -18,7 +18,7 @@ const ReviewActions = ({ onApprove, onReject, onReprocess, onSave }) => {
         </button>
         <button
           onClick={onReprocess}
-          className="flex-1 md:flex-none flex items-center justify-center gap-1.5 px-4 py-2.5 text-sm font-bold text-gray-700 bg-gray-50 border border-gray-200 rounded-full hover:bg-gray-100 transition-colors"
+          className="flex-1 md:flex-none flex items-center justify-center gap-1.5 px-4 py-2.5 text-sm font-bold text-gray-700 bg-gray-50 border border-gray-200 rounded-full hover:bg-gray-100 transition-colors dark:bg-neutral-800/50 dark:text-gray-300 dark:border-neutral-700 dark:hover:bg-neutral-700"
         >
           <RefreshCw size={16} />
           Reprocess

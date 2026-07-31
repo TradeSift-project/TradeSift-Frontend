@@ -17,7 +17,7 @@ const DocumentFilters = ({
       <select
         value={typeFilter}
         onChange={(e) => onTypeFilterChange(e.target.value)}
-        className="bg-white border border-neutral-200 rounded-full px-3.5 py-2 text-[11px] font-bold text-[#686C72] focus:outline-none focus:ring-2 focus:ring-[#F87103]/10 transition"
+        className="bg-white border border-neutral-200 rounded-full px-3.5 py-2 text-[11px] font-bold text-[#686C72] focus:outline-none focus:ring-2 focus:ring-[#F87103]/10 transition dark:bg-neutral-900 dark:text-gray-400 dark:border-neutral-700"
       >
         <option value="All">All Types</option>
         {DOCUMENT_TYPES.map((type) => (
@@ -31,7 +31,7 @@ const DocumentFilters = ({
       <select
         value={opFilter}
         onChange={(e) => onOpFilterChange(e.target.value)}
-        className="bg-white border border-neutral-200 rounded-full px-3.5 py-2 text-[11px] font-bold text-[#686C72] focus:outline-none focus:ring-2 focus:ring-[#F87103]/10 transition"
+        className="bg-white border border-neutral-200 rounded-full px-3.5 py-2 text-[11px] font-bold text-[#686C72] focus:outline-none focus:ring-2 focus:ring-[#F87103]/10 transition dark:bg-neutral-900 dark:text-gray-400 dark:border-neutral-700"
       >
         <option value="All">All Operations</option>
         <option value="Import">Import</option>
@@ -42,7 +42,7 @@ const DocumentFilters = ({
       <select
         value={statusFilter}
         onChange={(e) => onStatusFilterChange(e.target.value)}
-        className="bg-white border border-neutral-200 rounded-full px-3.5 py-2 text-[11px] font-bold text-[#686C72] focus:outline-none focus:ring-2 focus:ring-[#F87103]/10 transition"
+        className="bg-white border border-neutral-200 rounded-full px-3.5 py-2 text-[11px] font-bold text-[#686C72] focus:outline-none focus:ring-2 focus:ring-[#F87103]/10 transition dark:bg-neutral-900 dark:text-gray-400 dark:border-neutral-700"
       >
         <option value="All">All Processing Status</option>
         <option value="Processing">Processing</option>
@@ -55,7 +55,7 @@ const DocumentFilters = ({
       <select
         value={reviewFilter}
         onChange={(e) => onReviewFilterChange(e.target.value)}
-        className="bg-white border border-neutral-200 rounded-full px-3.5 py-2 text-[11px] font-bold text-[#686C72] focus:outline-none focus:ring-2 focus:ring-[#F87103]/10 transition"
+        className="bg-white border border-neutral-200 rounded-full px-3.5 py-2 text-[11px] font-bold text-[#686C72] focus:outline-none focus:ring-2 focus:ring-[#F87103]/10 transition dark:bg-neutral-900 dark:text-gray-400 dark:border-neutral-700"
       >
         <option value="All">All Review Status</option>
         <option value="Pending">Pending</option>

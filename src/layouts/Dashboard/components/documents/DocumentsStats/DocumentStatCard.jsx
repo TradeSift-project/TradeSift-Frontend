@@ -14,11 +14,11 @@ const DocumentStatCard = ({ label, value, status }) => {
   }
 
   return (
-    <div className={`flex flex-col gap-1.5 rounded-2xl border p-4 shadow-[0_2px_8px_rgba(0,0,0,0.015)] bg-white ${getStatusColor()}`}>
-      <span className="text-[10px] font-bold uppercase tracking-[0.5px] text-gray-500">
+    <div className={`flex flex-col gap-1.5 rounded-2xl border p-4 shadow-[0_2px_8px_rgba(0,0,0,0.015)] bg-white ${getStatusColor()} dark:bg-neutral-900`}>
+      <span className="text-[10px] font-bold uppercase tracking-[0.5px] text-gray-500 dark:text-gray-400">
         {label}
       </span>
-      <span className="font-geist text-xl font-bold text-gray-900 leading-none">
+      <span className="font-geist text-xl font-bold text-gray-900 leading-none dark:text-white">
         {value}
       </span>
     </div>

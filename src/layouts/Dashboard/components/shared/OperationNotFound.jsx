@@ -14,8 +14,8 @@ const OperationNotFound = () => {
       <div className="w-20 h-20 rounded-full bg-red-50 text-red-500 flex items-center justify-center mb-6">
         <AlertTriangle size={36} />
       </div>
-      <h1 className="text-2xl font-bold text-gray-900 mb-2">Operation Not Found</h1>
-      <p className="text-sm text-gray-500 mb-8 max-w-md">
+      <h1 className="text-2xl font-bold text-gray-900 mb-2 dark:text-white">Operation Not Found</h1>
+      <p className="text-sm text-gray-500 mb-8 max-w-md dark:text-gray-400">
         The operation you are looking for does not exist or you do not have permission to access it.
       </p>
       

@@ -6,9 +6,9 @@ const ComparisonCard = ({ comparison }) => {
   const badgeText = isConflict ? 'text-rose-600' : 'text-emerald-600'
 
   return (
-    <div className="flex flex-col p-4 bg-white border-b border-gray-100 last:border-b-0 hover:bg-gray-50/50 transition-colors">
+    <div className="flex flex-col p-4 bg-white border-b border-gray-100 last:border-b-0 hover:bg-gray-50/50 transition-colors dark:bg-neutral-900 dark:border-neutral-800">
       <div className="flex items-center justify-between mb-3">
-        <h4 className="text-xs font-bold text-gray-900 uppercase tracking-wider flex items-center gap-1.5">
+        <h4 className="text-xs font-bold text-gray-900 uppercase tracking-wider flex items-center gap-1.5 dark:text-white">
           <GitCompare size={12} className="text-gray-400" />
           {comparison.fieldName}
         </h4>
@@ -18,18 +18,18 @@ const ComparisonCard = ({ comparison }) => {
       </div>
 
       <div className="grid grid-cols-2 gap-3 mb-3">
-        <div className="flex flex-col gap-1 p-2 bg-gray-50 rounded-lg border border-gray-100">
+        <div className="flex flex-col gap-1 p-2 bg-gray-50 rounded-lg border border-gray-100 dark:bg-neutral-800/50 dark:border-neutral-800">
           <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">{comparison.docA.name}</span>
-          <span className="text-xs font-bold text-gray-900">{comparison.docA.value}</span>
+          <span className="text-xs font-bold text-gray-900 dark:text-white">{comparison.docA.value}</span>
         </div>
-        <div className="flex flex-col gap-1 p-2 bg-gray-50 rounded-lg border border-gray-100">
+        <div className="flex flex-col gap-1 p-2 bg-gray-50 rounded-lg border border-gray-100 dark:bg-neutral-800/50 dark:border-neutral-800">
           <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">{comparison.docB.name}</span>
-          <span className="text-xs font-bold text-gray-900">{comparison.docB.value}</span>
+          <span className="text-xs font-bold text-gray-900 dark:text-white">{comparison.docB.value}</span>
         </div>
       </div>
 
       <div className="flex items-center gap-2">
-        <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider">Difference:</span>
+        <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider dark:text-gray-400">Difference:</span>
         <span className={`text-xs font-bold ${isConflict ? 'text-rose-600' : 'text-emerald-600'}`}>
           {comparison.difference}
         </span>

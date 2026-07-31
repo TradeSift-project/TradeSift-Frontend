@@ -114,14 +114,14 @@ const CameraCapture = ({ onCapture, onCancel }) => {
 
         {error ? (
           <div className="flex flex-col items-center justify-center p-8 text-center">
-            <Camera size={48} className="text-gray-500 mb-4" />
+            <Camera size={48} className="text-gray-500 mb-4 dark:text-gray-400" />
             <p className="text-white font-semibold mb-2">{error}</p>
             <p className="text-sm text-gray-400 mb-6 max-w-sm">
               Please check your browser permissions or use the device upload option instead.
             </p>
             <button
               onClick={handleClose}
-              className="px-6 py-2.5 bg-white text-black rounded-full font-bold text-sm"
+              className="px-6 py-2.5 bg-white text-black rounded-full font-bold text-sm dark:bg-neutral-900"
             >
               Upload from Device
             </button>
@@ -159,7 +159,7 @@ const CameraCapture = ({ onCapture, onCancel }) => {
                     onClick={handleCapture}
                     className="w-16 h-16 rounded-full border-4 border-white flex items-center justify-center bg-white/20 hover:bg-white/40 transition"
                   >
-                    <div className="w-12 h-12 bg-white rounded-full"></div>
+                    <div className="w-12 h-12 bg-white rounded-full dark:bg-neutral-900"></div>
                   </button>
                 </div>
               </>

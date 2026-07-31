@@ -42,7 +42,7 @@ const NotificationPanel = () => {
         onClick={() => setIsOpen(!isOpen)}
         className="relative flex h-9 w-9 items-center justify-center rounded-full border border-[#E5E6E8] bg-white transition hover:bg-neutral-50 dark:bg-neutral-900 dark:border-neutral-800 dark:hover:bg-neutral-800"
       >
-        <Bell size={16} strokeWidth={1.6} className="text-[#686C72] dark:text-neutral-400" />
+        <Bell size={16} strokeWidth={1.6} className="text-[#686C72] dark:text-neutral-400 dark:text-gray-400" />
         {unreadCount > 0 && (
           <span className="absolute top-1.5 right-1.5 flex h-2 w-2 items-center justify-center rounded-full bg-red-500 ring-2 ring-white dark:ring-neutral-900"></span>
         )}

@@ -18,7 +18,7 @@ const IssueCard = ({ issue, onGoToField }) => {
           <span className={`text-xs font-bold uppercase tracking-wide mb-1 ${text}`}>
             {isError ? 'Critical Issue' : 'Review Required'}
           </span>
-          <span className="text-sm font-medium text-gray-900 leading-snug">
+          <span className="text-sm font-medium text-gray-900 leading-snug dark:text-white">
             {issue.description}
           </span>
         </div>
@@ -26,7 +26,7 @@ const IssueCard = ({ issue, onGoToField }) => {
       <div className="flex justify-end mt-1">
         <button
           onClick={() => onGoToField(issue.fieldId)}
-          className="flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 bg-white border border-gray-200 text-gray-700 rounded-md hover:bg-gray-50 transition-colors shadow-sm"
+          className="flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 bg-white border border-gray-200 text-gray-700 rounded-md hover:bg-gray-50 transition-colors shadow-sm dark:bg-neutral-900 dark:text-gray-300 dark:border-neutral-700 dark:hover:bg-neutral-800"
         >
           Go to Field <ArrowRight size={12} />
         </button>

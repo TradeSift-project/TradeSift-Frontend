@@ -31,8 +31,8 @@ const ActiveWorkflows = () => {
   if (loading) {
     return (
       <div className="flex flex-col gap-4">
-        <div className="flex items-center justify-between border-b border-gray-100 pb-2">
-          <span className="text-[10px] font-bold uppercase tracking-[0.93px] text-[#686C72]">
+        <div className="flex items-center justify-between border-b border-gray-100 pb-2 dark:border-neutral-800">
+          <span className="text-[10px] font-bold uppercase tracking-[0.93px] text-[#686C72] dark:text-gray-400">
             Active Gate Operations
           </span>
         </div>
@@ -45,8 +45,8 @@ const ActiveWorkflows = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between border-b border-gray-100 pb-2">
-        <span className="text-[10px] font-bold uppercase tracking-[0.93px] text-[#686C72]">
+      <div className="flex items-center justify-between border-b border-gray-100 pb-2 dark:border-neutral-800">
+        <span className="text-[10px] font-bold uppercase tracking-[0.93px] text-[#686C72] dark:text-gray-400">
           Active Gate Operations
         </span>
         <span className="text-[10px] text-gray-400">
@@ -55,8 +55,8 @@ const ActiveWorkflows = () => {
       </div>
 
       {operations.length === 0 ? (
-        <div className="flex flex-col items-center justify-center p-8 bg-gray-50 border border-gray-100 rounded-xl text-center">
-          <p className="text-sm font-semibold text-gray-600 mb-1">No active operations</p>
+        <div className="flex flex-col items-center justify-center p-8 bg-gray-50 border border-gray-100 rounded-xl text-center dark:bg-neutral-800/50 dark:border-neutral-800">
+          <p className="text-sm font-semibold text-gray-600 mb-1 dark:text-gray-400">No active operations</p>
           <p className="text-xs text-gray-400">Upload documents to start processing.</p>
         </div>
       ) : (
