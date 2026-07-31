@@ -25,6 +25,7 @@ export const NAV_ITEMS = [
   { label: 'Operations', icon: Package, path: '/dashboard/operations', soon: false },
   { label: 'Gate Operations', icon: Truck, path: '/dashboard/gate', soon: true },
   { label: 'Integrations', icon: Link, path: '/dashboard/integrations', soon: true },
+  { label: 'Settings', icon: Settings, path: '/dashboard/settings', soon: false },
 ]
 
 export const DASHBOARD_STATS = [

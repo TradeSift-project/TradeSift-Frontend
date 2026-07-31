@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
-import { Routes, Route, useNavigate } from 'react-router-dom'
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
 import { toast } from 'sonner'
 import ComingSoonModal from '../../components/modal/ComingSoonModal'
 import Sidebar from './components/layout/Sidebar'
 import DashboardHeader from './components/layout/DashboardHeader'
+import HeaderActions from './components/layout/DashboardHeader/HeaderActions'
+import { Menu, X } from 'lucide-react'
 import StatsGrid from './components/overview/StatsGrid'
 import ActiveWorkflows from './components/overview/ActiveWorkflows'
 import RecentDocuments from './components/overview/RecentDocuments'
@@ -22,12 +24,15 @@ import OperationsList from './OperationsList'
 import OperationWorkspace from './OperationWorkspace'
 import { getMe, logoutUser } from '../../services/userService'
 import NewOperationModal from '../../components/modal/NewOperationModal'
+import Settings from './Settings'
 
 const Dashboard = () => {
   const navigate = useNavigate()
+  const location = useLocation()
   const [showLoader, setShowLoader] = useState(true)
   const [showComingSoon, setShowComingSoon] = useState(false)
   const [showNewOpModal, setShowNewOpModal] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [user, setUser] = useState(null)
 
   useEffect(() => {
@@ -46,6 +51,11 @@ const Dashboard = () => {
       isMounted = false
     }
   }, [])
+
+  useEffect(() => {
+    // Close mobile menu on route change
+    setIsMobileMenuOpen(false)
+  }, [location.pathname])
 
   const handleLogout = async () => {
     try {
@@ -95,12 +105,41 @@ const Dashboard = () => {
         />
       )}
 
-      <div className="flex min-h-screen bg-[#FDFDFD] font-inter">
-        <Sidebar user={getSidebarUser()} onSoonClick={() => setShowComingSoon(true)} onLogout={handleLogout} />
+      <div className="flex min-h-screen bg-[#FDFDFD] font-inter dark:bg-neutral-950">
+        
+        {/* Mobile Sidebar Overlay */}
+        {isMobileMenuOpen && (
+          <div 
+            className="fixed inset-0 z-40 bg-black/50 lg:hidden"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+        )}
 
-        <main className="flex-1 px-10 py-10">
-          <div className="mx-auto flex max-w-[1000px] flex-col gap-8">
-            <Routes>
+        {/* Sidebar Container */}
+        <div className={`fixed inset-y-0 left-0 z-50 transform bg-white transition-transform duration-300 ease-in-out lg:static lg:translate-x-0 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+          <Sidebar 
+            user={getSidebarUser()} 
+            onSoonClick={() => setShowComingSoon(true)} 
+            onLogout={handleLogout} 
+          />
+        </div>
+
+        <main className="flex-1 flex flex-col min-w-0 max-h-screen overflow-y-auto relative">
+          
+          {/* Global Header */}
+          <div className="sticky top-0 z-30 bg-[#FDFDFD]/80 backdrop-blur-md px-6 py-4 flex items-center justify-between lg:justify-end border-b border-[#E5E6E8] lg:border-none lg:bg-transparent lg:px-10 dark:bg-neutral-950/80 dark:border-neutral-800">
+            <button 
+              className="lg:hidden p-2 -ml-2 text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg transition"
+              onClick={() => setIsMobileMenuOpen(true)}
+            >
+              <Menu size={20} />
+            </button>
+            <HeaderActions />
+          </div>
+
+          <div className="flex-1 px-6 lg:px-10 pb-10 pt-4 lg:pt-2">
+            <div className="mx-auto flex max-w-[1000px] flex-col gap-8">
+              <Routes>
               {/* Overview Page */}
               <Route
                 path=""
@@ -168,7 +207,12 @@ const Dashboard = () => {
                 path="export/:jobId"
                 element={<Export />}
               />
+              <Route
+                path="settings"
+                element={<Settings />}
+              />
             </Routes>
+            </div>
           </div>
         </main>
 
