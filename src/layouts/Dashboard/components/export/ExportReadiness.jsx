@@ -20,7 +20,7 @@ const ExportReadiness = ({ summary, isReady }) => {
         )}
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-2">
         <div className="flex items-center gap-3">
           <div className="flex items-center justify-center w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 shrink-0">
             <Check size={16} />
@@ -53,7 +53,7 @@ const ExportReadiness = ({ summary, isReady }) => {
           </div>
         </div>
 
-        <div className="flex items-center gap-3 border-l border-gray-100 pl-4">
+        <div className="flex items-center gap-3 lg:border-l border-gray-100 lg:pl-4">
           <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-50 text-gray-600 shrink-0 border border-gray-200">
             <LayoutTemplate size={16} />
           </div>

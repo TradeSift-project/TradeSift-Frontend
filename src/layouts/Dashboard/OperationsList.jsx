@@ -136,11 +136,11 @@ const OperationsList = () => {
             <table className="w-full text-left text-sm">
               <thead className="bg-gray-50/50 text-[10px] uppercase tracking-wider text-gray-500 border-b border-gray-100">
                 <tr>
-                  <th className="px-6 py-4 font-bold">Operation Details</th>
-                  <th className="px-6 py-4 font-bold">Type</th>
-                  <th className="px-6 py-4 font-bold">Documents</th>
-                  <th className="px-6 py-4 font-bold">Status</th>
-                  <th className="px-6 py-4 font-bold text-right">Updated</th>
+                  <th className="px-4 md:px-6 py-4 font-bold">Operation Details</th>
+                  <th className="px-4 md:px-6 py-4 font-bold hidden sm:table-cell">Type</th>
+                  <th className="px-4 md:px-6 py-4 font-bold hidden md:table-cell">Documents</th>
+                  <th className="px-4 md:px-6 py-4 font-bold">Status</th>
+                  <th className="px-4 md:px-6 py-4 font-bold text-right hidden lg:table-cell">Updated</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
@@ -160,17 +160,17 @@ const OperationsList = () => {
                       onClick={() => navigate(`/dashboard/operations/${op.id}`)}
                       className="hover:bg-gray-50/50 transition cursor-pointer group"
                     >
-                      <td className="px-6 py-4">
+                      <td className="px-4 md:px-6 py-4">
                         <div className="flex flex-col">
                           <span className="font-bold text-gray-900">
                             {op.referenceNo || 'Untitled Operation'}
                           </span>
-                          <span className="text-xs text-gray-400 font-mono mt-0.5">
+                          <span className="text-xs text-gray-400 font-mono mt-0.5 max-w-[120px] sm:max-w-none truncate">
                             {op.id}
                           </span>
                         </div>
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-4 md:px-6 py-4 hidden sm:table-cell">
                         <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold ${
                           isImport ? 'bg-blue-50/50 text-blue-700' : 'bg-purple-50/50 text-purple-700'
                         }`}>
@@ -178,19 +178,19 @@ const OperationsList = () => {
                           {isImport ? 'Import Gate-In' : 'Export Gate-Out'}
                         </div>
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-4 md:px-6 py-4 hidden md:table-cell">
                         <div className="flex items-center gap-2 text-gray-600">
                           <FileText size={16} className="text-gray-400" />
                           <span className="font-semibold">{op.documents?.length || 0}</span>
                           <span className="text-xs text-gray-400">/ 20</span>
                         </div>
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-4 md:px-6 py-4">
                         <span className={`inline-flex px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${statusColor}`}>
                           {op.status || 'DRAFT'}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-right text-gray-500 whitespace-nowrap">
+                      <td className="px-4 md:px-6 py-4 text-right text-gray-500 whitespace-nowrap hidden lg:table-cell">
                         {op.updatedAt ? new Date(op.updatedAt).toLocaleDateString() : 'Just now'}
                       </td>
                     </tr>

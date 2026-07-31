@@ -16,11 +16,11 @@ const RecentDocuments = ({ documents = RECENT_DOCUMENTS }) => {
         <table className="min-w-full divide-y divide-neutral-100 text-left text-xs font-medium text-gray-500">
           <thead className="bg-neutral-50 text-[10px] font-bold uppercase tracking-wider text-gray-400">
             <tr>
-              <th className="px-6 py-4">Document Name</th>
-              <th className="px-6 py-4">Type</th>
-              <th className="px-6 py-4">Workflow</th>
-              <th className="px-6 py-4">Processed</th>
-              <th className="px-6 py-4 text-right">Status</th>
+              <th className="px-4 md:px-6 py-4">Document Name</th>
+              <th className="px-4 md:px-6 py-4 hidden sm:table-cell">Type</th>
+              <th className="px-4 md:px-6 py-4 hidden md:table-cell">Workflow</th>
+              <th className="px-4 md:px-6 py-4 hidden lg:table-cell">Processed</th>
+              <th className="px-4 md:px-6 py-4 text-right">Status</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-neutral-100 bg-white">

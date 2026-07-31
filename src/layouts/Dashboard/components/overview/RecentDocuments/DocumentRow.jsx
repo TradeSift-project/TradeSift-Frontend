@@ -6,9 +6,9 @@ const DocumentRow = ({ id, documentName, documentType, workflowType, status, upl
     <tr className="hover:bg-neutral-50/50 transition">
       
       {/* File Icon & Name */}
-      <td className="whitespace-nowrap px-6 py-4 font-semibold text-[#0B0D12]">
+      <td className="whitespace-nowrap px-4 md:px-6 py-4 font-semibold text-[#0B0D12]">
         <div className="flex items-center gap-2.5">
-          <div className="flex h-7.5 w-7.5 items-center justify-center rounded-lg bg-neutral-50 border border-neutral-100 text-neutral-500">
+          <div className="hidden sm:flex h-7.5 w-7.5 items-center justify-center rounded-lg bg-neutral-50 border border-neutral-100 text-neutral-500">
             <FileText size={14} />
           </div>
           <div className="flex flex-col gap-0.5">
@@ -23,12 +23,12 @@ const DocumentRow = ({ id, documentName, documentType, workflowType, status, upl
       </td>
 
       {/* Doc Type */}
-      <td className="whitespace-nowrap px-6 py-4 text-xs text-[#686C72]">
+      <td className="whitespace-nowrap px-4 md:px-6 py-4 text-xs text-[#686C72] hidden sm:table-cell">
         {documentType}
       </td>
 
       {/* Workflow direction */}
-      <td className="whitespace-nowrap px-6 py-4">
+      <td className="whitespace-nowrap px-4 md:px-6 py-4 hidden md:table-cell">
         <span
           className={`inline-flex rounded px-1.5 py-0.5 text-[10px] font-bold ${
             workflowType === 'Import'
@@ -41,12 +41,12 @@ const DocumentRow = ({ id, documentName, documentType, workflowType, status, upl
       </td>
 
       {/* Uploaded time */}
-      <td className="whitespace-nowrap px-6 py-4 text-xs text-gray-400">
+      <td className="whitespace-nowrap px-4 md:px-6 py-4 text-xs text-gray-400 hidden lg:table-cell">
         {uploadedAt}
       </td>
 
       {/* Status Badge */}
-      <td className="whitespace-nowrap px-6 py-4 text-right">
+      <td className="whitespace-nowrap px-4 md:px-6 py-4 text-right">
         <div className="flex justify-end">
           <DocumentStatusBadge status={status} />
         </div>

@@ -25,7 +25,7 @@ const DocumentTableRow = ({
   return (
     <tr className="hover:bg-neutral-50/50 transition">
       {/* Name & ID */}
-      <td className="whitespace-nowrap px-6 py-4 font-semibold text-[#0B0D12]">
+      <td className="whitespace-nowrap px-4 md:px-6 py-4 font-semibold text-[#0B0D12]">
         <div className="flex items-center gap-3">
           <DocumentTypeIcon type={doc.type} />
           <div className="flex flex-col gap-0.5">
@@ -40,12 +40,12 @@ const DocumentTableRow = ({
       </td>
 
       {/* Doc Type */}
-      <td className="whitespace-nowrap px-6 py-4 text-xs text-[#686C72]">
+      <td className="whitespace-nowrap px-4 md:px-6 py-4 text-xs text-[#686C72] hidden sm:table-cell">
         {doc.type}
       </td>
 
       {/* Operation */}
-      <td className="whitespace-nowrap px-6 py-4">
+      <td className="whitespace-nowrap px-4 md:px-6 py-4 hidden md:table-cell">
         <div className="flex flex-col gap-1 items-start">
           <span
             className={`inline-flex rounded px-1.5 py-0.5 text-[10px] font-bold w-fit ${
@@ -72,22 +72,22 @@ const DocumentTableRow = ({
       </td>
 
       {/* Uploaded */}
-      <td className="whitespace-nowrap px-6 py-4 text-xs text-gray-400">
+      <td className="whitespace-nowrap px-4 md:px-6 py-4 text-xs text-gray-400 hidden lg:table-cell">
         {doc.uploadedAt}
       </td>
 
       {/* Processing Status */}
-      <td className="whitespace-nowrap px-6 py-4">
+      <td className="whitespace-nowrap px-4 md:px-6 py-4">
         <DocumentStatusBadge status={doc.processingStatus} />
       </td>
 
       {/* Review Status */}
-      <td className="whitespace-nowrap px-6 py-4">
+      <td className="whitespace-nowrap px-4 md:px-6 py-4 hidden sm:table-cell">
         <DocumentStatusBadge status={doc.reviewStatus} />
       </td>
 
       {/* Confidence */}
-      <td className="whitespace-nowrap px-6 py-4 text-xs font-semibold">
+      <td className="whitespace-nowrap px-4 md:px-6 py-4 text-xs font-semibold hidden xl:table-cell">
         {doc.confidence ? (
           <span className="text-emerald-600">{doc.confidence}</span>
         ) : (
@@ -96,13 +96,13 @@ const DocumentTableRow = ({
       </td>
 
       {/* Actions */}
-      <td className="whitespace-nowrap px-6 py-4 text-right relative">
-        <div className="flex items-center justify-end gap-2">
+      <td className="whitespace-nowrap px-4 md:px-6 py-4 text-right relative">
+        <div className="flex items-center justify-end gap-1 md:gap-2">
           
           <button
             type="button"
             onClick={() => navigate(action.path)}
-            className="inline-flex items-center gap-1 rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.5px] text-[#0B0D12] transition hover:bg-neutral-50 hover:border-neutral-300"
+            className="inline-flex items-center gap-1 rounded-full border border-neutral-200 bg-white px-2 md:px-3 py-1.5 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.5px] text-[#0B0D12] transition hover:bg-neutral-50 hover:border-neutral-300"
           >
             {action.label}
           </button>

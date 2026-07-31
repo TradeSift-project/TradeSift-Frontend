@@ -6,7 +6,7 @@ const ActionBar = ({ onSaveDraft, onRequestReview, onApprove, onExportPreview })
   return (
     <motion.div 
       variants={fadeUp}
-      className="sticky bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 px-6 py-4 flex flex-col md:flex-row items-center justify-between shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] mt-6"
+      className="sticky bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-gray-200 p-4 pb-[max(1rem,env(safe-area-inset-bottom))] md:px-6 md:py-4 flex flex-col md:flex-row items-center justify-between shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] mt-6"
     >
       <div className="flex items-center gap-3 w-full md:w-auto mb-4 md:mb-0">
         <button

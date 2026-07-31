@@ -138,7 +138,7 @@ const Dashboard = () => {
           </div>
 
           <div className="flex-1 px-6 lg:px-10 pb-10 pt-4 lg:pt-2">
-            <div className="mx-auto flex max-w-[1000px] flex-col gap-8">
+            <div className="mx-auto flex w-full max-w-7xl flex-col gap-8">
               <Routes>
               {/* Overview Page */}
               <Route

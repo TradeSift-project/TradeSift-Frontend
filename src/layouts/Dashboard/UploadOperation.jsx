@@ -39,7 +39,7 @@ const UploadOperation = () => {
         </div>
       )}
       
-      <div className="bg-white rounded-[32px] border border-neutral-150 p-8 shadow-sm">
+      <div className="bg-white sm:rounded-[32px] rounded-2xl border border-neutral-150 p-5 sm:p-8 shadow-sm">
         <div className="mb-8 flex items-start gap-4">
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#FDF6F0] text-[#F87103] shrink-0">
             <FileText size={24} />

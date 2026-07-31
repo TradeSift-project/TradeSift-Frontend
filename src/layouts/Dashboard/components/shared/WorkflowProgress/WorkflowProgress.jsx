@@ -18,13 +18,16 @@ const WorkflowStep = ({ step, isLast }) => {
   }
 
   return (
-    <div className="flex items-center">
-      <div className="flex items-center gap-2">
+    <div className="flex flex-col md:flex-row md:items-center">
+      <div className="flex items-center gap-2 py-1 md:py-0">
         {icon}
         <span className={`text-xs uppercase tracking-wider ${textColor} ${weight}`}>{step.label}</span>
       </div>
       {!isLast && (
-        <div className={`w-8 md:w-12 lg:w-16 h-px mx-3 ${isCompleted ? 'bg-emerald-200' : 'bg-gray-200'}`}></div>
+        <div className={`hidden md:block w-8 md:w-12 lg:w-16 h-px mx-3 ${isCompleted ? 'bg-emerald-200' : 'bg-gray-200'}`}></div>
+      )}
+      {!isLast && (
+        <div className={`md:hidden w-px h-6 ml-[6px] my-1 ${isCompleted ? 'bg-emerald-200' : 'bg-gray-200'}`}></div>
       )}
     </div>
   )
@@ -49,7 +52,7 @@ const WorkflowProgress = ({ steps, currentStepId }) => {
   })
 
   return (
-    <div className="flex flex-wrap items-center gap-y-3 py-6">
+    <div className="flex flex-col md:flex-row md:flex-wrap md:items-center gap-y-1 md:gap-y-3 py-6">
       {derivedSteps.map((step, index) => (
         <WorkflowStep key={step.id} step={step} isLast={index === derivedSteps.length - 1} />
       ))}
