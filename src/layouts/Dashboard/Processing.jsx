@@ -13,6 +13,8 @@ import ProcessingIssues from './components/processing/ProcessingIssues'
 import { mockUnifiedJob } from './constants/workflowConstants'
 
 import { getOperationById } from '../../services/operationService'
+import { documentService } from '../../services/documentService'
+import OperationNotFound from './components/shared/OperationNotFound'
 
 const Processing = () => {
   const { jobId } = useParams()
@@ -20,22 +22,49 @@ const Processing = () => {
   
   const [job, setJob] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     let isMounted = true
     const fetchJob = async () => {
       try {
         let backendJob = null
+        let backendDocs = []
         // Try to fetch real job if it's a UUID/ID from backend
         try {
           const res = await getOperationById(jobId)
-          if (res.success) backendJob = res.data
+          if (res.success) {
+            backendJob = res.data
+            // Fetch real documents for this operation
+            try {
+              const docRes = await documentService.listOperationDocuments(jobId)
+              if (docRes && docRes.data && docRes.data.documents) {
+                backendDocs = docRes.data.documents
+              }
+            } catch (err) {
+              console.error('Failed to fetch documents for operation', err)
+            }
+          } else {
+            if (isMounted) setError(true)
+            return
+          }
         } catch (e) {
-          // If it fails (e.g. mock ID or network error), gracefully fall back
-          console.warn('Could not fetch real operation, falling back to mock details')
+          if (isMounted) setError(true)
+          return
         }
 
         if (!isMounted) return
+
+        // Format backend documents for the Processing UI
+        const mappedDocs = backendDocs.map(doc => ({
+          id: doc.id,
+          name: doc.originalFileName.split('.')[0],
+          fileName: doc.originalFileName,
+          uploadedAt: new Date(doc.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          status: 'processing', // since AI doesn't exist yet, we keep them in processing state
+          confidence: null,
+          actionRequired: false
+        }))
 
         // Merge real backend data with the mock pipeline/documents
         const mergedJob = {
@@ -43,7 +72,12 @@ const Processing = () => {
           id: backendJob?.id || jobId || mockUnifiedJob.id,
           workflowType: backendJob?.operationType === 'GATE_IN' ? 'Import Gate-In' : 'Export Gate-Out',
           description: backendJob?.notes || backendJob?.referenceNo || 'Electronics Components',
-          status: 'Processing' // Start by showing processing status for UX
+          status: 'Processing', // Start by showing processing status for UX
+          processing: {
+            ...mockUnifiedJob.processing,
+            // If we have real documents, use them instead of the mock ones
+            documents: mappedDocs.length > 0 ? mappedDocs : mockUnifiedJob.processing.documents
+          }
         }
 
         setJob(mergedJob)
@@ -63,6 +97,8 @@ const Processing = () => {
     fetchJob()
     return () => { isMounted = false }
   }, [jobId])
+
+  if (error) return <OperationNotFound />
 
   if (loading || !job) {
     return (

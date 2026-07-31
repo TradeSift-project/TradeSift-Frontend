@@ -17,6 +17,7 @@ const Documents = () => {
   const [typeFilter, setTypeFilter] = useState('All')
   const [opFilter, setOpFilter] = useState('All')
   const [statusFilter, setStatusFilter] = useState('All')
+  const [reviewFilter, setReviewFilter] = useState('All')
   
   const [detailDoc, setDetailDoc] = useState(null)
   const [showUploadModal, setShowUploadModal] = useState(false)
@@ -30,26 +31,14 @@ const Documents = () => {
     toast.success('Document deleted successfully.')
   }
 
-  const handleSaveFields = (updatedFields) => {
-    setDocuments((prev) =>
-      prev.map((doc) => {
-        if (doc.id === selectedDocId) {
-          return {
-            ...doc,
-            status: 'Verified',
-          }
-        }
-        return doc
-      })
-    )
-    setSelectedDocId(null)
-  }
+
 
   const handleResetFilters = () => {
     setSearch('')
     setTypeFilter('All')
     setOpFilter('All')
     setStatusFilter('All')
+    setReviewFilter('All')
   }
 
   // Filter documents
@@ -69,13 +58,15 @@ const Documents = () => {
 
     const type = doc.type || doc.documentType || ''
     const operation = doc.operation || doc.workflowType || ''
-    const status = doc.status || ''
+    const pStatus = doc.processingStatus || ''
+    const rStatus = doc.reviewStatus || ''
 
     const matchesType = typeFilter === 'All' || type === typeFilter
     const matchesOp = opFilter === 'All' || operation === opFilter
-    const matchesStatus = statusFilter === 'All' || status === statusFilter
+    const matchesStatus = statusFilter === 'All' || pStatus === statusFilter
+    const matchesReview = reviewFilter === 'All' || rStatus === reviewFilter
 
-    return matchesSearch && matchesType && matchesOp && matchesStatus
+    return matchesSearch && matchesType && matchesOp && matchesStatus && matchesReview
   })
 
   return (
@@ -97,6 +88,8 @@ const Documents = () => {
         onOpFilterChange={setOpFilter}
         statusFilter={statusFilter}
         onStatusFilterChange={setStatusFilter}
+        reviewFilter={reviewFilter}
+        onReviewFilterChange={setReviewFilter}
       />
 
       {/* Table / Empty State */}
@@ -180,6 +173,14 @@ const Documents = () => {
               <div className="flex justify-between border-b border-neutral-50 pb-2">
                 <span>Upload Time:</span>
                 <span className="text-[#0b0d12] font-normal">{detailDoc.uploadedAt}</span>
+              </div>
+              <div className="flex justify-between border-b border-neutral-50 pb-2">
+                <span>Processing Status:</span>
+                <span className="text-[#0b0d12] font-normal">{detailDoc.processingStatus}</span>
+              </div>
+              <div className="flex justify-between border-b border-neutral-50 pb-2">
+                <span>Review Status:</span>
+                <span className="text-[#0b0d12] font-normal">{detailDoc.reviewStatus}</span>
               </div>
               
               <div className="pt-4 mt-4 border-t border-neutral-100">

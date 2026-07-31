@@ -14,9 +14,10 @@ const DocumentsTable = ({
             <th className="px-6 py-4">Document</th>
             <th className="px-6 py-4">Type</th>
             <th className="px-6 py-4">Operation</th>
-            <th className="px-6 py-4">Reference</th>
-            <th className="px-6 py-4">Status</th>
             <th className="px-6 py-4">Uploaded</th>
+            <th className="px-6 py-4">Processing Status</th>
+            <th className="px-6 py-4">Review Status</th>
+            <th className="px-6 py-4">Confidence</th>
             <th className="px-6 py-4 text-right">Actions</th>
           </tr>
         </thead>

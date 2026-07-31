@@ -5,8 +5,8 @@ import ComingSoonModal from '../../components/modal/ComingSoonModal'
 import Sidebar from './components/layout/Sidebar'
 import DashboardHeader from './components/layout/DashboardHeader'
 import StatsGrid from './components/overview/StatsGrid'
-import RecentDocuments from './components/overview/RecentDocuments'
 import ActiveWorkflows from './components/overview/ActiveWorkflows'
+import RecentDocuments from './components/overview/RecentDocuments'
 import OperationalAlerts from './components/overview/OperationalAlerts'
 import QuickActions from './components/overview/QuickActions'
 import DashboardLoader from './components/layout/DashboardHeader/DashboardLoader'
@@ -16,6 +16,7 @@ import Processing from './Processing'
 import Review from './Review'
 import ApprovedData from './ApprovedData'
 import Mapping from './Mapping'
+import Export from './Export'
 import UploadOperation from './UploadOperation'
 import { getMe, logoutUser } from '../../services/userService'
 import { createOperation } from '../../services/operationService'
@@ -170,6 +171,10 @@ const Dashboard = () => {
               <Route
                 path="mapping/:jobId"
                 element={<Mapping />}
+              />
+              <Route
+                path="export/:jobId"
+                element={<Export />}
               />
             </Routes>
           </div>

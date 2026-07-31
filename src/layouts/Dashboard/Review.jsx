@@ -16,6 +16,7 @@ import ActionBar from './components/review/ActionBar'
 import { mockUnifiedJob } from './constants/workflowConstants'
 
 import { getOperationById } from '../../services/operationService'
+import OperationNotFound from './components/shared/OperationNotFound'
 
 const Review = () => {
   const { jobId } = useParams() // Wait, routes uses :documentId for Review, but we will assume it's jobId for unified flow
@@ -28,6 +29,7 @@ const Review = () => {
   const [comparisons, setComparisons] = useState([])
   const [summary, setSummary] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     let isMounted = true
@@ -36,9 +38,15 @@ const Review = () => {
         let backendJob = null
         try {
           const res = await getOperationById(jobId)
-          if (res.success) backendJob = res.data
+          if (res.success) {
+            backendJob = res.data
+          } else {
+            if (isMounted) setError(true)
+            return
+          }
         } catch (e) {
-          console.warn('Could not fetch real operation, falling back to mock details')
+          if (isMounted) setError(true)
+          return
         }
 
         if (!isMounted) return
@@ -107,6 +115,8 @@ const Review = () => {
   const handleExportPreview = () => {
     toast.info('Generating structured JSON/Excel preview...')
   }
+
+  if (error) return <OperationNotFound />
 
   if (loading || !sections.length || !job) {
     return (

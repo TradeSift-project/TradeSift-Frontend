@@ -13,11 +13,13 @@ import { mockUnifiedJob } from './constants/workflowConstants'
 
 import { useParams } from 'react-router-dom'
 import { getOperationById } from '../../services/operationService'
+import OperationNotFound from './components/shared/OperationNotFound'
 
 const ApprovedData = () => {
   const { jobId } = useParams()
   const [loading, setLoading] = useState(true)
   const [job, setJob] = useState(null)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     let isMounted = true
@@ -26,9 +28,15 @@ const ApprovedData = () => {
         let backendJob = null
         try {
           const res = await getOperationById(jobId)
-          if (res.success) backendJob = res.data
+          if (res.success) {
+            backendJob = res.data
+          } else {
+            if (isMounted) setError(true)
+            return
+          }
         } catch (e) {
-          console.warn('Could not fetch real operation, falling back to mock details')
+          if (isMounted) setError(true)
+          return
         }
 
         if (!isMounted) return
@@ -52,6 +60,8 @@ const ApprovedData = () => {
     fetchJob()
     return () => { isMounted = false }
   }, [jobId])
+
+  if (error) return <OperationNotFound />
 
   if (loading || !job) {
     return (

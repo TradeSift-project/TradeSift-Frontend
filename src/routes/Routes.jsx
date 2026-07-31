@@ -6,8 +6,6 @@ import Login from '../layouts/auth/Login'
 import Signup from '../layouts/auth/Signup'
 import OTP from '../layouts/auth/OTP'
 import Dashboard from '../layouts/Dashboard/Dashboard'
-import TradeShield from '../layouts/Dashboard/TradeShield'
-import TradeShieldFiling from '../layouts/Dashboard/TradeShieldFiling'
 import ResetPassword from '../layouts/auth/ResetPassword'
 import Home from '../layouts/Landing/Home'
 
@@ -94,8 +92,6 @@ const AppRoutes = () => {
       <Route path="/verify-otp" element={<PublicRoute><OTP /></PublicRoute>} />
       
       <Route path="/dashboard/*" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-      <Route path="/dashboard/tradeshield" element={<ProtectedRoute><TradeShield /></ProtectedRoute>} />
-      <Route path="/dashboard/tradeshield/:filingId" element={<ProtectedRoute><TradeShieldFiling /></ProtectedRoute>} />
     </Routes>
   )
 }

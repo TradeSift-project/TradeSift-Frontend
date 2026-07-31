@@ -1,0 +1,70 @@
+import { CheckCircle2, AlertTriangle, Check, LayoutTemplate, FileText } from 'lucide-react'
+
+const ExportReadiness = ({ summary, isReady }) => {
+  return (
+    <div className="flex flex-col gap-4 bg-white rounded-[24px] border border-gray-150 p-6 shadow-sm">
+      <div className="flex items-center justify-between border-b border-gray-100 pb-4">
+        <span className="text-[10px] font-bold uppercase tracking-[0.93px] text-[#686C72]">
+          Operational Readiness
+        </span>
+        {isReady ? (
+          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-bold uppercase tracking-wider">
+            <CheckCircle2 size={14} />
+            Ready for Export
+          </div>
+        ) : (
+          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-50 border border-red-100 text-red-700 text-xs font-bold uppercase tracking-wider">
+            <AlertTriangle size={14} />
+            Mapping Incomplete
+          </div>
+        )}
+      </div>
+
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-2">
+        <div className="flex items-center gap-3">
+          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 shrink-0">
+            <Check size={16} />
+          </div>
+          <div className="flex flex-col">
+            <span className="text-sm font-bold text-gray-900">Processing Complete</span>
+            <span className="text-xs text-gray-500">{summary.documents} documents</span>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 shrink-0">
+            <Check size={16} />
+          </div>
+          <div className="flex flex-col">
+            <span className="text-sm font-bold text-gray-900">Data Reviewed</span>
+            <span className="text-xs text-gray-500">{summary.fieldsApproved} fields approved</span>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <div className={`flex items-center justify-center w-8 h-8 rounded-full shrink-0 ${isReady ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-600'}`}>
+            {isReady ? <Check size={16} /> : <AlertTriangle size={16} />}
+          </div>
+          <div className="flex flex-col">
+            <span className="text-sm font-bold text-gray-900">Terminal Mapping</span>
+            <span className="text-xs text-gray-500">
+              {isReady ? `${summary.fieldsMapped} fields mapped` : `${summary.requiredRemaining} required missing`}
+            </span>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3 border-l border-gray-100 pl-4">
+          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-50 text-gray-600 shrink-0 border border-gray-200">
+            <LayoutTemplate size={16} />
+          </div>
+          <div className="flex flex-col">
+            <span className="text-sm font-bold text-gray-900">Target System</span>
+            <span className="text-xs text-gray-500">{summary.targetSystem}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default ExportReadiness

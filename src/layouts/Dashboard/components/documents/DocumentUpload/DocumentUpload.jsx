@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Upload, Trash2, CheckCircle } from 'lucide-react'
 import { toast } from 'sonner'
 import { createOperation } from '../../../../../services/operationService'
+import { documentService } from '../../../../../services/documentService'
 
 const DocumentUpload = ({ onDocumentProcessed, operationId }) => {
   const navigate = useNavigate()
@@ -20,59 +21,69 @@ const DocumentUpload = ({ onDocumentProcessed, operationId }) => {
     }
   }
 
-  const simulateUpload = (newFile) => {
+  const processUpload = async (uploadFiles) => {
+    if (!uploadFiles || uploadFiles.length === 0) return
+
+    // 1. Create a tracking object for the UI
     const fileId = `DOC-${Math.floor(100000 + Math.random() * 900000)}`
+    // If multiple files, show first file name and +N more
+    const displayName = uploadFiles.length === 1 
+      ? uploadFiles[0].name 
+      : `${uploadFiles[0].name} +${uploadFiles.length - 1} more`
+      
+    const totalSize = Array.from(uploadFiles).reduce((acc, f) => acc + f.size, 0)
     const fileObject = {
       id: fileId,
-      name: newFile.name,
-      size: `${(newFile.size / 1024 / 1024).toFixed(2)} MB`,
+      name: displayName,
+      size: `${(totalSize / 1024 / 1024).toFixed(2)} MB`,
       progress: 0,
       status: 'Uploading',
     }
 
     setFiles((prev) => [fileObject, ...prev])
 
-    // Simulate progress
+    // Simulate fake progress for UX while real request happens
     let currentProgress = 0
-    const interval = setInterval(async () => {
-      currentProgress += 10
-      setFiles((prev) =>
-        prev.map((f) => {
-          if (f.id === fileId) {
-            return { ...f, progress: currentProgress }
-          }
-          return f
-        })
-      )
+    const progressInterval = setInterval(() => {
+      currentProgress = Math.min(currentProgress + 15, 90)
+      setFiles(prev => prev.map(f => f.id === fileId ? { ...f, progress: currentProgress } : f))
+    }, 200)
 
-      if (currentProgress >= 100) {
-        clearInterval(interval)
-        
-        setFiles(prev => prev.map(f => f.id === fileId ? { ...f, status: 'Completed', progress: 100 } : f))
-        
-        toast.success(`Upload complete for ${newFile.name}. Starting job...`)
-        
-        if (operationId) {
-          navigate(`/dashboard/processing/${operationId}`)
+    try {
+      let targetOperationId = operationId
+      
+      // If no operationId, we must create an operation first
+      if (!targetOperationId) {
+        const res = await createOperation({
+          operationType: 'GATE_IN',
+          notes: `Document Upload`
+        })
+        if (res.success && res.data) {
+          targetOperationId = res.data.id
         } else {
-          try {
-            const res = await createOperation({
-              operationType: 'GATE_IN',
-              notes: `Uploaded document: ${newFile.name}`
-            })
-            
-            if (res.success && res.data) {
-              navigate(`/dashboard/processing/${res.data.id}`)
-            } else {
-              toast.error('Failed to initialize job.')
-            }
-          } catch (err) {
-            console.error(err)
-            toast.error('Failed to connect to backend.')
-          }
+          throw new Error('Failed to create operation')
         }
       }
-    }, 100)
+
+      // 2. Real API Call
+      await documentService.uploadDocuments(targetOperationId, Array.from(uploadFiles))
+
+      // 3. Complete
+      clearInterval(progressInterval)
+      setFiles(prev => prev.map(f => f.id === fileId ? { ...f, status: 'Completed', progress: 100 } : f))
+      toast.success(`Upload complete.`)
+
+      setTimeout(() => {
+        if (onDocumentProcessed) onDocumentProcessed()
+        navigate(`/dashboard/processing/${targetOperationId}`)
+      }, 500)
+
+    } catch (err) {
+      clearInterval(progressInterval)
+      setFiles(prev => prev.map(f => f.id === fileId ? { ...f, status: 'Failed', progress: 0 } : f))
+      toast.error('Upload failed. Please try again.')
+      console.error(err)
+    }
   }
 
   const handleDrop = (e) => {
@@ -80,16 +91,14 @@ const DocumentUpload = ({ onDocumentProcessed, operationId }) => {
     e.stopPropagation()
     setDragActive(false)
 
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      const uploadedFile = e.dataTransfer.files[0]
-      simulateUpload(uploadedFile)
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      processUpload(e.dataTransfer.files)
     }
   }
 
   const handleFileChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      const uploadedFile = e.target.files[0]
-      simulateUpload(uploadedFile)
+    if (e.target.files && e.target.files.length > 0) {
+      processUpload(e.target.files)
     }
   }
 
@@ -117,6 +126,7 @@ const DocumentUpload = ({ onDocumentProcessed, operationId }) => {
           ref={fileInputRef}
           type="file"
           className="hidden"
+          multiple
           onChange={handleFileChange}
           accept=".pdf,.png,.jpg,.jpeg"
         />

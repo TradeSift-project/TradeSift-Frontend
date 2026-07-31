@@ -10,6 +10,8 @@ const DocumentsToolbar = ({
   onOpFilterChange,
   statusFilter,
   onStatusFilterChange,
+  reviewFilter,
+  onReviewFilterChange,
 }) => {
   return (
     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-neutral-50/50 border border-neutral-150 rounded-[20px] p-4.5">
@@ -21,6 +23,8 @@ const DocumentsToolbar = ({
         onOpFilterChange={onOpFilterChange}
         statusFilter={statusFilter}
         onStatusFilterChange={onStatusFilterChange}
+        reviewFilter={reviewFilter}
+        onReviewFilterChange={onReviewFilterChange}
       />
     </div>
   )

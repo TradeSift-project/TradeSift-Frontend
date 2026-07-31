@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { MoreVertical, Eye, FileEdit, Download, Trash2 } from 'lucide-react'
 import DocumentTypeIcon from './DocumentTypeIcon'
 import DocumentStatusBadge from '../../overview/RecentDocuments/DocumentStatusBadge'
@@ -10,6 +11,16 @@ const DocumentTableRow = ({
   onDelete,
 }) => {
   const [showMenu, setShowMenu] = useState(false)
+  const navigate = useNavigate()
+
+  const getAction = () => {
+    if (doc.processingStatus === 'Processing') return { label: 'View Processing', path: `/dashboard/processing/${doc.operationId}` }
+    if (doc.processingStatus === 'Failed') return { label: 'View Error', path: `/dashboard/processing/${doc.operationId}` }
+    if (doc.reviewStatus === 'Pending') return { label: 'Review Document', path: `/dashboard/documents/${doc.id}/review` }
+    if (doc.reviewStatus === 'Approved') return { label: 'View Approved Data', path: `/dashboard/approved-data/${doc.operationId}` }
+    return { label: 'View Details', path: `/dashboard/documents/${doc.id}/review` }
+  }
+  const action = getAction()
 
   return (
     <tr className="hover:bg-neutral-50/50 transition">
@@ -35,30 +46,53 @@ const DocumentTableRow = ({
 
       {/* Operation */}
       <td className="whitespace-nowrap px-6 py-4">
-        <span
-          className={`inline-flex rounded px-1.5 py-0.5 text-[10px] font-bold ${
-            doc.operation === 'Import'
-              ? 'bg-blue-50 text-blue-600'
-              : 'bg-purple-50 text-purple-600'
-          }`}
-        >
-          {doc.operation}
-        </span>
-      </td>
-
-      {/* Reference (BL/Container) */}
-      <td className="whitespace-nowrap px-6 py-4 text-xs text-[#686C72]">
-        {doc.reference || doc.billOfLading || 'N/A'}
-      </td>
-
-      {/* Status */}
-      <td className="whitespace-nowrap px-6 py-4">
-        <DocumentStatusBadge status={doc.status} />
+        <div className="flex flex-col gap-1 items-start">
+          <span
+            className={`inline-flex rounded px-1.5 py-0.5 text-[10px] font-bold w-fit ${
+              doc.operation === 'Import'
+                ? 'bg-blue-50 text-blue-600'
+                : 'bg-purple-50 text-purple-600'
+            }`}
+          >
+            {doc.operation}
+          </span>
+          {doc.operationId ? (
+            <button 
+              onClick={() => navigate(`/dashboard/processing/${doc.operationId}`)}
+              className="text-[10px] text-gray-500 font-mono hover:text-[#F87103] hover:underline text-left transition"
+            >
+              {doc.reference || doc.operationId}
+            </button>
+          ) : (
+            <span className="text-[10px] text-gray-500 font-mono">
+              {doc.reference || 'No Ref'}
+            </span>
+          )}
+        </div>
       </td>
 
       {/* Uploaded */}
       <td className="whitespace-nowrap px-6 py-4 text-xs text-gray-400">
         {doc.uploadedAt}
+      </td>
+
+      {/* Processing Status */}
+      <td className="whitespace-nowrap px-6 py-4">
+        <DocumentStatusBadge status={doc.processingStatus} />
+      </td>
+
+      {/* Review Status */}
+      <td className="whitespace-nowrap px-6 py-4">
+        <DocumentStatusBadge status={doc.reviewStatus} />
+      </td>
+
+      {/* Confidence */}
+      <td className="whitespace-nowrap px-6 py-4 text-xs font-semibold">
+        {doc.confidence ? (
+          <span className="text-emerald-600">{doc.confidence}</span>
+        ) : (
+          <span className="text-gray-300">—</span>
+        )}
       </td>
 
       {/* Actions */}
@@ -67,10 +101,10 @@ const DocumentTableRow = ({
           
           <button
             type="button"
-            onClick={() => onReview(doc.id)}
+            onClick={() => navigate(action.path)}
             className="inline-flex items-center gap-1 rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.5px] text-[#0B0D12] transition hover:bg-neutral-50 hover:border-neutral-300"
           >
-            Review
+            {action.label}
           </button>
 
           {/* Action dots menu */}

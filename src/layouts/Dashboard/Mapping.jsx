@@ -6,6 +6,7 @@ import { toast } from 'sonner'
 import { CheckCircle2 } from 'lucide-react'
 
 import { getOperationById } from '../../services/operationService'
+import OperationNotFound from './components/shared/OperationNotFound'
 import { mockUnifiedJob } from './constants/workflowConstants'
 import { TARGET_SYSTEMS, MOCK_MAPPING_DATA } from './constants/mappingConstants'
 
@@ -21,6 +22,7 @@ const Mapping = () => {
   
   const [loading, setLoading] = useState(true)
   const [job, setJob] = useState(null)
+  const [error, setError] = useState(false)
   
   const [selectedSystem, setSelectedSystem] = useState(MOCK_MAPPING_DATA.targetSystem)
   const [mappings, setMappings] = useState(MOCK_MAPPING_DATA.mappings)
@@ -33,9 +35,15 @@ const Mapping = () => {
         let backendJob = null
         try {
           const res = await getOperationById(jobId)
-          if (res.success) backendJob = res.data
+          if (res.success) {
+            backendJob = res.data
+          } else {
+            if (isMounted) setError(true)
+            return
+          }
         } catch (e) {
-          console.warn('Could not fetch real operation, falling back to mock details')
+          if (isMounted) setError(true)
+          return
         }
 
         if (!isMounted) return
@@ -74,9 +82,10 @@ const Mapping = () => {
   }
 
   const handleExport = () => {
-    toast.success('Initiating export to target system...')
-    // Would call actual export API here
+    navigate(`/dashboard/export/${job.id}`)
   }
+
+  if (error) return <OperationNotFound />
 
   if (loading || !job) {
     return (
