@@ -12,6 +12,9 @@ import QuickActions from './components/overview/QuickActions'
 import DashboardLoader from './components/layout/DashboardHeader/DashboardLoader'
 import Documents from './Documents'
 import DocumentReview from './DocumentReview'
+import Processing from './Processing'
+import Review from './Review'
+import ApprovedData from './ApprovedData'
 import { getMe, logoutUser } from '../../services/userService'
 
 const Dashboard = () => {
@@ -126,6 +129,18 @@ const Dashboard = () => {
               <Route
                 path="documents/:documentId/review"
                 element={<DocumentReview />}
+              />
+              <Route
+                path="processing/:jobId"
+                element={<Processing />}
+              />
+              <Route
+                path="review/:documentId"
+                element={<Review />}
+              />
+              <Route
+                path="approved-data"
+                element={<ApprovedData />}
               />
             </Routes>
           </div>

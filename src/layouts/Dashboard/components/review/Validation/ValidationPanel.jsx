@@ -1,0 +1,24 @@
+import ValidationIssue from './ValidationIssue'
+import { AlertCircle } from 'lucide-react'
+
+const ValidationPanel = ({ issues }) => {
+  if (!issues || issues.length === 0) return null
+
+  return (
+    <div className="flex flex-col bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+      <div className="flex items-center gap-2 px-4 py-3 bg-rose-50/50 border-b border-rose-100">
+        <AlertCircle size={14} className="text-rose-500" />
+        <h3 className="text-xs font-bold text-rose-700 uppercase tracking-wider">
+          Validation Issues ({issues.length})
+        </h3>
+      </div>
+      <div className="flex flex-col">
+        {issues.map(issue => (
+          <ValidationIssue key={issue.id} issue={issue} />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+export default ValidationPanel

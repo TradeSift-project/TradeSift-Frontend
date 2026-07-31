@@ -1,9 +1,10 @@
 import { useState, useRef } from 'react'
-import { Upload, Trash2 } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { Upload, Trash2, CheckCircle } from 'lucide-react'
 import { toast } from 'sonner'
-import ProcessingStatus from '../ProcessingStatus'
 
 const DocumentUpload = ({ onDocumentProcessed }) => {
+  const navigate = useNavigate()
   const [dragActive, setDragActive] = useState(false)
   const [files, setFiles] = useState([])
   const fileInputRef = useRef(null)
@@ -40,55 +41,21 @@ const DocumentUpload = ({ onDocumentProcessed }) => {
             const updatedFile = { ...f, progress: currentProgress }
             if (currentProgress >= 100) {
               clearInterval(interval)
-              updatedFile.status = 'Processing'
+              updatedFile.status = 'Completed'
               
-              // Simulate AI extraction after 2s
+              toast.success(`Upload complete for ${newFile.name}. Redirecting to processing pipeline...`)
+              
               setTimeout(() => {
-                const finalStatus = Math.random() > 0.4 ? 'Extracted' : 'Needs Review'
-
-                setFiles((currentFiles) =>
-                  currentFiles.map((item) => {
-                    if (item.id === fileId) {
-                      return {
-                        ...item,
-                        status: finalStatus,
-                      }
-                    }
-                    return item
-                  })
-                )
-
-                // Fire callback to parent page to update list if needed
-                onDocumentProcessed?.({
-                  id: fileId,
-                  name: newFile.name,
-                  documentName: newFile.name,
-                  type: newFile.name.toLowerCase().includes('invoice')
-                    ? 'Commercial Invoice'
-                    : newFile.name.toLowerCase().includes('packing')
-                    ? 'Packing List'
-                    : 'Weighment Slip',
-                  documentType: newFile.name.toLowerCase().includes('invoice')
-                    ? 'Commercial Invoice'
-                    : newFile.name.toLowerCase().includes('packing')
-                    ? 'Packing List'
-                    : 'Weighment Slip',
-                  operation: 'Import',
-                  workflowType: 'Import',
-                  status: finalStatus,
-                  uploadedAt: 'Just now',
-                  confidence: '90%',
-                })
-
-                toast.success(`AI Extraction Complete for ${newFile.name}`)
-              }, 2000)
+                const jobId = `IMP-2026-${Math.floor(1000 + Math.random() * 9000)}`
+                navigate(`/dashboard/processing/${jobId}`)
+              }, 1000)
             }
             return updatedFile
           }
           return f
         })
       )
-    }, 200)
+    }, 100)
   }
 
   const handleDrop = (e) => {
@@ -158,28 +125,41 @@ const DocumentUpload = ({ onDocumentProcessed }) => {
 
       {/* Upload list UI */}
       {files.length > 0 && (
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 mt-4">
           <span className="text-[10px] font-bold uppercase tracking-[0.93px] text-[#686C72]">
-            Uploading & Processing
+            Uploading Documents
           </span>
 
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-3">
             {files.map((file) => (
-              <div key={file.id} className="flex flex-col gap-2">
-                <ProcessingStatus
-                  fileName={file.name}
-                  currentStatus={file.status}
-                  progress={file.progress}
+              <div key={file.id} className="flex flex-col bg-white border border-gray-100 rounded-xl p-4 shadow-sm relative overflow-hidden">
+                <div 
+                  className="absolute left-0 top-0 bottom-0 bg-[#FDF6F0] transition-all duration-300"
+                  style={{ width: `${file.progress}%` }}
                 />
-                <div className="flex justify-end px-2">
-                  <button
-                    type="button"
-                    onClick={() => removeFile(file.id)}
-                    className="flex items-center gap-1 text-[10px] font-bold text-gray-400 hover:text-red-500 uppercase tracking-[0.5px] transition"
-                  >
-                    <Trash2 size={12} />
-                    Cancel Pipeline
-                  </button>
+                
+                <div className="flex items-center justify-between z-10">
+                  <div className="flex items-center gap-3">
+                    <span className="text-sm font-semibold text-gray-900">{file.name}</span>
+                    <span className="text-xs text-gray-500">{file.size}</span>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <span className={`text-xs font-bold ${file.progress === 100 ? 'text-green-600' : 'text-[#F87103]'}`}>
+                      {file.progress}%
+                    </span>
+                    {file.progress < 100 && (
+                      <button
+                        type="button"
+                        onClick={() => removeFile(file.id)}
+                        className="text-gray-400 hover:text-red-500 transition-colors"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    )}
+                    {file.progress === 100 && (
+                      <CheckCircle size={16} className="text-green-500" />
+                    )}
+                  </div>
                 </div>
               </div>
             ))}
