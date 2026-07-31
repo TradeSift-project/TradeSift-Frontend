@@ -135,11 +135,11 @@ const Dashboard = () => {
                 element={<Processing />}
               />
               <Route
-                path="review/:documentId"
+                path="review/:jobId"
                 element={<Review />}
               />
               <Route
-                path="approved-data"
+                path="approved-data/:jobId"
                 element={<ApprovedData />}
               />
             </Routes>

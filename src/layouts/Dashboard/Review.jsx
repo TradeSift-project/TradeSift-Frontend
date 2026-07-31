@@ -4,7 +4,8 @@ import { motion } from 'framer-motion'
 import { staggerContainer } from '../../animations/variants'
 import { toast } from 'sonner'
 
-import ReviewHeader from './components/review/ReviewHeader'
+import JobContextHeader from './components/shared/JobContextHeader'
+import WorkflowProgress from './components/shared/WorkflowProgress'
 import DocumentNavigator from './components/review/DocumentNavigator'
 import StructuredData from './components/review/StructuredData'
 import ValidationSummary from './components/review/Validation/ValidationSummary'
@@ -12,18 +13,13 @@ import ValidationPanel from './components/review/Validation/ValidationPanel'
 import ComparisonPanel from './components/review/Comparison/ComparisonPanel'
 import ActionBar from './components/review/ActionBar'
 
-import { 
-  mockDocuments, 
-  mockStructuredData, 
-  mockValidationIssues, 
-  mockComparisons, 
-  mockReviewSummary 
-} from './constants/reviewConstants'
+import { mockUnifiedJob } from './constants/workflowConstants'
 
 const Review = () => {
-  const { documentId } = useParams()
+  const { documentId } = useParams() // Wait, routes uses :documentId for Review, but we will assume it's jobId for unified flow
   const navigate = useNavigate()
   
+  const [job, setJob] = useState(null)
   const [documents, setDocuments] = useState([])
   const [sections, setSections] = useState([])
   const [issues, setIssues] = useState([])
@@ -34,11 +30,13 @@ const Review = () => {
   useEffect(() => {
     // Simulate fetching data for the specific job
     const timer = setTimeout(() => {
-      setDocuments(JSON.parse(JSON.stringify(mockDocuments)))
-      setSections(JSON.parse(JSON.stringify(mockStructuredData)))
-      setIssues(JSON.parse(JSON.stringify(mockValidationIssues)))
-      setComparisons(JSON.parse(JSON.stringify(mockComparisons)))
-      setSummary(JSON.parse(JSON.stringify(mockReviewSummary)))
+      const activeJob = { ...mockUnifiedJob, id: documentId || mockUnifiedJob.id }
+      setJob(activeJob)
+      setDocuments(JSON.parse(JSON.stringify(activeJob.review.documentsHealth)))
+      setSections(JSON.parse(JSON.stringify(activeJob.review.structuredData)))
+      setIssues(JSON.parse(JSON.stringify(activeJob.review.validationIssues)))
+      setComparisons(JSON.parse(JSON.stringify(activeJob.review.comparisons)))
+      setSummary(JSON.parse(JSON.stringify(activeJob.review.reviewSummary)))
       setLoading(false)
     }, 500)
 
@@ -66,8 +64,8 @@ const Review = () => {
   }
 
   const handleApprove = () => {
-    toast.success('Structured dataset approved! Ready for ERP mapping.')
-    navigate('/dashboard/documents')
+    toast.success('Structured dataset approved! Proceeding to Export.')
+    navigate(`/dashboard/approved-data`)
   }
 
   const handleSaveDraft = () => {
@@ -76,14 +74,14 @@ const Review = () => {
 
   const handleRequestReview = () => {
     toast.warning('Document sent back to processing queue for review.')
-    navigate('/dashboard/documents')
+    navigate(`/dashboard/processing/${job.id}`)
   }
 
   const handleExportPreview = () => {
     toast.info('Generating structured JSON/Excel preview...')
   }
 
-  if (loading || !sections.length) {
+  if (loading || !sections.length || !job) {
     return (
       <div className="flex flex-col flex-1 items-center justify-center min-h-[500px]">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#F87103]"></div>
@@ -99,7 +97,8 @@ const Review = () => {
       animate="animate"
       className="flex flex-col w-full max-w-[1600px] mx-auto min-h-screen pb-24"
     >
-      <ReviewHeader />
+      <JobContextHeader job={job} backTo={`/dashboard/processing/${job.id}`} />
+      <WorkflowProgress steps={job.pipeline} currentStepId="review" />
       
       <div className="flex flex-col lg:flex-row gap-6 mt-6 flex-1 items-stretch">
         

@@ -46,7 +46,7 @@ const DocumentUpload = ({ onDocumentProcessed }) => {
               toast.success(`Upload complete for ${newFile.name}. Redirecting to processing pipeline...`)
               
               setTimeout(() => {
-                const jobId = `IMP-2026-${Math.floor(1000 + Math.random() * 9000)}`
+                const jobId = 'IMP-2026-00124' // Unified mock job context
                 navigate(`/dashboard/processing/${jobId}`)
               }, 1000)
             }
