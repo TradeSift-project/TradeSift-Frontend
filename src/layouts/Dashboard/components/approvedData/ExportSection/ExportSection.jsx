@@ -1,14 +1,18 @@
-import { Download, Server } from 'lucide-react'
+import { Download, Server, Settings2 } from 'lucide-react'
 import ExportButton from './ExportButton'
 import { toast } from 'sonner'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const ExportSection = () => {
+  const navigate = useNavigate()
+  const { jobId } = useParams()
+
   const handleExportExcel = () => {
     toast.success('Downloading structured Excel file...')
   }
 
   const handleExportERP = () => {
-    toast.info('ERP API integration is not yet connected.')
+    navigate(`/dashboard/mapping/${jobId}`)
   }
 
   return (
@@ -27,10 +31,10 @@ const ExportSection = () => {
           onClick={handleExportExcel}
         />
         <ExportButton 
-          icon={Server}
-          title="Push to ERP / API"
-          description="Automatically push the structured data to the connected operational system."
-          status="Ready for Integration"
+          icon={Settings2}
+          title="Configure Terminal Mapping"
+          description="Map standard fields to terminal-specific operational formats."
+          status="Mapping Required"
           onClick={handleExportERP}
         />
       </div>

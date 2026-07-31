@@ -11,17 +11,47 @@ import ExportSection from './components/approvedData/ExportSection'
 
 import { mockUnifiedJob } from './constants/workflowConstants'
 
+import { useParams } from 'react-router-dom'
+import { getOperationById } from '../../services/operationService'
+
 const ApprovedData = () => {
+  const { jobId } = useParams()
   const [loading, setLoading] = useState(true)
   const [job, setJob] = useState(null)
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setJob({ ...mockUnifiedJob, status: 'Approved' })
-      setLoading(false)
-    }, 500)
-    return () => clearTimeout(timer)
-  }, [])
+    let isMounted = true
+    const fetchJob = async () => {
+      try {
+        let backendJob = null
+        try {
+          const res = await getOperationById(jobId)
+          if (res.success) backendJob = res.data
+        } catch (e) {
+          console.warn('Could not fetch real operation, falling back to mock details')
+        }
+
+        if (!isMounted) return
+
+        const mergedJob = {
+          ...mockUnifiedJob,
+          id: backendJob?.id || jobId || mockUnifiedJob.id,
+          workflowType: backendJob?.operationType === 'GATE_IN' ? 'Import Gate-In' : 'Export Gate-Out',
+          description: backendJob?.notes || backendJob?.referenceNo || 'Electronics Components',
+          status: 'Approved'
+        }
+
+        setJob(mergedJob)
+      } catch (err) {
+        console.error('Failed to load approved data context:', err)
+      } finally {
+        if (isMounted) setLoading(false)
+      }
+    }
+
+    fetchJob()
+    return () => { isMounted = false }
+  }, [jobId])
 
   if (loading || !job) {
     return (

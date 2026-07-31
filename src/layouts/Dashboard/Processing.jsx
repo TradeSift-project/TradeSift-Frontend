@@ -12,6 +12,8 @@ import ProcessingIssues from './components/processing/ProcessingIssues'
 
 import { mockUnifiedJob } from './constants/workflowConstants'
 
+import { getOperationById } from '../../services/operationService'
+
 const Processing = () => {
   const { jobId } = useParams()
   const navigate = useNavigate()
@@ -20,23 +22,46 @@ const Processing = () => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Simulate network delay
-    const timer = setTimeout(() => {
-      setJob({
-        ...mockUnifiedJob,
-        id: jobId || mockUnifiedJob.id,
-        status: 'Processing' // Start by showing processing status for UX
-      })
-      
-      // Simulate moving to "Needs Review" after a few seconds
-      setTimeout(() => {
-        setJob(prev => ({ ...prev, status: 'Needs Review' }))
-      }, 3000)
+    let isMounted = true
+    const fetchJob = async () => {
+      try {
+        let backendJob = null
+        // Try to fetch real job if it's a UUID/ID from backend
+        try {
+          const res = await getOperationById(jobId)
+          if (res.success) backendJob = res.data
+        } catch (e) {
+          // If it fails (e.g. mock ID or network error), gracefully fall back
+          console.warn('Could not fetch real operation, falling back to mock details')
+        }
 
-      setLoading(false)
-    }, 600)
+        if (!isMounted) return
 
-    return () => clearTimeout(timer)
+        // Merge real backend data with the mock pipeline/documents
+        const mergedJob = {
+          ...mockUnifiedJob,
+          id: backendJob?.id || jobId || mockUnifiedJob.id,
+          workflowType: backendJob?.operationType === 'GATE_IN' ? 'Import Gate-In' : 'Export Gate-Out',
+          description: backendJob?.notes || backendJob?.referenceNo || 'Electronics Components',
+          status: 'Processing' // Start by showing processing status for UX
+        }
+
+        setJob(mergedJob)
+        
+        // Simulate moving to "Needs Review" after a few seconds
+        setTimeout(() => {
+          if (isMounted) setJob(prev => ({ ...prev, status: 'Needs Review' }))
+        }, 3000)
+
+      } catch (err) {
+        console.error('Failed to load job context:', err)
+      } finally {
+        if (isMounted) setLoading(false)
+      }
+    }
+
+    fetchJob()
+    return () => { isMounted = false }
   }, [jobId])
 
   if (loading || !job) {

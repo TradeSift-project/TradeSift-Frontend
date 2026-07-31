@@ -2,8 +2,9 @@ import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Upload, Trash2, CheckCircle } from 'lucide-react'
 import { toast } from 'sonner'
+import { createOperation } from '../../../../../services/operationService'
 
-const DocumentUpload = ({ onDocumentProcessed }) => {
+const DocumentUpload = ({ onDocumentProcessed, operationId }) => {
   const navigate = useNavigate()
   const [dragActive, setDragActive] = useState(false)
   const [files, setFiles] = useState([])
@@ -33,28 +34,44 @@ const DocumentUpload = ({ onDocumentProcessed }) => {
 
     // Simulate progress
     let currentProgress = 0
-    const interval = setInterval(() => {
+    const interval = setInterval(async () => {
       currentProgress += 10
       setFiles((prev) =>
         prev.map((f) => {
           if (f.id === fileId) {
-            const updatedFile = { ...f, progress: currentProgress }
-            if (currentProgress >= 100) {
-              clearInterval(interval)
-              updatedFile.status = 'Completed'
-              
-              toast.success(`Upload complete for ${newFile.name}. Redirecting to processing pipeline...`)
-              
-              setTimeout(() => {
-                const jobId = 'IMP-2026-00124' // Unified mock job context
-                navigate(`/dashboard/processing/${jobId}`)
-              }, 1000)
-            }
-            return updatedFile
+            return { ...f, progress: currentProgress }
           }
           return f
         })
       )
+
+      if (currentProgress >= 100) {
+        clearInterval(interval)
+        
+        setFiles(prev => prev.map(f => f.id === fileId ? { ...f, status: 'Completed', progress: 100 } : f))
+        
+        toast.success(`Upload complete for ${newFile.name}. Starting job...`)
+        
+        if (operationId) {
+          navigate(`/dashboard/processing/${operationId}`)
+        } else {
+          try {
+            const res = await createOperation({
+              operationType: 'GATE_IN',
+              notes: `Uploaded document: ${newFile.name}`
+            })
+            
+            if (res.success && res.data) {
+              navigate(`/dashboard/processing/${res.data.id}`)
+            } else {
+              toast.error('Failed to initialize job.')
+            }
+          } catch (err) {
+            console.error(err)
+            toast.error('Failed to connect to backend.')
+          }
+        }
+      }
     }, 100)
   }
 

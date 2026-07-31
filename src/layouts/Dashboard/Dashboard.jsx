@@ -15,7 +15,10 @@ import DocumentReview from './DocumentReview'
 import Processing from './Processing'
 import Review from './Review'
 import ApprovedData from './ApprovedData'
+import Mapping from './Mapping'
+import UploadOperation from './UploadOperation'
 import { getMe, logoutUser } from '../../services/userService'
+import { createOperation } from '../../services/operationService'
 
 const Dashboard = () => {
   const navigate = useNavigate()
@@ -114,7 +117,25 @@ const Dashboard = () => {
                         <RecentDocuments />
                       </div>
                       <div className="flex flex-col gap-8">
-                        <QuickActions onStartWorkflow={() => setShowComingSoon(true)} />
+                        <QuickActions 
+                          onStartWorkflow={async (type) => {
+                            try {
+                              toast.info(`Initializing ${type} operation...`)
+                              const res = await createOperation({
+                                operationType: type === 'Import' ? 'GATE_IN' : 'GATE_OUT',
+                                notes: `${type} Operation initiated from dashboard`
+                              })
+                              if (res.success && res.data) {
+                                navigate(`/dashboard/upload/${res.data.id}`)
+                              } else {
+                                toast.error('Failed to initialize job.')
+                              }
+                            } catch (err) {
+                              console.error(err)
+                              toast.error('Failed to connect to backend.')
+                            }
+                          }} 
+                        />
                         <OperationalAlerts onResolveItem={() => setShowComingSoon(true)} />
                       </div>
                     </div>
@@ -122,6 +143,10 @@ const Dashboard = () => {
                 }
               />
 
+              <Route
+                path="upload/:operationId"
+                element={<UploadOperation />}
+              />
               <Route
                 path="documents"
                 element={<Documents />}
@@ -141,6 +166,10 @@ const Dashboard = () => {
               <Route
                 path="approved-data/:jobId"
                 element={<ApprovedData />}
+              />
+              <Route
+                path="mapping/:jobId"
+                element={<Mapping />}
               />
             </Routes>
           </div>

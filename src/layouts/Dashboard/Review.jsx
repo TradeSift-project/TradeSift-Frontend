@@ -15,8 +15,10 @@ import ActionBar from './components/review/ActionBar'
 
 import { mockUnifiedJob } from './constants/workflowConstants'
 
+import { getOperationById } from '../../services/operationService'
+
 const Review = () => {
-  const { documentId } = useParams() // Wait, routes uses :documentId for Review, but we will assume it's jobId for unified flow
+  const { jobId } = useParams() // Wait, routes uses :documentId for Review, but we will assume it's jobId for unified flow
   const navigate = useNavigate()
   
   const [job, setJob] = useState(null)
@@ -28,20 +30,45 @@ const Review = () => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Simulate fetching data for the specific job
-    const timer = setTimeout(() => {
-      const activeJob = { ...mockUnifiedJob, id: documentId || mockUnifiedJob.id }
-      setJob(activeJob)
-      setDocuments(JSON.parse(JSON.stringify(activeJob.review.documentsHealth)))
-      setSections(JSON.parse(JSON.stringify(activeJob.review.structuredData)))
-      setIssues(JSON.parse(JSON.stringify(activeJob.review.validationIssues)))
-      setComparisons(JSON.parse(JSON.stringify(activeJob.review.comparisons)))
-      setSummary(JSON.parse(JSON.stringify(activeJob.review.reviewSummary)))
-      setLoading(false)
-    }, 500)
+    let isMounted = true
+    const fetchJob = async () => {
+      try {
+        let backendJob = null
+        try {
+          const res = await getOperationById(jobId)
+          if (res.success) backendJob = res.data
+        } catch (e) {
+          console.warn('Could not fetch real operation, falling back to mock details')
+        }
 
-    return () => clearTimeout(timer)
-  }, [documentId])
+        if (!isMounted) return
+
+        // Merge real backend data with the mock pipeline/documents
+        const mergedJob = {
+          ...mockUnifiedJob,
+          id: backendJob?.id || jobId || mockUnifiedJob.id,
+          workflowType: backendJob?.operationType === 'GATE_IN' ? 'Import Gate-In' : 'Export Gate-Out',
+          description: backendJob?.notes || backendJob?.referenceNo || 'Electronics Components',
+          status: 'Needs Review'
+        }
+
+        setJob(mergedJob)
+        setDocuments(JSON.parse(JSON.stringify(mergedJob.review.documentsHealth)))
+        setSections(JSON.parse(JSON.stringify(mergedJob.review.structuredData)))
+        setIssues(JSON.parse(JSON.stringify(mergedJob.review.validationIssues)))
+        setComparisons(JSON.parse(JSON.stringify(mergedJob.review.comparisons)))
+        setSummary(JSON.parse(JSON.stringify(mergedJob.review.reviewSummary)))
+
+      } catch (err) {
+        console.error('Failed to load review context:', err)
+      } finally {
+        if (isMounted) setLoading(false)
+      }
+    }
+
+    fetchJob()
+    return () => { isMounted = false }
+  }, [jobId])
 
   const handleFieldChange = (sectionId, fieldId, value) => {
     setSections(prev => {
@@ -65,7 +92,7 @@ const Review = () => {
 
   const handleApprove = () => {
     toast.success('Structured dataset approved! Proceeding to Export.')
-    navigate(`/dashboard/approved-data`)
+    navigate(`/dashboard/approved-data/${job.id}`)
   }
 
   const handleSaveDraft = () => {

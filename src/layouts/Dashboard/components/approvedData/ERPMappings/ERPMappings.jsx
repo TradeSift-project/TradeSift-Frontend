@@ -23,7 +23,10 @@ const ERPMappings = ({ mappings, unmapped }) => {
         <div className="flex flex-col bg-white rounded-xl border border-amber-200 shadow-sm overflow-hidden">
           <div className="flex items-center justify-between px-4 py-3 bg-amber-50/50 border-b border-amber-100">
             <h3 className="text-xs font-bold text-amber-700 uppercase tracking-wider">Unmapped Fields ({unmapped.length})</h3>
-            <button className="text-[10px] font-bold uppercase tracking-wider text-amber-700 hover:text-amber-800 underline">
+            <button 
+              onClick={() => window.location.href = window.location.pathname.replace('approved-data', 'mapping')}
+              className="text-[10px] font-bold uppercase tracking-wider text-amber-700 hover:text-amber-800 underline"
+            >
               Review Mapping
             </button>
           </div>
