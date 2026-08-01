@@ -22,6 +22,12 @@ export const documentService = {
     return response.data
   },
 
+  // Get all documents for the authenticated user
+  getAllUserDocuments: async () => {
+    const response = await apiClient.get('/documents')
+    return response.data
+  },
+
   // Get a single document by ID
   getDocument: async (documentId) => {
     const response = await apiClient.get(`/documents/${documentId}`)

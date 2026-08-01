@@ -17,6 +17,7 @@ import ApiExport from './components/export/ApiExport'
 import ExcelExport from './components/export/ExcelExport'
 import ExportPreview from './components/export/ExportPreview'
 import ExportActions from './components/export/ExportActions'
+import { exportService } from '../../services/exportService'
 
 const Export = () => {
   const { jobId } = useParams()
@@ -71,29 +72,45 @@ const Export = () => {
     return () => { isMounted = false }
   }, [jobId])
 
-  const handleExport = () => {
+  const handleExport = async () => {
     if (!MOCK_EXPORT_DATA.isReady) {
       toast.error('Cannot export: mapping incomplete.')
       return
     }
 
     setIsExporting(true)
+    setExportError(false)
+    toast.loading('Preparing export...', { id: 'export-progress' })
     
-    // Simulate export progress
-    const steps = ['Preparing payload...', 'Validating schema...', 'Sending to destination...', 'Complete']
-    let stepIndex = 0
-    
-    const interval = setInterval(() => {
-      if (stepIndex < steps.length - 1) {
-        toast.loading(steps[stepIndex], { id: 'export-progress' })
-        stepIndex++
-      } else {
-        clearInterval(interval)
-        toast.success(steps[steps.length - 1], { id: 'export-progress' })
-        setIsExporting(false)
+    try {
+      const res = await exportService.exportOperationData(job.id, 'EXCEL')
+      
+      if (res.success && res.data?.downloadUrl) {
+        toast.loading('Downloading Excel...', { id: 'export-progress' })
+        
+        // Trigger browser download
+        const a = document.createElement('a')
+        a.href = res.data.downloadUrl
+        a.download = res.data.filename || `TradeSift_Export_${job.id}.xlsx`
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+        
+        // Cleanup URL
+        setTimeout(() => window.URL.revokeObjectURL(res.data.downloadUrl), 1000)
+
+        toast.success('Export complete', { id: 'export-progress' })
         setExportComplete(true)
+      } else {
+        throw new Error(res.message || 'Export failed')
       }
-    }, 800)
+    } catch (err) {
+      console.error(err)
+      toast.error('Export failed: ' + (err.message || 'Unknown error'), { id: 'export-progress' })
+      setExportError(true)
+    } finally {
+      setIsExporting(false)
+    }
   }
 
   if (fetchError) return <OperationNotFound />

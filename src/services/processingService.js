@@ -15,11 +15,8 @@ export const processingService = {
   // Replace this placeholder with the real API.
   // =====================================================
   startProcessing: async (operationId) => {
-    console.warn('BACKEND TODO: processingService.startProcessing missing endpoint')
-    // return apiClient.post(`/operations/${operationId}/process`)
-    
-    // MOCK RESPONSE
-    return { success: true, message: 'Processing started' }
+    const res = await apiClient.post(`/operations/${operationId}/process`)
+    return res.data
   },
 
   // =====================================================
@@ -37,21 +34,7 @@ export const processingService = {
   // Replace this placeholder with the real API.
   // =====================================================
   getProcessingStatus: async (operationId) => {
-    console.warn('BACKEND TODO: processingService.getProcessingStatus missing endpoint')
-    // return apiClient.get(`/operations/${operationId}/processing-status`)
-    
-    // MOCK RESPONSE
-    return {
-      success: true,
-      data: {
-        status: 'Needs Review',
-        stages: [
-          { name: 'Document Detection', status: 'Completed' },
-          { name: 'OCR & Extraction', status: 'Completed' },
-          { name: 'Data Normalization', status: 'Completed' },
-          { name: 'Business Validation', status: 'Issue Detected' }
-        ]
-      }
-    }
+    const res = await apiClient.get(`/operations/${operationId}/processing-status`)
+    return res.data
   }
 }

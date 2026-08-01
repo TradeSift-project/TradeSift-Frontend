@@ -1,17 +1,20 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import DocumentsHeader from './components/documents/DocumentsHeader'
 import DocumentsStats from './components/documents/DocumentsStats'
 import DocumentsToolbar from './components/documents/DocumentsToolbar'
 import DocumentsTable from './components/documents/DocumentsTable'
 import DocumentEmptyState from './components/documents/DocumentEmptyState'
-import { MOCK_DOCUMENTS } from './constants/documentConstants'
-import { X, Cpu, RefreshCw, FileText, CheckCircle2 } from 'lucide-react'
+import { X, Cpu, RefreshCw, FileText, CheckCircle2, AlertCircle } from 'lucide-react'
 import { toast } from 'sonner'
+import { documentService } from '../../services/documentService'
+import { mapDocumentsToUI } from '../../services/documentMapper'
 
 const Documents = () => {
   const navigate = useNavigate()
-  const [documents, setDocuments] = useState(MOCK_DOCUMENTS)
+  const [documents, setDocuments] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
   const [search, setSearch] = useState('')
   const [typeFilter, setTypeFilter] = useState('All')
   const [opFilter, setOpFilter] = useState('All')
@@ -20,12 +23,41 @@ const Documents = () => {
   
   const [detailDoc, setDetailDoc] = useState(null)
 
-  const handleDelete = (id) => {
-    setDocuments((prev) => prev.filter((d) => d.id !== id))
-    toast.success('Document deleted successfully.')
+  const handleDelete = async (id) => {
+    try {
+      await documentService.deleteDocument(id)
+      setDocuments((prev) => prev.filter((d) => d.id !== id))
+      setDetailDoc(null)
+      toast.success('Document deleted successfully.')
+    } catch(err) {
+      console.error(err)
+      toast.error('Failed to delete document.')
+    }
   }
 
+  const fetchDocuments = async () => {
+    try {
+      setLoading(true)
+      setError(null)
+      const res = await documentService.getAllUserDocuments()
+      if (res.success) {
+        // Handle mapping backend docs to UI docs
+        const mappedDocs = mapDocumentsToUI(res.data.documents || [])
+        setDocuments(mappedDocs)
+      } else {
+        throw new Error(res.message || 'Failed to fetch documents')
+      }
+    } catch(err) {
+      console.error(err)
+      setError('Unable to load document history.')
+    } finally {
+      setLoading(false)
+    }
+  }
 
+  useEffect(() => {
+    fetchDocuments()
+  }, [])
 
   const handleResetFilters = () => {
     setSearch('')
@@ -63,6 +95,14 @@ const Documents = () => {
     return matchesSearch && matchesType && matchesOp && matchesStatus && matchesReview
   })
 
+  // Compute stats based on the real documents array (unfiltered, so it reflects total history)
+  const computedStats = [
+    { label: 'Total Documents', value: documents.length, status: 'info' },
+    { label: 'Processing', value: documents.filter(d => d.processingStatus === 'Processing').length, status: 'primary' },
+    { label: 'Needs Review', value: documents.filter(d => d.processingStatus === 'Requires Review').length, status: 'warning' },
+    { label: 'Processed', value: documents.filter(d => d.processingStatus === 'Completed').length, status: 'success' },
+  ]
+
   return (
     <div className="flex flex-col gap-6 relative min-h-screen">
       
@@ -70,7 +110,7 @@ const Documents = () => {
       <DocumentsHeader />
 
       {/* Stats */}
-      <DocumentsStats />
+      <DocumentsStats stats={computedStats} />
 
       {/* Toolbar */}
       <DocumentsToolbar
@@ -86,11 +126,36 @@ const Documents = () => {
         onReviewFilterChange={setReviewFilter}
       />
 
-      {/* Table / Empty State */}
-      {filteredDocuments.length > 0 ? (
+      {/* Table / Empty State / Error / Loading */}
+      {loading ? (
+        <div className="bg-white rounded-[24px] border border-gray-100 shadow-sm flex flex-col items-center justify-center p-12 min-h-[400px] text-gray-400 dark:bg-neutral-900 dark:border-neutral-800">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#F87103] mb-4"></div>
+          <p className="text-sm">Loading document history...</p>
+        </div>
+      ) : error ? (
+        <div className="bg-white rounded-[24px] border border-gray-100 shadow-sm flex flex-col items-center justify-center p-12 min-h-[400px] text-center dark:bg-neutral-900 dark:border-neutral-800">
+          <AlertCircle size={40} className="text-red-400 mb-4" />
+          <h3 className="font-bold text-gray-900 mb-1 dark:text-white">Unable to load documents</h3>
+          <p className="text-sm text-gray-500 mb-6 dark:text-gray-400">{error}</p>
+          <button
+            onClick={fetchDocuments}
+            className="flex items-center gap-2 px-6 py-2 rounded-full border border-gray-200 text-sm font-bold text-gray-700 hover:bg-gray-50 transition dark:text-gray-300 dark:border-neutral-700 dark:hover:bg-neutral-800"
+          >
+            <RefreshCw size={16} />
+            Retry
+          </button>
+        </div>
+      ) : filteredDocuments.length > 0 ? (
         <DocumentsTable
           documents={filteredDocuments}
-          onReview={(id) => navigate(`/dashboard/documents/${id}/review`)}
+          onReview={(id) => {
+            // Find the doc so we can navigate to its operation workspace or review directly
+            const doc = filteredDocuments.find(d => d.id === id)
+            if (doc && doc.operationId) {
+               // Since it's history, we might want to navigate to the review page of the operation
+               navigate(`/dashboard/review/${doc.operationId}`)
+            }
+          }}
           onViewDetails={setDetailDoc}
           onDelete={handleDelete}
         />
@@ -186,9 +251,12 @@ const Documents = () => {
             <button
               type="button"
               onClick={() => {
-                const id = detailDoc.id
+                // For real data, we route to the Operation's Review page since Documents don't have individual review screens in global scope
+                const id = detailDoc.operationId
                 setDetailDoc(null)
-                navigate(`/dashboard/documents/${id}/review`)
+                if (id) {
+                  navigate(`/dashboard/review/${id}`)
+                }
               }}
               className="flex-1 rounded-full bg-black py-2.5 text-xs font-bold text-white transition hover:bg-neutral-850 uppercase tracking-wider text-center"
             >

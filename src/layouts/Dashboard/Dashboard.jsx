@@ -23,8 +23,11 @@ import UploadOperation from './UploadOperation'
 import OperationsList from './OperationsList'
 import OperationWorkspace from './OperationWorkspace'
 import { getMe, logoutUser } from '../../services/userService'
+import { dashboardService } from '../../services/dashboardService'
+import { mapDashboardSummaryToUI } from '../../services/dashboardMapper'
 import NewOperationModal from '../../components/modal/NewOperationModal'
 import Settings from './Settings'
+import { AlertCircle, RefreshCw } from 'lucide-react'
 
 const Dashboard = () => {
   const navigate = useNavigate()
@@ -34,6 +37,9 @@ const Dashboard = () => {
   const [showNewOpModal, setShowNewOpModal] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [user, setUser] = useState(null)
+  const [dashboardData, setDashboardData] = useState(null)
+  const [dashboardLoading, setDashboardLoading] = useState(true)
+  const [dashboardError, setDashboardError] = useState(null)
 
   useEffect(() => {
     let isMounted = true
@@ -50,6 +56,30 @@ const Dashboard = () => {
     return () => {
       isMounted = false
     }
+  }, [])
+
+  const fetchDashboardData = async () => {
+    try {
+      setDashboardLoading(true)
+      setDashboardError(null)
+      const res = await dashboardService.getDashboardSummary()
+      if (res.success) {
+        setDashboardData(mapDashboardSummaryToUI(res.data))
+      } else {
+        throw new Error(res.message || 'Failed to fetch dashboard summary')
+      }
+    } catch (err) {
+      console.error(err)
+      setDashboardError('Unable to load dashboard data.')
+    } finally {
+      setDashboardLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    // Only fetch if we are on the root dashboard route, but for simplicity we fetch it when dashboard mounts
+    // or we could fetch it in a child component. Let's fetch it here.
+    fetchDashboardData()
   }, [])
 
   useEffect(() => {
@@ -73,14 +103,14 @@ const Dashboard = () => {
     if (user) {
       return `Good morning, ${user.firstName} 👋`
     }
-    return 'Good morning, Ahmed 👋'
+    return 'Good morning 👋'
   }
 
   const getUserNameForLoader = () => {
     if (user) {
       return `${user.firstName} ${user.lastName}`
     }
-    return 'Ahmed Raza'
+    return ''
   }
 
   const getSidebarUser = () => {
@@ -91,8 +121,8 @@ const Dashboard = () => {
       }
     }
     return {
-      name: 'Ahmed Raza',
-      role: 'Terminal Operator',
+      name: 'Loading...',
+      role: '...',
     }
   }
 
@@ -146,23 +176,47 @@ const Dashboard = () => {
                 element={
                   <>
                     <DashboardHeader greeting={getGreeting()} />
-                    <StatsGrid />
-                    
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-                      <div className="lg:col-span-2 flex flex-col gap-8">
-                        <ActiveWorkflows />
-                        <RecentDocuments />
+                    {dashboardLoading ? (
+                      <div className="bg-white rounded-[24px] border border-gray-100 shadow-sm flex flex-col items-center justify-center p-12 min-h-[400px] text-gray-400 dark:bg-neutral-900 dark:border-neutral-800">
+                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#F87103] mb-4"></div>
+                        <p className="text-sm">Loading dashboard summary...</p>
                       </div>
-                      <div className="flex flex-col gap-8">
-                        <QuickActions 
-                          onStartWorkflow={() => {
-                            // Can pre-select type in future, for now just open modal
-                            setShowNewOpModal(true)
-                          }} 
-                        />
-                        <OperationalAlerts onResolveItem={() => setShowComingSoon(true)} />
+                    ) : dashboardError ? (
+                      <div className="bg-white rounded-[24px] border border-gray-100 shadow-sm flex flex-col items-center justify-center p-12 min-h-[400px] text-center dark:bg-neutral-900 dark:border-neutral-800">
+                        <AlertCircle size={40} className="text-red-400 mb-4" />
+                        <h3 className="font-bold text-gray-900 mb-1 dark:text-white">Unable to load dashboard data.</h3>
+                        <p className="text-sm text-gray-500 mb-6 dark:text-gray-400">{dashboardError}</p>
+                        <button
+                          onClick={fetchDashboardData}
+                          className="flex items-center gap-2 px-6 py-2 rounded-full border border-gray-200 text-sm font-bold text-gray-700 hover:bg-gray-50 transition dark:text-gray-300 dark:border-neutral-700 dark:hover:bg-neutral-800"
+                        >
+                          <RefreshCw size={16} />
+                          Retry
+                        </button>
                       </div>
-                    </div>
+                    ) : dashboardData && (
+                      <>
+                        <StatsGrid stats={dashboardData.stats} />
+                        
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                          <div className="lg:col-span-2 flex flex-col gap-8">
+                            <ActiveWorkflows />
+                            <RecentDocuments documents={dashboardData.recentDocuments} />
+                          </div>
+                          <div className="flex flex-col gap-8">
+                            <QuickActions 
+                              onStartWorkflow={() => {
+                                setShowNewOpModal(true)
+                              }} 
+                            />
+                            <OperationalAlerts 
+                              alerts={dashboardData.alerts} 
+                              onResolveItem={() => setShowComingSoon(true)} 
+                            />
+                          </div>
+                        </div>
+                      </>
+                    )}
                   </>
                 }
               />

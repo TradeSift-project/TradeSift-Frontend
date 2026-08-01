@@ -23,7 +23,7 @@ const OperationsList = () => {
         setLoading(true)
         const res = await getOperations()
         if (isMounted && res.success) {
-          const fetchedData = res.data?.items || res.data
+          const fetchedData = res.data?.operations || res.data?.items || []
           setOperations(Array.isArray(fetchedData) ? fetchedData : [])
         }
       } catch (err) {

@@ -16,6 +16,9 @@ import ActionBar from './components/review/ActionBar'
 import { mockUnifiedJob } from './constants/workflowConstants'
 
 import { getOperationById } from '../../services/operationService'
+import { documentService } from '../../services/documentService'
+import { reviewService } from '../../services/reviewService'
+import { mapExtractionDataToUI } from '../../services/reviewMapper'
 import OperationNotFound from './components/shared/OperationNotFound'
 
 const Review = () => {
@@ -36,6 +39,9 @@ const Review = () => {
     const fetchJob = async () => {
       try {
         let backendJob = null
+        let backendDocs = []
+        let extractions = []
+
         try {
           const res = await getOperationById(jobId)
           if (res.success) {
@@ -49,23 +55,42 @@ const Review = () => {
           return
         }
 
+        try {
+          const docRes = await documentService.listOperationDocuments(jobId)
+          if (docRes?.data?.documents) {
+            backendDocs = docRes.data.documents
+          }
+        } catch(e) {}
+
+        try {
+          const extRes = await reviewService.getExtractionData(jobId)
+          if (extRes.success && extRes.data) {
+            extractions = Array.isArray(extRes.data) ? extRes.data : [extRes.data]
+          }
+        } catch(e) {
+          console.warn('No extractions found or error fetching extractions', e)
+        }
+
         if (!isMounted) return
 
-        // Merge real backend data with the mock pipeline/documents
         const mergedJob = {
           ...mockUnifiedJob,
-          id: backendJob?.id || jobId || mockUnifiedJob.id,
-          workflowType: backendJob?.operationType === 'GATE_IN' ? 'Import Gate-In' : 'Export Gate-Out',
-          description: backendJob?.notes || backendJob?.referenceNo || 'Electronics Components',
-          status: 'Needs Review'
+          id: backendJob.id,
+          workflowType: backendJob.operationType === 'GATE_IN' ? 'Import Gate-In' : 'Export Gate-Out',
+          description: backendJob.notes || backendJob.referenceNo || 'No reference',
+          status: 'Needs Review',
+          extractions // keeping raw extractions in state for save/approve actions
         }
 
         setJob(mergedJob)
-        setDocuments(JSON.parse(JSON.stringify(mergedJob.review.documentsHealth)))
-        setSections(JSON.parse(JSON.stringify(mergedJob.review.structuredData)))
-        setIssues(JSON.parse(JSON.stringify(mergedJob.review.validationIssues)))
-        setComparisons(JSON.parse(JSON.stringify(mergedJob.review.comparisons)))
-        setSummary(JSON.parse(JSON.stringify(mergedJob.review.reviewSummary)))
+        
+        const mappedData = mapExtractionDataToUI(extractions, backendDocs)
+        
+        setDocuments(mappedData.documents)
+        setSections(mappedData.sections)
+        setIssues(mappedData.issues)
+        setComparisons(mappedData.comparisons)
+        setSummary(mappedData.summary)
 
       } catch (err) {
         console.error('Failed to load review context:', err)
@@ -98,18 +123,63 @@ const Review = () => {
     })
   }
 
-  const handleApprove = () => {
-    toast.success('Structured dataset approved! Proceeding to Export.')
-    navigate(`/dashboard/approved-data/${job.id}`)
+  const handleApprove = async () => {
+    try {
+      // First save any draft changes
+      await handleSaveDraft(false)
+
+      const extractionIds = job.extractions.map(e => e.id)
+      for (const id of extractionIds) {
+        await reviewService.approveExtractionData(id)
+      }
+      toast.success('Structured dataset approved! Proceeding to Export.')
+      navigate(`/dashboard/export/${job.id}`) // Assuming export follows review
+    } catch (err) {
+      toast.error('Failed to approve extractions.')
+      console.error(err)
+    }
   }
 
-  const handleSaveDraft = () => {
-    toast.success('Validation progress saved as draft.')
+  const handleSaveDraft = async (showToast = true) => {
+    try {
+      // Group fields by extractionId
+      const updates = {}
+      sections.forEach(section => {
+        section.fields.forEach(field => {
+          if (field.extractionId && field.status === 'manually-edited') {
+            if (!updates[field.extractionId]) updates[field.extractionId] = {}
+            updates[field.extractionId][field.originalKey] = field.editableValue
+          }
+        })
+      })
+
+      const promises = Object.entries(updates).map(([extractionId, editedFields]) => {
+        return reviewService.updateExtractionData(extractionId, { editedFields })
+      })
+
+      if (promises.length > 0) {
+        await Promise.all(promises)
+      }
+      if (showToast) toast.success('Validation progress saved as draft.')
+    } catch (err) {
+      if (showToast) toast.error('Failed to save draft.')
+      console.error(err)
+    }
   }
 
-  const handleRequestReview = () => {
-    toast.warning('Document sent back to processing queue for review.')
-    navigate(`/dashboard/processing/${job.id}`)
+  const handleRequestReview = async () => {
+    try {
+      // Reject all extractions with a generic reason
+      const extractionIds = job.extractions.map(e => e.id)
+      for (const id of extractionIds) {
+        await reviewService.rejectExtractionData(id, 'Sent back for review')
+      }
+      toast.warning('Document sent back to processing queue for review.')
+      navigate(`/dashboard/processing/${job.id}`)
+    } catch (err) {
+      toast.error('Failed to request review.')
+      console.error(err)
+    }
   }
 
   const handleExportPreview = () => {

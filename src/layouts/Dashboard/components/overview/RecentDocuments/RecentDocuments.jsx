@@ -1,8 +1,8 @@
 import DocumentRow from './DocumentRow'
 import { RECENT_DOCUMENTS } from '../../../constants/dashboardConstants'
 
-const RecentDocuments = ({ documents = RECENT_DOCUMENTS }) => {
-  const currentDocuments = documents || RECENT_DOCUMENTS
+const RecentDocuments = ({ documents }) => {
+  const currentDocuments = documents || []
 
   return (
     <div className="flex flex-col gap-4">
@@ -24,9 +24,18 @@ const RecentDocuments = ({ documents = RECENT_DOCUMENTS }) => {
             </tr>
           </thead>
           <tbody className="divide-y divide-neutral-100 bg-white dark:bg-neutral-900">
-            {currentDocuments.map((doc) => (
-              <DocumentRow key={doc.id} {...doc} />
-            ))}
+            {currentDocuments.length > 0 ? (
+              currentDocuments.map((doc) => (
+                <DocumentRow key={doc.id} {...doc} />
+              ))
+            ) : (
+              <tr>
+                <td colSpan="5" className="px-6 py-8 text-center text-gray-400 dark:text-gray-500">
+                  <p className="text-sm">No recent documents</p>
+                  <p className="text-xs mt-1">Start an operation to begin processing documents.</p>
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

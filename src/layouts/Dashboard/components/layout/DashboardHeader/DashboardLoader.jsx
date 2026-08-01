@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { fadeInOpacityOnly } from '../../../../../animations/variants'
 
-const DashboardLoader = ({ onComplete, userName = 'Ahmed Raza' }) => {
+const DashboardLoader = ({ onComplete, userName = '' }) => {
   const [stage, setStage] = useState('video')
 
   const handleVideoEnd = () => {
@@ -24,7 +24,7 @@ const DashboardLoader = ({ onComplete, userName = 'Ahmed Raza' }) => {
           onComplete()
         }
       }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-white dark:bg-neutral-900"
+      className="fixed inset-0 z-[999] flex items-center justify-center bg-white dark:bg-neutral-900"
     >
       {stage === 'video' && (
         <video
@@ -48,7 +48,7 @@ const DashboardLoader = ({ onComplete, userName = 'Ahmed Raza' }) => {
           animate="visible"
           className="font-geist text-4xl font-semibold tracking-[-0.5px] text-[#0B0D12] dark:text-white"
         >
-          Welcome, {userName}
+          Welcome{userName ? `, ${userName}` : ''}
         </motion.h1>
       )}
     </motion.div>

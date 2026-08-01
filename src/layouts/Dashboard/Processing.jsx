@@ -11,6 +11,7 @@ import ProcessingDocuments from './components/processing/ProcessingDocuments'
 import ProcessingIssues from './components/processing/ProcessingIssues'
 
 import { mockUnifiedJob } from './constants/workflowConstants'
+import { mapProcessingStatusToUI } from '../../services/processingMapper'
 
 import { getOperationById } from '../../services/operationService'
 import { documentService } from '../../services/documentService'
@@ -27,86 +28,92 @@ const Processing = () => {
 
   useEffect(() => {
     let isMounted = true
-    const fetchJob = async () => {
+    let pollInterval = null
+
+    const fetchContextAndPoll = async () => {
       try {
         let backendJob = null
         let backendDocs = []
-        // Try to fetch real job if it's a UUID/ID from backend
+        
+        // Initial fetches
+        const res = await getOperationById(jobId)
+        if (!res.success) throw new Error('Operation not found')
+        backendJob = res.data
+
         try {
-          const res = await getOperationById(jobId)
-          if (res.success) {
-            backendJob = res.data
-            // Fetch real documents for this operation
-            try {
-              const docRes = await documentService.listOperationDocuments(jobId)
-              if (docRes && docRes.data && docRes.data.documents) {
-                backendDocs = docRes.data.documents
-              }
-            } catch (err) {
-              console.error('Failed to fetch documents for operation', err)
-            }
-          } else {
-            if (isMounted) setError(true)
-            return
-          }
-        } catch (e) {
-          if (isMounted) setError(true)
-          return
+          const docRes = await documentService.listOperationDocuments(jobId)
+          if (docRes?.data?.documents) backendDocs = docRes.data.documents
+        } catch (err) {
+          console.error('Failed to fetch documents for operation', err)
         }
 
         if (!isMounted) return
 
-        // Format backend documents for the Processing UI
-        const mappedDocs = backendDocs.map(doc => ({
-          id: doc.id,
-          name: doc.originalFileName.split('.')[0],
-          fileName: doc.originalFileName,
-          uploadedAt: new Date(doc.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          status: 'processing', // since AI doesn't exist yet, we keep them in processing state
-          confidence: null,
-          actionRequired: false
-        }))
+        const updateStateFromStatus = (statusData) => {
+          const mapped = mapProcessingStatusToUI(statusData, backendDocs)
+          const mergedJob = {
+            ...mockUnifiedJob,
+            id: backendJob.id,
+            workflowType: backendJob.operationType === 'GATE_IN' ? 'Import Gate-In' : 'Export Gate-Out',
+            description: backendJob.notes || backendJob.referenceNo || 'No reference',
+            ...mapped
+          }
+          setJob(mergedJob)
+          return mapped
+        }
 
-        // Merge real backend data with the mock pipeline/documents
-        const mergedJob = {
-          ...mockUnifiedJob,
-          id: backendJob?.id || jobId || mockUnifiedJob.id,
-          workflowType: backendJob?.operationType === 'GATE_IN' ? 'Import Gate-In' : 'Export Gate-Out',
-          description: backendJob?.notes || backendJob?.referenceNo || 'Electronics Components',
-          status: 'Processing', // Start by showing processing status for UX
-          processing: {
-            ...mockUnifiedJob.processing,
-            // If we have real documents, use them instead of the mock ones
-            documents: mappedDocs.length > 0 ? mappedDocs : mockUnifiedJob.processing.documents
+        // If operation is DRAFT, start processing
+        if (backendJob.status === 'DRAFT') {
+          try {
+            await processingService.startProcessing(jobId)
+          } catch(err) {
+            console.error('Failed to start processing', err)
           }
         }
 
-        setJob(mergedJob)
-        // Simulate merging processing pipeline status from the backend service
+        // Fetch initial status
+        let statusData = null
         try {
-          const processingRes = await processingService.getProcessingStatus(jobId)
-          if (processingRes.success) {
-            // Apply backend statuses to our pipeline
-            // setJob(prev => ({ ...prev, status: processingRes.data.status }))
-            
-            // For now, simulate delay then set status to Needs Review
-            setTimeout(() => {
-              if (isMounted) setJob(prev => ({ ...prev, status: processingRes.data.status }))
-            }, 3000)
-          }
-        } catch (err) {
-          console.error('Failed to get processing status:', err)
+          const statusRes = await processingService.getProcessingStatus(jobId)
+          if (statusRes.success) statusData = statusRes.data
+        } catch(err) {
+          // It might not exist yet if it just got queued
         }
 
+        const initialMapped = updateStateFromStatus(statusData)
+        setLoading(false)
+
+        // Polling loop
+        if (initialMapped.status === 'Processing') {
+          pollInterval = setInterval(async () => {
+            try {
+              const currentRes = await processingService.getProcessingStatus(jobId)
+              if (currentRes.success && isMounted) {
+                const currentMapped = updateStateFromStatus(currentRes.data)
+                if (currentMapped.status !== 'Processing') {
+                  clearInterval(pollInterval)
+                }
+              }
+            } catch (err) {
+              console.error('Polling error', err)
+            }
+          }, 3000)
+        }
       } catch (err) {
-        console.error('Failed to load job context:', err)
-      } finally {
-        if (isMounted) setLoading(false)
+        console.error('Failed to load processing context', err)
+        if (isMounted) {
+          setError(true)
+          setLoading(false)
+        }
       }
     }
 
-    fetchJob()
-    return () => { isMounted = false }
+    fetchContextAndPoll()
+
+    return () => {
+      isMounted = false
+      if (pollInterval) clearInterval(pollInterval)
+    }
   }, [jobId])
 
   if (error) return <OperationNotFound />

@@ -15,23 +15,9 @@ export const reviewService = {
   // Backend developer:
   // Replace this placeholder with the real API.
   // =====================================================
-  getExtractionData: async (documentId) => {
-    console.warn('BACKEND TODO: reviewService.getExtractionData missing endpoint')
-    // return apiClient.get(`/documents/${documentId}/extraction`)
-    
-    // MOCK RESPONSE
-    return {
-      success: true,
-      data: {
-        fields: [
-          { name: 'Gross Weight', value: '12,450 KG', confidence: 0.94, status: 'Needs Review' },
-          { name: 'Shipper', value: 'Global Logistics LLC', confidence: 0.99, status: 'Approved' }
-        ],
-        validationIssues: [
-          { field: 'Gross Weight', message: 'Weight mismatch compared to Packing List (12,800 KG)' }
-        ]
-      }
-    }
+  getExtractionData: async (operationId) => {
+    const res = await apiClient.get(`/operations/${operationId}/extraction`)
+    return res.data
   },
 
   // =====================================================
@@ -50,11 +36,18 @@ export const reviewService = {
   // Backend developer:
   // Replace this placeholder with the real API.
   // =====================================================
-  updateExtractionData: async (documentId, payload) => {
-    console.warn('BACKEND TODO: reviewService.updateExtractionData missing endpoint')
-    // return apiClient.patch(`/documents/${documentId}/extraction`, payload)
-    
-    // MOCK RESPONSE
-    return { success: true, message: 'Data updated and approved successfully' }
+  updateExtractionData: async (extractionId, payload) => {
+    const res = await apiClient.patch(`/extractions/${extractionId}`, payload)
+    return res.data
+  },
+
+  approveExtractionData: async (extractionId) => {
+    const res = await apiClient.post(`/extractions/${extractionId}/approve`)
+    return res.data
+  },
+
+  rejectExtractionData: async (extractionId, reason) => {
+    const res = await apiClient.post(`/extractions/${extractionId}/reject`, { reason })
+    return res.data
   }
 }
