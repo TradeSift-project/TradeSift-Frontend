@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
-import { fadeUp, collapse } from '../../../../../animations/variants'
+import { fadeUp, collapse, staggerContainer } from '../../../../../animations/variants'
 import { FAQS } from '../../constants/landingConstants'
 
 export default function FAQ() {
@@ -36,7 +36,13 @@ export default function FAQ() {
         </p>
       </motion.div>
 
-      <div className="mx-auto w-full max-w-4xl space-y-4">
+      <motion.div 
+        initial={shouldReduceMotion ? 'visible' : 'hidden'}
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
+        variants={staggerContainer}
+        className="mx-auto w-full max-w-4xl space-y-4"
+      >
         {FAQS.map((faq) => {
           const isOpen = openFaqId === faq.id
 
@@ -78,7 +84,7 @@ export default function FAQ() {
             </motion.div>
           )
         })}
-      </div>
+      </motion.div>
     </section>
   )
 }

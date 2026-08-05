@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { FileText, Table, CheckSquare, Search, Tag, CornerDownRight } from 'lucide-react'
-import { fadeUp } from '../../../../../animations/variants'
+import { fadeUp, fadeLeft, fadeRight, scaleIn, staggerContainer } from '../../../../../animations/variants'
 
 const SupportedDocuments = () => {
   return (
@@ -15,7 +15,13 @@ const SupportedDocuments = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           
           {/* Left: Mock OCR Invoice extraction visualization */}
-          <div className="bg-neutral-50 border border-gray-200 rounded-[28px] p-6 lg:p-8 font-mono text-[11px] text-gray-700 shadow-sm relative overflow-hidden">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={staggerContainer}
+            className="bg-neutral-50 border border-gray-200 rounded-[28px] p-6 lg:p-8 font-mono text-[11px] text-gray-700 shadow-sm relative overflow-hidden"
+          >
             <div className="absolute top-0 left-0 right-0 h-10 bg-gray-100/50 border-b border-gray-200/60 px-4 flex items-center justify-between">
               <span className="text-[10px] text-gray-500 font-bold">manifest_invoice_v3.pdf</span>
               <div className="flex gap-1">
@@ -28,38 +34,38 @@ const SupportedDocuments = () => {
             <div className="mt-8 space-y-5 pt-2">
               
               {/* Row 1 */}
-              <div className="relative border border-amber-300 bg-amber-500/5 rounded-lg p-3">
+              <motion.div variants={fadeRight} className="relative border border-amber-300 bg-amber-500/5 rounded-lg p-3">
                 <span className="absolute -top-2.5 left-2 bg-amber-500 text-black px-1.5 py-0.5 rounded text-[8px] font-bold tracking-wider">HS_CODE_EXTRACTED</span>
                 <p className="text-gray-400">8504.40.90 - ELECTRONICS INTEGRATED CIRCUIT MODULES</p>
-              </div>
+              </motion.div>
 
               {/* Row 2 */}
-              <div className="relative border border-emerald-300 bg-emerald-500/5 rounded-lg p-3">
+              <motion.div variants={fadeRight} className="relative border border-emerald-300 bg-emerald-500/5 rounded-lg p-3">
                 <span className="absolute -top-2.5 left-2 bg-emerald-500 text-white px-1.5 py-0.5 rounded text-[8px] font-bold tracking-wider">CONSIGNEE_MATCH</span>
                 <p className="text-gray-400">IMPORTER NAME: AHMED WEBS LTD (REG #12039-A)</p>
-              </div>
+              </motion.div>
 
               {/* Row 3 */}
               <div className="grid grid-cols-2 gap-4">
-                <div className="relative border border-blue-300 bg-blue-500/5 rounded-lg p-3">
+                <motion.div variants={scaleIn} className="relative border border-blue-300 bg-blue-500/5 rounded-lg p-3">
                   <span className="absolute -top-2.5 left-2 bg-blue-500 text-white px-1.5 py-0.5 rounded text-[8px] font-bold tracking-wider">CONTAINER_NUM</span>
                   <p className="text-gray-400">HLXU8902341</p>
-                </div>
-                <div className="relative border border-purple-300 bg-purple-500/5 rounded-lg p-3">
+                </motion.div>
+                <motion.div variants={scaleIn} className="relative border border-purple-300 bg-purple-500/5 rounded-lg p-3">
                   <span className="absolute -top-2.5 left-2 bg-purple-500 text-white px-1.5 py-0.5 rounded text-[8px] font-bold tracking-wider">GROSS_WT</span>
                   <p className="text-gray-400">23,800 KG</p>
-                </div>
+                </motion.div>
               </div>
 
               {/* Typographic Document lines */}
-              <div className="space-y-1.5 text-gray-400/60 font-sans text-[10px] pl-1">
+              <motion.div variants={fadeUp} className="space-y-1.5 text-gray-400/60 font-sans text-[10px] pl-1">
                 <p>COUNTRY OF ORIGIN: CHINA (CHINA-PAKISTAN FTA APPLICABLE)</p>
                 <p>PORT OF LOADING: SHANGHAI PORT // PORT OF DISCHARGE: KARACHI (KICT)</p>
                 <p>DELIVERY ORDER REFERENCE: DO-902381-KARACHI</p>
-              </div>
+              </motion.div>
 
             </div>
-          </div>
+          </motion.div>
 
           {/* Right: Copy details (No cards!) */}
           <motion.div

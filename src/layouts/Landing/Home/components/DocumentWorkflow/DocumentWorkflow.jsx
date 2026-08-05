@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { ArrowRight, FileText, Cpu, CheckSquare, Database, ArrowDown } from 'lucide-react'
-import { fadeUp } from '../../../../../animations/variants'
+import { fadeUp, staggerContainer } from '../../../../../animations/variants'
 
 const DocumentWorkflow = () => {
   return (
@@ -30,10 +30,16 @@ const DocumentWorkflow = () => {
         </motion.div>
 
         {/* Infographic Visual Diagram Flow */}
-        <div className="relative flex flex-col lg:flex-row items-stretch justify-between gap-8 lg:gap-4 mt-12 bg-neutral-50 rounded-[32px] p-8 lg:p-12 border border-gray-200">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={staggerContainer}
+          className="relative flex flex-col lg:flex-row items-stretch justify-between gap-8 lg:gap-4 mt-12 bg-neutral-50 rounded-[32px] p-8 lg:p-12 border border-gray-200"
+        >
           
           {/* Step 1: Documents Ingest */}
-          <div className="flex-1 flex flex-col justify-between items-center text-center lg:text-left lg:items-start bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+          <motion.div variants={fadeUp} className="flex-1 flex flex-col justify-between items-center text-center lg:text-left lg:items-start bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
             <div>
               <span className="text-[10px] font-mono font-bold text-amber-600 uppercase tracking-wider bg-amber-50 px-2 py-0.5 rounded">Step 01</span>
               <h3 className="font-geist text-lg font-bold text-gray-900 mt-3">Document Ingestion</h3>
@@ -51,16 +57,16 @@ const DocumentWorkflow = () => {
                 <span>PackingList.jpg</span>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Connection 1 */}
-          <div className="flex items-center justify-center text-gray-300">
+          <motion.div variants={fadeUp} className="flex items-center justify-center text-gray-300">
             <ArrowRight size={20} className="hidden lg:block text-amber-500 animate-pulse" />
             <ArrowDown size={20} className="lg:hidden text-amber-500 animate-pulse" />
-          </div>
+          </motion.div>
 
           {/* Step 2: AI Parsing */}
-          <div className="flex-1 flex flex-col justify-between items-center text-center lg:text-left lg:items-start bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+          <motion.div variants={fadeUp} className="flex-1 flex flex-col justify-between items-center text-center lg:text-left lg:items-start bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
             <div>
               <span className="text-[10px] font-mono font-bold text-amber-600 uppercase tracking-wider bg-amber-50 px-2 py-0.5 rounded">Step 02</span>
               <h3 className="font-geist text-lg font-bold text-gray-900 mt-3">AI Field Extraction</h3>
@@ -72,16 +78,16 @@ const DocumentWorkflow = () => {
               <span className="h-1.5 w-1.5 rounded-full bg-amber-500 animate-ping" />
               <span className="text-[11px] font-mono text-gray-500">Extracting: Container No...</span>
             </div>
-          </div>
+          </motion.div>
 
           {/* Connection 2 */}
-          <div className="flex items-center justify-center text-gray-300">
+          <motion.div variants={fadeUp} className="flex items-center justify-center text-gray-300">
             <ArrowRight size={20} className="hidden lg:block text-amber-500 animate-pulse" />
             <ArrowDown size={20} className="lg:hidden text-amber-500 animate-pulse" />
-          </div>
+          </motion.div>
 
           {/* Step 3: Cross-Doc Validation */}
-          <div className="flex-1 flex flex-col justify-between items-center text-center lg:text-left lg:items-start bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+          <motion.div variants={fadeUp} className="flex-1 flex flex-col justify-between items-center text-center lg:text-left lg:items-start bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
             <div>
               <span className="text-[10px] font-mono font-bold text-amber-600 uppercase tracking-wider bg-amber-50 px-2 py-0.5 rounded">Step 03</span>
               <h3 className="font-geist text-lg font-bold text-gray-900 mt-3">Data Validation</h3>
@@ -93,16 +99,16 @@ const DocumentWorkflow = () => {
               <CheckSquare size={12} />
               <span>Weight verified match</span>
             </div>
-          </div>
+          </motion.div>
 
           {/* Connection 3 */}
-          <div className="flex items-center justify-center text-gray-300">
+          <motion.div variants={fadeUp} className="flex items-center justify-center text-gray-300">
             <ArrowRight size={20} className="hidden lg:block text-amber-500 animate-pulse" />
             <ArrowDown size={20} className="lg:hidden text-amber-500 animate-pulse" />
-          </div>
+          </motion.div>
 
           {/* Step 4: System Integration */}
-          <div className="flex-1 flex flex-col justify-between items-center text-center lg:text-left lg:items-start bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+          <motion.div variants={fadeUp} className="flex-1 flex flex-col justify-between items-center text-center lg:text-left lg:items-start bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
             <div>
               <span className="text-[10px] font-mono font-bold text-amber-600 uppercase tracking-wider bg-amber-50 px-2 py-0.5 rounded">Step 04</span>
               <h3 className="font-geist text-lg font-bold text-gray-900 mt-3">ERP Synchronization</h3>
@@ -114,9 +120,9 @@ const DocumentWorkflow = () => {
               <Database size={12} className="text-amber-500 animate-bounce" />
               <span>Syncing with ERP system...</span>
             </div>
-          </div>
+          </motion.div>
 
-        </div>
+        </motion.div>
 
       </div>
     </section>

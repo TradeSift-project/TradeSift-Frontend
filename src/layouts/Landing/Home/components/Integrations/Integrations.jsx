@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { Database, Download, Cpu, ArrowRight } from 'lucide-react'
-import { fadeUp } from '../../../../../animations/variants'
+import { fadeUp, scaleIn, staggerContainer } from '../../../../../animations/variants'
 
 const Integrations = () => {
   return (
@@ -32,10 +32,16 @@ const Integrations = () => {
         </motion.div>
 
         {/* Custom diagrammatic integration section */}
-        <div className="relative flex flex-col md:grid md:grid-cols-3 items-center justify-between gap-8 mt-12 bg-white border border-gray-200 rounded-[32px] p-8 lg:p-12 shadow-sm">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={staggerContainer}
+          className="relative flex flex-col md:grid md:grid-cols-3 items-center justify-between gap-8 mt-12 bg-white border border-gray-200 rounded-[32px] p-8 lg:p-12 shadow-sm"
+        >
           
           {/* Node 1: AI Engine */}
-          <div className="flex flex-col items-center text-center p-6 bg-neutral-50 border border-gray-150 rounded-2xl w-full max-w-[280px]">
+          <motion.div variants={scaleIn} className="flex flex-col items-center text-center p-6 bg-neutral-50 border border-gray-150 rounded-2xl w-full max-w-[280px]">
             <div className="h-10 w-10 rounded-xl bg-black text-[#FAF0CB] flex items-center justify-center mb-4">
               <Cpu size={20} />
             </div>
@@ -43,21 +49,21 @@ const Integrations = () => {
             <p className="text-[11px] text-gray-400 mt-2 leading-relaxed">
               Processes raw paperwork and converts it into fully validated cargo parameters.
             </p>
-          </div>
+          </motion.div>
 
           {/* Connectors / Mid block */}
-          <div className="flex flex-col items-center justify-center text-gray-300 w-full gap-2">
+          <motion.div variants={fadeUp} className="flex flex-col items-center justify-center text-gray-300 w-full gap-2">
             <span className="text-[10px] font-mono font-bold text-amber-600 tracking-wider">OUTPUT FLOW</span>
             <div className="flex items-center gap-1.5 animate-pulse">
               <ArrowRight size={18} className="text-amber-500 hidden md:block" />
             </div>
-          </div>
+          </motion.div>
 
           {/* Node 2: System Outputs (APIs + Sheets) */}
           <div className="flex flex-col gap-4 w-full max-w-[340px]">
             
             {/* API Integration */}
-            <div className="flex items-start gap-4 p-4 border border-gray-100 rounded-xl bg-neutral-50/50 hover:bg-neutral-50 transition duration-200">
+            <motion.div variants={fadeUp} className="flex items-start gap-4 p-4 border border-gray-100 rounded-xl bg-neutral-50/50 hover:bg-neutral-50 transition duration-200">
               <div className="h-8 w-8 rounded-lg bg-black text-amber-500 flex items-center justify-center shrink-0">
                 <Database size={16} />
               </div>
@@ -67,10 +73,10 @@ const Integrations = () => {
                   Connect direct mapping fields into your database or terminal operating system.
                 </p>
               </div>
-            </div>
+            </motion.div>
 
             {/* Offline Excel export */}
-            <div className="flex items-start gap-4 p-4 border border-gray-100 rounded-xl bg-neutral-50/50 hover:bg-neutral-50 transition duration-200">
+            <motion.div variants={fadeUp} className="flex items-start gap-4 p-4 border border-gray-100 rounded-xl bg-neutral-50/50 hover:bg-neutral-50 transition duration-200">
               <div className="h-8 w-8 rounded-lg bg-black text-[#FAF0CB] flex items-center justify-center shrink-0">
                 <Download size={16} />
               </div>
@@ -80,11 +86,11 @@ const Integrations = () => {
                   For operations running legacy offline terminals. Download template-formatted sheets.
                 </p>
               </div>
-            </div>
+            </motion.div>
 
           </div>
 
-        </div>
+        </motion.div>
 
       </div>
     </section>

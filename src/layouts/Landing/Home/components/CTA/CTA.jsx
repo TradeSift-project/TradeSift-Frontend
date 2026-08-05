@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { fadeUp } from '../../../../../animations/variants'
+import { fadeUp, staggerContainer } from '../../../../../animations/variants'
 import { Link } from 'react-router-dom'
 
 const MotionLink = motion.create(Link)
@@ -16,18 +16,18 @@ const CTA = () => {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
-        variants={fadeUp}
+        variants={staggerContainer}
         className="mx-auto flex max-w-5xl flex-col items-center gap-8 rounded-[36px] border border-gray-200 shadow-md bg-white px-8 py-16 text-center shadow-[0_4px_20px_rgba(0,0,0,0.05)]"
       >
-        <h2 className="max-w-2xl font-geist text-3xl font-bold tracking-tight text-black sm:text-4xl md:text-[40px] md:leading-[1.15]">
+        <motion.h2 variants={fadeUp} className="max-w-2xl font-geist text-3xl font-bold tracking-tight text-black sm:text-4xl md:text-[40px] md:leading-[1.15]">
           Ready to automate your terminal document workflows?
-        </h2>
+        </motion.h2>
         
-        <p className="max-w-lg text-sm leading-relaxed text-gray-500 sm:text-base">
+        <motion.p variants={fadeUp} className="max-w-lg text-sm leading-relaxed text-gray-500 sm:text-base">
           Connect your incoming paperwork with your operational systems automatically using TradeSift AI.
-        </p>
+        </motion.p>
         
-        <div className="flex flex-col items-center gap-3 sm:flex-row">
+        <motion.div variants={fadeUp} className="flex flex-col items-center gap-3 sm:flex-row">
           <MotionLink
             to="/signup"
             whileHover={{ y: -3 }}
@@ -44,7 +44,7 @@ const CTA = () => {
           >
             SIGN IN
           </MotionLink>
-        </div>
+        </motion.div>
       </motion.div>
     </section>
   )

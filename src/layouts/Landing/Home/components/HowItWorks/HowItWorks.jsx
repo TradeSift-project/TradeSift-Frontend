@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { AlertCircle, CheckCircle2, AlertTriangle, FileText, Info } from 'lucide-react'
-import { fadeUp } from '../../../../../animations/variants'
+import { fadeUp, fadeLeft, staggerContainer } from '../../../../../animations/variants'
 
 const HowItWorks = () => {
   return (
@@ -60,7 +60,13 @@ const HowItWorks = () => {
           </motion.div>
 
           {/* Right: Mock Verification Dashboard UI (High visual B2B value, zero boxes!) */}
-          <div className="bg-white border border-gray-200 rounded-[24px] p-6 lg:p-8 shadow-[0_10px_30px_rgba(0,0,0,0.03)] relative overflow-hidden">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={staggerContainer}
+            className="bg-white border border-gray-200 rounded-[24px] p-6 lg:p-8 shadow-[0_10px_30px_rgba(0,0,0,0.03)] relative overflow-hidden"
+          >
             <div className="absolute top-0 right-0 h-40 w-40 bg-amber-500/5 rounded-full blur-3xl" />
             
             {/* Header */}
@@ -78,7 +84,7 @@ const HowItWorks = () => {
             <div className="space-y-4">
               
               {/* Check 1 */}
-              <div className="flex items-start justify-between bg-emerald-50/50 border border-emerald-100/80 rounded-xl p-3.5">
+              <motion.div variants={fadeLeft} className="flex items-start justify-between bg-emerald-50/50 border border-emerald-100/80 rounded-xl p-3.5">
                 <div className="flex gap-3">
                   <CheckCircle2 className="text-emerald-500 shrink-0 mt-0.5" size={16} />
                   <div>
@@ -87,10 +93,10 @@ const HowItWorks = () => {
                   </div>
                 </div>
                 <span className="text-[10px] font-mono text-emerald-600 font-semibold mt-0.5">Verified</span>
-              </div>
+              </motion.div>
 
               {/* Check 2 */}
-              <div className="flex items-start justify-between bg-emerald-50/50 border border-emerald-100/80 rounded-xl p-3.5">
+              <motion.div variants={fadeLeft} className="flex items-start justify-between bg-emerald-50/50 border border-emerald-100/80 rounded-xl p-3.5">
                 <div className="flex gap-3">
                   <CheckCircle2 className="text-emerald-500 shrink-0 mt-0.5" size={16} />
                   <div>
@@ -99,10 +105,10 @@ const HowItWorks = () => {
                   </div>
                 </div>
                 <span className="text-[10px] font-mono text-emerald-600 font-semibold mt-0.5">Verified</span>
-              </div>
+              </motion.div>
 
               {/* Check 3: Discrepancy Alert */}
-              <div className="flex items-start justify-between bg-red-50/50 border border-red-100/80 rounded-xl p-3.5">
+              <motion.div variants={fadeLeft} className="flex items-start justify-between bg-red-50/50 border border-red-100/80 rounded-xl p-3.5">
                 <div className="flex gap-3">
                   <AlertTriangle className="text-red-500 shrink-0 mt-0.5 animate-bounce" size={16} />
                   <div>
@@ -111,17 +117,17 @@ const HowItWorks = () => {
                   </div>
                 </div>
                 <span className="text-[10px] font-mono text-red-600 font-semibold mt-0.5">Discrepancy</span>
-              </div>
+              </motion.div>
 
             </div>
 
             {/* Info footer */}
-            <div className="flex items-center gap-2 mt-6 text-[10.5px] text-gray-400">
+            <motion.div variants={fadeUp} className="flex items-center gap-2 mt-6 text-[10.5px] text-gray-400">
               <Info size={12} className="shrink-0" />
               <span>WeBOC integration will require manual override to submit this weighment.</span>
-            </div>
+            </motion.div>
 
-          </div>
+          </motion.div>
 
         </div>
 

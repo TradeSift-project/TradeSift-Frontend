@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
-import { fadeUp } from '../../../../../animations/variants'
+import { fadeUp, staggerContainer } from '../../../../../animations/variants'
+import AnimatedNumber from './AnimatedNumber'
 
 const Benefits = () => {
   return (
@@ -31,12 +32,18 @@ const Benefits = () => {
         </motion.div>
 
         {/* Stats Grid (No repetitive boxes!) */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mt-10 text-center md:text-left">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={staggerContainer}
+          className="grid grid-cols-1 md:grid-cols-3 gap-12 mt-10 text-center md:text-left"
+        >
           
           {/* Stat 1 */}
-          <div className="flex flex-col gap-3">
+          <motion.div variants={fadeUp} className="flex flex-col gap-3">
             <span className="font-geist text-[48px] sm:text-[60px] font-bold text-gray-900 tracking-tight leading-none">
-              99.2%
+              <AnimatedNumber value={99.2} decimals={1} suffix="%" />
             </span>
             <h3 className="font-geist text-base font-bold text-gray-900">
               Extraction Accuracy
@@ -44,12 +51,12 @@ const Benefits = () => {
             <p className="text-xs text-gray-500 leading-relaxed max-w-xs md:max-w-none">
               Our specialized parser processes invoices, weights, and seal numbers with human-level accuracy.
             </p>
-          </div>
+          </motion.div>
 
           {/* Stat 2 */}
-          <div className="flex flex-col gap-3 md:border-l md:border-gray-200 md:pl-10">
+          <motion.div variants={fadeUp} className="flex flex-col gap-3 md:border-l md:border-gray-200 md:pl-10">
             <span className="font-geist text-[48px] sm:text-[60px] font-bold text-amber-550 tracking-tight leading-none text-amber-600">
-              90%
+              <AnimatedNumber value={90} suffix="%" />
             </span>
             <h3 className="font-geist text-base font-bold text-gray-900">
               Filing Time Reduction
@@ -57,12 +64,12 @@ const Benefits = () => {
             <p className="text-xs text-gray-500 leading-relaxed max-w-xs md:max-w-none">
               Auto-filling ERP data fields instantly instead of manually reading, comparing, and re-typing forms.
             </p>
-          </div>
+          </motion.div>
 
           {/* Stat 3 */}
-          <div className="flex flex-col gap-3 md:border-l md:border-gray-200 md:pl-10">
+          <motion.div variants={fadeUp} className="flex flex-col gap-3 md:border-l md:border-gray-200 md:pl-10">
             <span className="font-geist text-[48px] sm:text-[60px] font-bold text-gray-900 tracking-tight leading-none">
-              &lt; 1s
+              <AnimatedNumber value={1} prefix="< " suffix="s" />
             </span>
             <h3 className="font-geist text-base font-bold text-gray-900">
               Sub-Second Parsing
@@ -70,9 +77,9 @@ const Benefits = () => {
             <p className="text-xs text-gray-500 leading-relaxed max-w-xs md:max-w-none">
               Every document is scanned, validated, and cross-referenced in under a second for real-time operations.
             </p>
-          </div>
+          </motion.div>
 
-        </div>
+        </motion.div>
 
       </div>
     </section>
