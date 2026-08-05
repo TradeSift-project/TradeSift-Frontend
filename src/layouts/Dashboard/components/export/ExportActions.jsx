@@ -22,7 +22,7 @@ const ExportActions = ({ destinationId, onBack, onExport, isReady }) => {
           className={`flex items-center gap-2 px-8 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition ${
             isReady 
               ? 'bg-[#F87103] text-white hover:bg-[#E06602] shadow-md shadow-[#F87103]/20' 
-              : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+              : 'bg-gray-100 text-gray-400 cursor-not-allowed dark:bg-neutral-800 dark:text-gray-500'
           }`}
         >
           {isExcel ? <Download size={16} /> : <Send size={16} />}

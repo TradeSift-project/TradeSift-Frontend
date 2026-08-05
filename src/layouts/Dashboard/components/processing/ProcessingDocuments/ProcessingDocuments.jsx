@@ -5,33 +5,33 @@ import { useNavigate } from 'react-router-dom'
 
 const statusConfig = {
   completed: {
-    bg: 'bg-emerald-50',
-    text: 'text-emerald-700',
-    icon: <CheckCircle2 size={14} className="text-emerald-500" />,
+    bg: 'bg-emerald-50 dark:bg-emerald-500/10',
+    text: 'text-emerald-700 dark:text-emerald-400',
+    icon: <CheckCircle2 size={14} className="text-emerald-500 dark:text-emerald-400" />,
     label: 'Completed'
   },
   processing: {
-    bg: 'bg-orange-50',
-    text: 'text-orange-700',
-    icon: <Loader2 size={14} className="text-orange-500 animate-spin" />,
+    bg: 'bg-blue-50 dark:bg-indigo-500/10',
+    text: 'text-blue-700 dark:text-indigo-400',
+    icon: <Loader2 size={14} className="text-blue-500 dark:text-indigo-400 animate-spin" />,
     label: 'Processing'
   },
   extraction: {
-    bg: 'bg-orange-50',
-    text: 'text-orange-700',
-    icon: <Loader2 size={14} className="text-orange-500 animate-spin" />,
+    bg: 'bg-blue-50 dark:bg-indigo-500/10',
+    text: 'text-blue-700 dark:text-indigo-400',
+    icon: <Loader2 size={14} className="text-blue-500 dark:text-indigo-400 animate-spin" />,
     label: 'Extracting Fields'
   },
   requires_review: {
-    bg: 'bg-rose-50',
-    text: 'text-rose-700',
-    icon: <AlertTriangle size={14} className="text-rose-500" />,
+    bg: 'bg-amber-50 dark:bg-amber-500/10',
+    text: 'text-amber-700 dark:text-amber-400',
+    icon: <AlertTriangle size={14} className="text-amber-500 dark:text-amber-400" />,
     label: 'Requires Review'
   },
   failed: {
-    bg: 'bg-red-50',
-    text: 'text-red-700',
-    icon: <AlertTriangle size={14} className="text-red-500" />,
+    bg: 'bg-red-50 dark:bg-red-500/10',
+    text: 'text-red-700 dark:text-red-400',
+    icon: <AlertTriangle size={14} className="text-red-500 dark:text-red-400" />,
     label: 'Failed'
   }
 }
@@ -74,7 +74,7 @@ const ProcessingDocumentCard = ({ document }) => {
           {document.actionRequired ? (
             <button 
               onClick={() => navigate(`/dashboard/review/${document.id}`)}
-              className="text-xs font-bold px-4 py-2 bg-black text-white rounded-full hover:bg-neutral-800 transition-colors"
+              className="text-xs font-bold px-4 py-2 bg-black text-white rounded-full hover:bg-neutral-800 transition-colors dark:bg-[#F87103] dark:hover:bg-[#e06502]"
             >
               Review
             </button>

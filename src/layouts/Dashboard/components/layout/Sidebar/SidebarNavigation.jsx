@@ -22,7 +22,7 @@ const SidebarNavigation = ({ onSoonClick, isCollapsed }) => {
               <>
                 <span className="flex-1 whitespace-nowrap">{label}</span>
                 {soon && (
-                  <span className="rounded-full border border-[#E5E6E8] px-2 py-0.5 text-[11px] font-medium uppercase tracking-[0.4px] text-[#686C72] dark:border-neutral-800 dark:text-gray-500">
+                  <span className="rounded-full border border-[#E5E6E8] px-2 py-0.5 text-[11px] font-medium uppercase tracking-[0.4px] text-[#686C72] dark:border-white/5 dark:bg-white/5 dark:text-neutral-400">
                     Soon
                   </span>
                 )}

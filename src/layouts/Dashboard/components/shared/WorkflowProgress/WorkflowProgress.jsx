@@ -4,13 +4,13 @@ const WorkflowStep = ({ step, isLast }) => {
   const isCompleted = step.status === 'completed'
   const isCurrent = step.status === 'current'
   
-  let icon = <Circle size={14} className="text-gray-300" />
-  let textColor = 'text-gray-400'
+  let icon = <Circle size={14} className="text-gray-300 dark:text-neutral-600" />
+  let textColor = 'text-gray-400 dark:text-neutral-500'
   let weight = 'font-medium'
   
   if (isCompleted) {
-    icon = <Check size={14} className="text-emerald-500" />
-    textColor = 'text-gray-900'
+    icon = <Check size={14} className="text-emerald-500 dark:text-emerald-400" />
+    textColor = 'text-gray-900 dark:text-gray-300'
   } else if (isCurrent) {
     icon = <div className="w-3.5 h-3.5 rounded-full bg-[#F87103] flex items-center justify-center"><div className="w-1.5 h-1.5 bg-white rounded-full dark:bg-neutral-900"></div></div>
     textColor = 'text-[#F87103]'
@@ -24,10 +24,10 @@ const WorkflowStep = ({ step, isLast }) => {
         <span className={`text-xs uppercase tracking-wider ${textColor} ${weight}`}>{step.label}</span>
       </div>
       {!isLast && (
-        <div className={`hidden md:block w-8 md:w-12 lg:w-16 h-px mx-3 ${isCompleted ? 'bg-emerald-200' : 'bg-gray-200'}`}></div>
+        <div className={`hidden md:block w-8 md:w-12 lg:w-16 h-px mx-3 ${isCompleted ? 'bg-emerald-200 dark:bg-emerald-500/50' : 'bg-gray-200 dark:bg-neutral-800'}`}></div>
       )}
       {!isLast && (
-        <div className={`md:hidden w-px h-6 ml-[6px] my-1 ${isCompleted ? 'bg-emerald-200' : 'bg-gray-200'}`}></div>
+        <div className={`md:hidden w-px h-6 ml-[6px] my-1 ${isCompleted ? 'bg-emerald-200 dark:bg-emerald-500/50' : 'bg-gray-200 dark:bg-neutral-800'}`}></div>
       )}
     </div>
   )

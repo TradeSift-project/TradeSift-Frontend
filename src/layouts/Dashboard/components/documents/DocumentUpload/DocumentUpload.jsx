@@ -131,8 +131,8 @@ const DocumentUpload = ({ onDocumentProcessed, operationId }) => {
           onDrop={!isLimitReached ? handleDrop : undefined}
           className={`flex flex-col items-center justify-center border-2 border-dashed rounded-[24px] p-8 lg:p-12 text-center transition ${
             dragActive && !isLimitReached
-              ? 'border-[#F87103] bg-[#FDF6F0]/20'
-              : 'border-[#E5E6E8] bg-white'
+              ? 'border-[#F87103] bg-[#FDF6F0]/20 dark:bg-[#F87103]/10'
+              : 'border-[#E5E6E8] bg-white dark:bg-neutral-900 dark:border-neutral-700'
           } ${isLimitReached ? 'opacity-70 cursor-not-allowed' : ''}`}
         >
           <input
@@ -161,7 +161,7 @@ const DocumentUpload = ({ onDocumentProcessed, operationId }) => {
               type="button"
               onClick={() => fileInputRef.current?.click()}
               disabled={isLimitReached}
-              className="flex items-center gap-2 rounded-full bg-black px-6 py-3 text-xs font-bold text-white transition hover:bg-neutral-850 uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center gap-2 rounded-full border border-[#F87103] bg-transparent px-6 py-3 text-xs font-bold text-[#0B0D12] transition hover:bg-[#FDF6F0]/50 uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed dark:border-transparent dark:bg-[#F87103] dark:text-white dark:hover:bg-[#e06502]"
             >
               <Upload size={16} />
               Upload from Device
@@ -170,7 +170,7 @@ const DocumentUpload = ({ onDocumentProcessed, operationId }) => {
               type="button"
               onClick={() => setShowCamera(true)}
               disabled={isLimitReached}
-              className="flex items-center gap-2 rounded-full bg-[#FDF6F0] border border-[#F87103]/20 px-6 py-3 text-xs font-bold text-[#F87103] transition hover:bg-[#F87103]/10 uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center gap-2 rounded-full bg-[#FDF6F0] border border-[#F87103]/20 px-6 py-3 text-xs font-bold text-[#F87103] transition hover:bg-[#F87103]/10 uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed dark:bg-transparent dark:border-[#F87103] dark:text-[#F87103] dark:hover:bg-[#F87103]/10"
             >
               <CameraIcon size={16} />
               Take Photo
@@ -198,7 +198,7 @@ const DocumentUpload = ({ onDocumentProcessed, operationId }) => {
             {files.map((file) => (
               <div key={file.id} className="flex flex-col bg-white border border-gray-100 rounded-xl p-4 shadow-sm relative overflow-hidden dark:bg-neutral-900 dark:border-neutral-800">
                 <div 
-                  className="absolute left-0 top-0 bottom-0 bg-[#FDF6F0] transition-all duration-300"
+                  className="absolute left-0 top-0 bottom-0 bg-[#FDF6F0] transition-all duration-300 dark:bg-[#F87103]/20"
                   style={{ width: `${file.progress}%` }}
                 />
                 
@@ -206,7 +206,7 @@ const DocumentUpload = ({ onDocumentProcessed, operationId }) => {
                   <div className="flex items-center gap-3">
                     <span className="text-sm font-semibold text-gray-900 dark:text-white">{file.name}</span>
                     <span className="text-xs text-gray-500 dark:text-gray-400">{file.size}</span>
-                    <span className="text-[10px] font-bold text-[#F87103] bg-[#FDF6F0] px-2 py-0.5 rounded-full uppercase tracking-wider">
+                    <span className="text-[10px] font-bold text-[#F87103] bg-[#FDF6F0] px-2 py-0.5 rounded-full uppercase tracking-wider dark:bg-[#F87103]/10">
                       {file.name.startsWith('camera_capture_') ? 'Camera' : 'Device Upload'}
                     </span>
                   </div>

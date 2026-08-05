@@ -20,17 +20,17 @@ const ExportDestination = ({ destinations, selectedDestination, onSelect }) => {
               onClick={() => onSelect(dest.id)}
               className={`flex items-start gap-4 p-5 rounded-[20px] border text-left transition ${
                 isSelected 
-                  ? 'bg-[#FDF6F0] border-[#F87103] shadow-[0_2px_12px_rgba(248,113,3,0.08)]'
-                  : 'bg-white border-gray-200 hover:border-gray-300 hover:bg-gray-50'
-              } dark:border-neutral-700`}
+                  ? 'bg-[#FDF6F0] border-[#F87103] shadow-[0_2px_12px_rgba(248,113,3,0.08)] dark:bg-[#F87103]/10 dark:border-[#F87103]'
+                  : 'bg-white border-gray-200 hover:border-gray-300 hover:bg-gray-50 dark:bg-neutral-900 dark:border-neutral-700 dark:hover:border-neutral-600 dark:hover:bg-neutral-800/50'
+              }`}
             >
               <div className={`flex items-center justify-center p-2 rounded-xl shrink-0 ${
-                isSelected ? 'bg-white text-[#F87103]' : 'bg-gray-100 text-gray-500'
+                isSelected ? 'bg-white text-[#F87103] dark:bg-transparent dark:text-[#F87103]' : 'bg-gray-100 text-gray-500 dark:bg-neutral-800 dark:text-gray-400'
               }`}>
                 <Icon size={20} />
               </div>
               <div className="flex flex-col gap-1 mt-0.5">
-                <span className={`text-sm font-bold ${isSelected ? 'text-[#F87103]' : 'text-gray-900'}`}>
+                <span className={`text-sm font-bold ${isSelected ? 'text-[#F87103]' : 'text-gray-900 dark:text-gray-200'}`}>
                   {dest.name}
                 </span>
                 <span className="text-xs text-gray-500 leading-relaxed dark:text-gray-400">
@@ -41,7 +41,7 @@ const ExportDestination = ({ destinations, selectedDestination, onSelect }) => {
               </div>
               
               <div className={`ml-auto w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
-                isSelected ? 'border-[#F87103]' : 'border-gray-300'
+                isSelected ? 'border-[#F87103]' : 'border-gray-300 dark:border-neutral-600'
               }`}>
                 {isSelected && <div className="w-2.5 h-2.5 bg-[#F87103] rounded-full" />}
               </div>

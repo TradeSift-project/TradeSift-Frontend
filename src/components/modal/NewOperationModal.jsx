@@ -88,9 +88,9 @@ const NewOperationModal = ({ isOpen, onClose }) => {
                   onClick={() => setFormData({ ...formData, operationType: 'GATE_IN' })}
                   className={`p-3 rounded-xl border text-sm font-semibold transition ${
                     formData.operationType === 'GATE_IN' 
-                      ? 'border-[#F87103] bg-[#FDF6F0] text-[#F87103]' 
-                      : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300'
-                  } dark:bg-neutral-900 dark:text-gray-400`}
+                      ? 'border-[#F87103] bg-[#FDF6F0] text-[#F87103] dark:bg-[#F87103]/10 dark:text-[#F87103]' 
+                      : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300 dark:border-neutral-700 dark:bg-neutral-800/50 dark:text-gray-400 dark:hover:bg-neutral-800'
+                  }`}
                 >
                   Import Gate-In
                 </button>
@@ -99,9 +99,9 @@ const NewOperationModal = ({ isOpen, onClose }) => {
                   onClick={() => setFormData({ ...formData, operationType: 'GATE_OUT' })}
                   className={`p-3 rounded-xl border text-sm font-semibold transition ${
                     formData.operationType === 'GATE_OUT' 
-                      ? 'border-[#F87103] bg-[#FDF6F0] text-[#F87103]' 
-                      : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300'
-                  } dark:bg-neutral-900 dark:text-gray-400`}
+                      ? 'border-[#F87103] bg-[#FDF6F0] text-[#F87103] dark:bg-[#F87103]/10 dark:text-[#F87103]' 
+                      : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300 dark:border-neutral-700 dark:bg-neutral-800/50 dark:text-gray-400 dark:hover:bg-neutral-800'
+                  }`}
                 >
                   Export Gate-Out
                 </button>
@@ -118,7 +118,7 @@ const NewOperationModal = ({ isOpen, onClose }) => {
                 placeholder="e.g. IMP-2026-00124"
                 value={formData.referenceNo}
                 onChange={(e) => setFormData({ ...formData, referenceNo: e.target.value })}
-                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-[#F87103] focus:outline-none focus:ring-1 focus:ring-[#F87103] transition dark:border-neutral-700"
+                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-[#F87103] focus:outline-none focus:ring-1 focus:ring-[#F87103] transition bg-white dark:bg-neutral-800/50 dark:border-neutral-700 dark:text-white dark:placeholder-gray-500"
               />
             </div>
 
@@ -132,7 +132,7 @@ const NewOperationModal = ({ isOpen, onClose }) => {
                 rows={3}
                 value={formData.notes}
                 onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-[#F87103] focus:outline-none focus:ring-1 focus:ring-[#F87103] transition resize-none custom-scrollbar dark:border-neutral-700"
+                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-[#F87103] focus:outline-none focus:ring-1 focus:ring-[#F87103] transition resize-none custom-scrollbar bg-white dark:bg-neutral-800/50 dark:border-neutral-700 dark:text-white dark:placeholder-gray-500"
               />
             </div>
 
@@ -148,7 +148,7 @@ const NewOperationModal = ({ isOpen, onClose }) => {
               <button
                 type="submit"
                 disabled={loading}
-                className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-black text-white text-sm font-bold shadow-md hover:bg-neutral-800 transition disabled:opacity-50"
+                className="flex items-center gap-2 px-6 py-2.5 rounded-full border border-transparent bg-black text-white text-sm font-bold shadow-md hover:bg-neutral-850 transition disabled:opacity-50 dark:border-[#F87103] dark:bg-[#F87103] dark:hover:bg-[#e06502]"
               >
                 {loading ? 'Creating...' : 'Create Operation'}
                 {!loading && <ArrowRight size={16} />}

@@ -1,13 +1,17 @@
 const WorkflowStatusBadge = ({ status }) => {
   const getBadgeClasses = () => {
     switch (status) {
+      case 'COMPLETED':
       case 'Completed':
-        return 'bg-emerald-50 text-emerald-600 border-emerald-100'
+        return 'bg-emerald-50 text-emerald-600 border-emerald-100 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20'
+      case 'PROCESSING':
       case 'Processing':
-        return 'bg-blue-50 text-blue-600 border-blue-100 animate-pulse'
+        return 'bg-indigo-50 text-indigo-600 border-indigo-100 animate-pulse dark:bg-indigo-500/10 dark:text-indigo-400 dark:border-indigo-500/20'
+      case 'NEEDS_REVIEW':
       case 'Needs Review':
+      case 'DRAFT':
       default:
-        return 'bg-amber-50 text-amber-600 border-amber-100'
+        return 'bg-amber-50 text-amber-600 border-amber-100 dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/20'
     }
   }
 

@@ -27,23 +27,23 @@ const ApiExport = ({ endpoint, fieldsCount }) => {
           </div>
           <div className="flex flex-col gap-1">
             <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider dark:text-gray-400">Authentication</span>
-            <div className="flex items-center gap-1.5 text-emerald-600">
+            <div className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
               <ShieldCheck size={14} />
               <span className="text-sm font-semibold">Verified</span>
             </div>
           </div>
           <div className="flex flex-col gap-1">
             <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider dark:text-gray-400">Mapping Status</span>
-            <div className="flex items-center gap-1.5 text-emerald-600">
+            <div className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
               <CheckCircle2 size={14} />
               <span className="text-sm font-semibold">Validated</span>
             </div>
           </div>
         </div>
         
-        <div className="mt-2 p-3 bg-blue-50 border border-blue-100 rounded-xl flex items-start gap-3">
-          <div className="text-blue-600 shrink-0 mt-0.5">ℹ️</div>
-          <p className="text-xs text-blue-800 leading-relaxed">
+        <div className="mt-2 p-3 bg-blue-50 border border-blue-100 rounded-xl flex items-start gap-3 dark:bg-blue-500/10 dark:border-blue-500/20">
+          <div className="text-blue-600 shrink-0 mt-0.5 dark:text-blue-400">ℹ️</div>
+          <p className="text-xs text-blue-800 leading-relaxed dark:text-blue-300">
             Data will be pushed directly to the terminal operational system. Ensure your configured mapping exactly matches the target schema to avoid rejection.
           </p>
         </div>

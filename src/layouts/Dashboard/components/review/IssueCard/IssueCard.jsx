@@ -3,10 +3,10 @@ import { AlertTriangle, AlertCircle, ArrowRight } from 'lucide-react'
 const IssueCard = ({ issue, onGoToField }) => {
   const isError = issue.severity === 'error'
   const Icon = isError ? AlertCircle : AlertTriangle
-  const bg = isError ? 'bg-rose-50' : 'bg-amber-50'
-  const text = isError ? 'text-rose-800' : 'text-amber-800'
-  const border = isError ? 'border-rose-200' : 'border-amber-200'
-  const iconColor = isError ? 'text-rose-600' : 'text-amber-600'
+  const bg = isError ? 'bg-rose-50 dark:bg-rose-500/10' : 'bg-amber-50 dark:bg-amber-500/10'
+  const text = isError ? 'text-rose-800 dark:text-rose-400' : 'text-amber-800 dark:text-amber-400'
+  const border = isError ? 'border-rose-200 dark:border-rose-500/20' : 'border-amber-200 dark:border-amber-500/20'
+  const iconColor = isError ? 'text-rose-600 dark:text-rose-400' : 'text-amber-600 dark:text-amber-400'
 
   return (
     <div className={`flex flex-col gap-3 p-4 rounded-xl border ${bg} ${border}`}>

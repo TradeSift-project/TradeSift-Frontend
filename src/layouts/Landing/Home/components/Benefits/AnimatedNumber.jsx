@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+  import { useEffect, useRef } from 'react'
 import { animate, useInView } from 'framer-motion'
 
 export default function AnimatedNumber({ value, duration = 2, decimals = 0, prefix = "", suffix = "" }) {

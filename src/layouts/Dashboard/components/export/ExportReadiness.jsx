@@ -8,12 +8,12 @@ const ExportReadiness = ({ summary, isReady }) => {
           Operational Readiness
         </span>
         {isReady ? (
-          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-bold uppercase tracking-wider">
+          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-bold uppercase tracking-wider dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-400">
             <CheckCircle2 size={14} />
             Ready for Export
           </div>
         ) : (
-          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-50 border border-red-100 text-red-700 text-xs font-bold uppercase tracking-wider">
+          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-50 border border-red-100 text-red-700 text-xs font-bold uppercase tracking-wider dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400">
             <AlertTriangle size={14} />
             Mapping Incomplete
           </div>
@@ -22,7 +22,7 @@ const ExportReadiness = ({ summary, isReady }) => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-2">
         <div className="flex items-center gap-3">
-          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 shrink-0">
+          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 shrink-0 dark:bg-emerald-500/10 dark:text-emerald-400">
             <Check size={16} />
           </div>
           <div className="flex flex-col">
@@ -32,7 +32,7 @@ const ExportReadiness = ({ summary, isReady }) => {
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 shrink-0">
+          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 shrink-0 dark:bg-emerald-500/10 dark:text-emerald-400">
             <Check size={16} />
           </div>
           <div className="flex flex-col">
@@ -42,7 +42,7 @@ const ExportReadiness = ({ summary, isReady }) => {
         </div>
 
         <div className="flex items-center gap-3">
-          <div className={`flex items-center justify-center w-8 h-8 rounded-full shrink-0 ${isReady ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-600'}`}>
+          <div className={`flex items-center justify-center w-8 h-8 rounded-full shrink-0 ${isReady ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400' : 'bg-red-50 text-red-600 dark:bg-red-500/10 dark:text-red-400'}`}>
             {isReady ? <Check size={16} /> : <AlertTriangle size={16} />}
           </div>
           <div className="flex flex-col">

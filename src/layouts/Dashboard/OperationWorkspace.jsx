@@ -91,11 +91,11 @@ const OperationWorkspace = () => {
   const docCount = documents.length
   
   // Operation Status formatting
-  let statusColor = 'bg-gray-100 text-gray-600 border-gray-200'
-  if (operation.status === 'PROCESSING') statusColor = 'bg-blue-50 text-blue-700 border-blue-200'
-  if (operation.status === 'REVIEW') statusColor = 'bg-orange-50 text-orange-700 border-orange-200'
-  if (operation.status === 'COMPLETED') statusColor = 'bg-green-50 text-green-700 border-green-200'
-  if (operation.status === 'CANCELLED') statusColor = 'bg-red-50 text-red-700 border-red-200'
+  let statusColor = 'bg-gray-100 text-gray-600 border-gray-200 dark:bg-white/5 dark:text-gray-400 dark:border-white/5'
+  if (operation.status === 'PROCESSING') statusColor = 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-indigo-500/10 dark:text-indigo-400 dark:border-indigo-500/20'
+  if (operation.status === 'REVIEW') statusColor = 'bg-orange-50 text-orange-700 border-orange-200 dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/20'
+  if (operation.status === 'COMPLETED') statusColor = 'bg-green-50 text-green-700 border-green-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20'
+  if (operation.status === 'CANCELLED') statusColor = 'bg-red-50 text-red-700 border-red-200 dark:bg-red-500/10 dark:text-red-400 dark:border-red-500/20'
 
   return (
     <div className="flex flex-col gap-6 w-full max-w-5xl mx-auto pb-12 pt-4">
@@ -142,7 +142,7 @@ const OperationWorkspace = () => {
         <div className="p-8 flex-1 border-b md:border-b-0 md:border-r border-gray-100 dark:border-neutral-800">
           <div className="flex items-center gap-3 mb-6">
             <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold ${
-              isImport ? 'bg-blue-50 text-blue-700' : 'bg-purple-50 text-purple-700'
+              isImport ? 'bg-blue-50 text-blue-700 dark:bg-indigo-500/10 dark:text-indigo-400' : 'bg-purple-50 text-purple-700 dark:bg-purple-500/10 dark:text-purple-400'
             }`}>
               {isImport ? <ArrowDownRight size={16} /> : <ArrowUpRight size={16} />}
               {isImport ? 'Import Gate-In' : 'Export Gate-Out'}
@@ -192,7 +192,7 @@ const OperationWorkspace = () => {
                 navigate(`/dashboard/upload/${operation.id}`)
               }}
               disabled={docCount >= maxDocuments}
-              className="flex items-center justify-center gap-2 w-full rounded-full bg-black px-6 py-3 text-sm font-bold text-white transition hover:bg-neutral-850 shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center justify-center gap-2 w-full rounded-full border border-[#F87103] bg-transparent px-6 py-3 text-sm font-bold text-[#0B0D12] transition hover:bg-[#FDF6F0]/50 shadow-md disabled:opacity-50 disabled:cursor-not-allowed dark:border-transparent dark:bg-[#F87103] dark:text-white dark:hover:bg-[#e06502]"
             >
               <UploadCloud size={16} />
               Add Documents
@@ -246,7 +246,7 @@ const OperationWorkspace = () => {
             </p>
             <button
               onClick={() => navigate(`/dashboard/upload/${operation.id}`)}
-              className="flex items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-6 py-2.5 text-sm font-bold text-gray-700 transition hover:bg-gray-50 shadow-sm dark:bg-neutral-900 dark:text-gray-300 dark:border-neutral-700 dark:hover:bg-neutral-800"
+              className="flex items-center justify-center gap-2 rounded-full border border-[#F87103] bg-transparent px-6 py-2.5 text-sm font-bold text-[#0B0D12] transition hover:bg-[#FDF6F0]/50 shadow-sm dark:border-transparent dark:bg-[#F87103] dark:text-white dark:hover:bg-[#e06502]"
             >
               <UploadCloud size={16} />
               Upload First Document

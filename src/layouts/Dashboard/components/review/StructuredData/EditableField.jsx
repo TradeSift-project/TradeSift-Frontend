@@ -1,6 +1,6 @@
 const EditableField = ({ value, onChange, status }) => {
   const isNeedsReview = status === 'requires-review' || status === 'empty'
-  const inputBorder = isNeedsReview ? 'border-orange-400 bg-orange-50/20' : 'border-gray-200 bg-white hover:border-gray-300'
+  const inputBorder = isNeedsReview ? 'border-orange-400 bg-orange-50/20 dark:bg-orange-500/10 dark:border-orange-500/30' : 'border-gray-200 bg-white hover:border-gray-300 dark:bg-neutral-800/50 dark:border-neutral-700'
 
   return (
     <input

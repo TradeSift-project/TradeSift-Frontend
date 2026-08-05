@@ -12,20 +12,20 @@ const DocumentNavigator = ({ documents }) => {
         {documents.map((doc) => {
           let Icon = Clock
           let iconColor = 'text-gray-400'
-          let bgColor = 'bg-gray-50'
+          let bgColor = 'bg-gray-50 dark:bg-neutral-800/50'
           
           if (doc.health === 'Verified') {
             Icon = CheckCircle2
             iconColor = 'text-emerald-500'
-            bgColor = 'bg-emerald-50/50 hover:bg-emerald-50'
+            bgColor = 'bg-emerald-50/50 hover:bg-emerald-50 dark:bg-emerald-500/10 dark:hover:bg-emerald-500/20'
           } else if (doc.health === 'Low Confidence') {
             Icon = AlertTriangle
             iconColor = 'text-amber-500'
-            bgColor = 'bg-amber-50/50 hover:bg-amber-50'
+            bgColor = 'bg-amber-50/50 hover:bg-amber-50 dark:bg-amber-500/10 dark:hover:bg-amber-500/20'
           } else if (doc.health === 'Missing') {
             Icon = AlertCircle
             iconColor = 'text-rose-500'
-            bgColor = 'bg-rose-50/50 hover:bg-rose-50'
+            bgColor = 'bg-rose-50/50 hover:bg-rose-50 dark:bg-rose-500/10 dark:hover:bg-rose-500/20'
           }
 
           return (

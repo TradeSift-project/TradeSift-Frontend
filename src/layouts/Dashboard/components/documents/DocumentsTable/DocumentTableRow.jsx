@@ -50,8 +50,8 @@ const DocumentTableRow = ({
           <span
             className={`inline-flex rounded px-1.5 py-0.5 text-[10px] font-bold w-fit ${
               doc.operation === 'Import'
-                ? 'bg-blue-50 text-blue-600'
-                : 'bg-purple-50 text-purple-600'
+                ? 'bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-400'
+                : 'bg-purple-50 text-purple-600 dark:bg-purple-500/10 dark:text-purple-400'
             }`}
           >
             {doc.operation}

@@ -7,17 +7,17 @@ const JobContextHeader = ({ job, backTo }) => {
   if (!job) return null
 
   let StatusIcon = Loader2
-  let statusColor = 'text-amber-600 bg-amber-50 border-amber-200'
+  let statusColor = 'text-amber-600 bg-amber-50 border-amber-200 dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/20'
   
   if (job.status === 'Approved' || job.status === 'Completed') {
     StatusIcon = CheckCircle2
-    statusColor = 'text-emerald-700 bg-emerald-50 border-emerald-200'
+    statusColor = 'text-emerald-700 bg-emerald-50 border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20'
   } else if (job.status === 'Needs Review') {
     StatusIcon = AlertCircle
-    statusColor = 'text-rose-600 bg-rose-50 border-rose-200'
+    statusColor = 'text-rose-600 bg-rose-50 border-rose-200 dark:bg-rose-500/10 dark:text-rose-400 dark:border-rose-500/20'
   } else if (job.status === 'Processing') {
     StatusIcon = Loader2
-    statusColor = 'text-blue-600 bg-blue-50 border-blue-200'
+    statusColor = 'text-blue-600 bg-blue-50 border-blue-200 dark:bg-indigo-500/10 dark:text-indigo-400 dark:border-indigo-500/20'
   }
 
   return (

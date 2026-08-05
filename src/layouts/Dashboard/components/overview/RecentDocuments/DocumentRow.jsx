@@ -3,7 +3,7 @@ import DocumentStatusBadge from './DocumentStatusBadge'
 
 const DocumentRow = ({ id, documentName, documentType, workflowType, status, uploadedAt }) => {
   return (
-    <tr className="hover:bg-neutral-50/50 transition dark:hover:bg-neutral-800/50">
+    <tr className="hover:bg-neutral-50/50 transition dark:hover:bg-white/5">
       
       {/* File Icon & Name */}
       <td className="whitespace-nowrap px-4 md:px-6 py-4 font-semibold text-[#0B0D12] dark:text-white">
@@ -15,7 +15,7 @@ const DocumentRow = ({ id, documentName, documentType, workflowType, status, upl
             <span className="text-xs font-semibold text-[#0B0D12] dark:text-white">
               {documentName}
             </span>
-            <span className="text-[10px] text-gray-400 font-normal">
+            <span className="text-[10px] text-gray-400 font-normal dark:text-[#8A94A6]">
               {id}
             </span>
           </div>
@@ -23,7 +23,7 @@ const DocumentRow = ({ id, documentName, documentType, workflowType, status, upl
       </td>
 
       {/* Doc Type */}
-      <td className="whitespace-nowrap px-4 md:px-6 py-4 text-xs text-[#686C72] hidden sm:table-cell dark:text-gray-400">
+      <td className="whitespace-nowrap px-4 md:px-6 py-4 text-xs text-[#686C72] hidden sm:table-cell dark:text-[#9CA3AF]">
         {documentType}
       </td>
 
@@ -32,8 +32,8 @@ const DocumentRow = ({ id, documentName, documentType, workflowType, status, upl
         <span
           className={`inline-flex rounded px-1.5 py-0.5 text-[10px] font-bold ${
             workflowType === 'Import'
-              ? 'bg-blue-50 text-blue-600'
-              : 'bg-purple-50 text-purple-600'
+              ? 'bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-400'
+              : 'bg-purple-50 text-purple-600 dark:bg-purple-500/10 dark:text-purple-400'
           }`}
         >
           {workflowType}
@@ -41,7 +41,7 @@ const DocumentRow = ({ id, documentName, documentType, workflowType, status, upl
       </td>
 
       {/* Uploaded time */}
-      <td className="whitespace-nowrap px-4 md:px-6 py-4 text-xs text-gray-400 hidden lg:table-cell">
+      <td className="whitespace-nowrap px-4 md:px-6 py-4 text-xs text-gray-400 hidden lg:table-cell dark:text-[#8A94A6]">
         {uploadedAt}
       </td>
 

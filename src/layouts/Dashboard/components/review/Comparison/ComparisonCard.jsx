@@ -2,11 +2,11 @@ import { GitCompare } from 'lucide-react'
 
 const ComparisonCard = ({ comparison }) => {
   const isConflict = comparison.status === 'conflict'
-  const badgeBg = isConflict ? 'bg-rose-50' : 'bg-emerald-50'
-  const badgeText = isConflict ? 'text-rose-600' : 'text-emerald-600'
+  const badgeBg = isConflict ? 'bg-rose-50 dark:bg-rose-500/10' : 'bg-emerald-50 dark:bg-emerald-500/10'
+  const badgeText = isConflict ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400'
 
   return (
-    <div className="flex flex-col p-4 bg-white border-b border-gray-100 last:border-b-0 hover:bg-gray-50/50 transition-colors dark:bg-neutral-900 dark:border-neutral-800">
+    <div className="flex flex-col p-4 bg-white border-b border-gray-100 last:border-b-0 hover:bg-gray-50/50 transition-colors dark:bg-neutral-900 dark:border-neutral-800 dark:hover:bg-neutral-800/50">
       <div className="flex items-center justify-between mb-3">
         <h4 className="text-xs font-bold text-gray-900 uppercase tracking-wider flex items-center gap-1.5 dark:text-white">
           <GitCompare size={12} className="text-gray-400" />

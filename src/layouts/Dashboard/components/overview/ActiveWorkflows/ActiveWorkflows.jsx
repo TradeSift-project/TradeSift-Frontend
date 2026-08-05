@@ -4,11 +4,12 @@ import { getOperations } from '../../../../../services/operationService'
 import { toast } from 'sonner'
 import { Link } from 'react-router-dom'
 
-const ActiveWorkflows = () => {
-  const [operations, setOperations] = useState([])
-  const [loading, setLoading] = useState(true)
+const ActiveWorkflows = ({ mockData }) => {
+  const [operations, setOperations] = useState(mockData || [])
+  const [loading, setLoading] = useState(!mockData)
 
   useEffect(() => {
+    if (mockData) return
     let isMounted = true
     const fetchOperations = async () => {
       try {

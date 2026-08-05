@@ -33,7 +33,7 @@ const StructuredDataPreview = ({ isOpen, onClose, documentName, documentType, fi
                 <th className="px-5 py-3 text-right">Confidence</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-neutral-100">
+            <tbody className="divide-y divide-neutral-100 dark:divide-white/5">
               {fields.map((field) => (
                 <tr key={field.id} className="hover:bg-neutral-50/20">
                   <td className="px-5 py-3 text-[#0B0D12] font-semibold dark:text-white">{field.label}</td>

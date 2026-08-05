@@ -64,7 +64,7 @@ const OperationsList = () => {
         
         <button
           onClick={() => setShowNewOpModal(true)}
-          className="flex items-center gap-2 rounded-full bg-black px-6 py-2.5 text-sm font-bold text-white transition hover:bg-neutral-850 shadow-md whitespace-nowrap"
+          className="flex items-center gap-2 rounded-full border border-transparent bg-black px-6 py-2.5 text-sm font-bold text-white transition hover:bg-neutral-850 shadow-md whitespace-nowrap dark:border-[#F87103] dark:bg-[#F87103] dark:hover:bg-[#e06502]"
         >
           <Plus size={16} />
           New Operation
@@ -90,8 +90,8 @@ const OperationsList = () => {
               onClick={() => setStatusFilter(status)}
               className={`px-4 py-2 rounded-xl text-xs font-bold transition whitespace-nowrap ${
                 statusFilter === status 
-                  ? 'bg-[#FDF6F0] text-[#F87103]' 
-                  : 'text-gray-500 hover:bg-gray-50'
+                  ? 'bg-[#FDF6F0] text-[#F87103] dark:bg-[#F87103]/10 dark:text-[#F87103]' 
+                  : 'text-gray-500 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-neutral-800'
               }`}
             >
               {status}
@@ -143,22 +143,22 @@ const OperationsList = () => {
                   <th className="px-4 md:px-6 py-4 font-bold text-right hidden lg:table-cell">Updated</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="divide-y divide-gray-100 dark:divide-white/5">
                 {filteredOperations.map((op) => {
                   const isImport = op.operationType === 'GATE_IN'
                   
                   // Operation Status formatting
-                  let statusColor = 'bg-gray-100 text-gray-600'
-                  if (op.status === 'PROCESSING') statusColor = 'bg-blue-50 text-blue-600'
-                  if (op.status === 'REVIEW') statusColor = 'bg-orange-50 text-orange-600'
-                  if (op.status === 'COMPLETED') statusColor = 'bg-green-50 text-green-600'
-                  if (op.status === 'CANCELLED') statusColor = 'bg-red-50 text-red-600'
+                  let statusColor = 'bg-gray-100 text-gray-600 dark:bg-white/5 dark:text-gray-400'
+                  if (op.status === 'PROCESSING') statusColor = 'bg-blue-50 text-blue-600 dark:bg-indigo-500/10 dark:text-indigo-400'
+                  if (op.status === 'REVIEW') statusColor = 'bg-orange-50 text-orange-600 dark:bg-amber-500/10 dark:text-amber-400'
+                  if (op.status === 'COMPLETED') statusColor = 'bg-green-50 text-green-600 dark:bg-emerald-500/10 dark:text-emerald-400'
+                  if (op.status === 'CANCELLED') statusColor = 'bg-red-50 text-red-600 dark:bg-red-500/10 dark:text-red-400'
 
                   return (
                     <tr 
                       key={op.id} 
                       onClick={() => navigate(`/dashboard/operations/${op.id}`)}
-                      className="hover:bg-gray-50/50 transition cursor-pointer group"
+                      className="hover:bg-gray-50/50 transition cursor-pointer group dark:hover:bg-white/5"
                     >
                       <td className="px-4 md:px-6 py-4">
                         <div className="flex flex-col">
@@ -172,7 +172,7 @@ const OperationsList = () => {
                       </td>
                       <td className="px-4 md:px-6 py-4 hidden sm:table-cell">
                         <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold ${
-                          isImport ? 'bg-blue-50/50 text-blue-700' : 'bg-purple-50/50 text-purple-700'
+                          isImport ? 'bg-blue-50/50 text-blue-700 dark:bg-indigo-500/10 dark:text-indigo-400' : 'bg-purple-50/50 text-purple-700 dark:bg-purple-500/10 dark:text-purple-400'
                         }`}>
                           {isImport ? <ArrowDownRight size={14} /> : <ArrowUpRight size={14} />}
                           {isImport ? 'Import Gate-In' : 'Export Gate-Out'}

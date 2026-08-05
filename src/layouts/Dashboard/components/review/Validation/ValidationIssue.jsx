@@ -6,7 +6,7 @@ const ValidationIssue = ({ issue }) => {
   const iconColor = isError ? 'text-rose-500' : 'text-amber-500'
 
   return (
-    <div className="flex flex-col gap-1 p-3 bg-white border-b border-gray-100 last:border-b-0 hover:bg-gray-50/50 transition-colors dark:bg-neutral-900 dark:border-neutral-800">
+    <div className="flex flex-col gap-1 p-3 bg-white border-b border-gray-100 last:border-b-0 hover:bg-gray-50/50 transition-colors dark:bg-neutral-900 dark:border-neutral-800 dark:hover:bg-neutral-800/50">
       <div className="flex items-center gap-2">
         <Icon size={14} className={iconColor} />
         <span className="text-xs font-bold text-gray-900 dark:text-white">{issue.title}</span>

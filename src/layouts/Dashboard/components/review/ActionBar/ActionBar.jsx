@@ -18,7 +18,7 @@ const ActionBar = ({ onSaveDraft, onRequestReview, onApprove, onExportPreview })
         </button>
         <button
           onClick={onRequestReview}
-          className="flex-1 md:flex-none flex items-center justify-center gap-1.5 px-5 py-2.5 text-xs font-bold text-amber-700 bg-amber-50 border border-amber-200 rounded-full hover:bg-amber-100 transition-colors shadow-sm uppercase tracking-wider"
+          className="flex-1 md:flex-none flex items-center justify-center gap-1.5 px-5 py-2.5 text-xs font-bold text-amber-700 bg-amber-50 border border-amber-200 rounded-full hover:bg-amber-100 transition-colors shadow-sm uppercase tracking-wider dark:bg-[#F87103]/10 dark:text-[#F87103] dark:border-[#F87103]/20 dark:hover:bg-[#F87103]/20"
         >
           <Edit3 size={14} />
           Request Review
@@ -28,14 +28,14 @@ const ActionBar = ({ onSaveDraft, onRequestReview, onApprove, onExportPreview })
       <div className="flex items-center gap-3 w-full md:w-auto">
         <button
           onClick={onExportPreview}
-          className="flex-1 md:flex-none flex items-center justify-center gap-1.5 px-6 py-2.5 text-xs font-bold text-[#F87103] bg-[#FDF6F0] border border-[#F87103]/20 rounded-full hover:bg-[#F87103]/10 transition-colors uppercase tracking-wider"
+          className="flex-1 md:flex-none flex items-center justify-center gap-1.5 px-6 py-2.5 text-xs font-bold text-[#F87103] bg-[#FDF6F0] border border-[#F87103]/20 rounded-full hover:bg-[#F87103]/10 transition-colors uppercase tracking-wider dark:bg-transparent dark:border-[#F87103] dark:text-[#F87103] dark:hover:bg-[#F87103]/10"
         >
           <Send size={14} />
           Export Preview
         </button>
         <button
           onClick={onApprove}
-          className="flex-1 md:flex-none flex items-center justify-center gap-1.5 px-6 py-2.5 text-xs font-bold text-white bg-black rounded-full hover:bg-neutral-800 transition-colors uppercase tracking-wider shadow-sm"
+          className="flex-1 md:flex-none flex items-center justify-center gap-1.5 px-6 py-2.5 text-xs font-bold text-white bg-black rounded-full hover:bg-neutral-800 transition-colors uppercase tracking-wider shadow-sm border border-transparent dark:border-[#F87103] dark:bg-[#F87103] dark:hover:bg-[#e06502]"
         >
           <Check size={14} />
           Approve Data

@@ -3,10 +3,10 @@ import { fadeUp, staggerContainer } from '../../../../../animations/variants'
 import { UploadCloud, Activity, CheckCircle, AlertCircle } from 'lucide-react'
 
 const statCards = [
-  { id: 'uploaded', label: 'Uploaded', icon: UploadCloud, color: 'text-blue-500', bg: 'bg-blue-50' },
-  { id: 'processing', label: 'Processing', icon: Activity, color: 'text-[#F87103]', bg: 'bg-orange-50' },
-  { id: 'processed', label: 'Processed', icon: CheckCircle, color: 'text-green-500', bg: 'bg-green-50' },
-  { id: 'review', label: 'Requires Review', icon: AlertCircle, color: 'text-rose-500', bg: 'bg-rose-50' },
+  { id: 'uploaded', label: 'Uploaded', icon: UploadCloud, color: 'text-blue-500 dark:text-blue-400', bg: 'bg-blue-50 dark:bg-blue-500/10' },
+  { id: 'processing', label: 'Processing', icon: Activity, color: 'text-[#F87103]', bg: 'bg-orange-50 dark:bg-[#F87103]/10' },
+  { id: 'processed', label: 'Processed', icon: CheckCircle, color: 'text-green-500 dark:text-green-400', bg: 'bg-green-50 dark:bg-green-500/10' },
+  { id: 'review', label: 'Requires Review', icon: AlertCircle, color: 'text-rose-500 dark:text-rose-400', bg: 'bg-rose-50 dark:bg-rose-500/10' },
 ]
 
 const ProcessingSummary = ({ documents }) => {
