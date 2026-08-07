@@ -21,7 +21,7 @@ const WorkflowStep = ({ step, isLast }) => {
     <div className="flex flex-col md:flex-row md:items-center">
       <div className="flex items-center gap-2 py-1 md:py-0">
         {icon}
-        <span className={`text-xs uppercase tracking-wider ${textColor} ${weight}`}>{step.label}</span>
+        <span className={`text-xs uppercase tracking-wider ${textColor} ${weight}`}>{step.label || step.title}</span>
       </div>
       {!isLast && (
         <div className={`hidden md:block w-8 md:w-12 lg:w-16 h-px mx-3 ${isCompleted ? 'bg-emerald-200 dark:bg-emerald-500/50' : 'bg-gray-200 dark:bg-neutral-800'}`}></div>

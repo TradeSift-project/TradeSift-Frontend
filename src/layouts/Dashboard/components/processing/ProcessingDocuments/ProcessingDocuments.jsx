@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { fadeUp } from '../../../../../animations/variants'
 import { FileText, CheckCircle2, AlertTriangle, Loader2 } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const statusConfig = {
   completed: {
@@ -39,6 +39,7 @@ const statusConfig = {
 const ProcessingDocumentCard = ({ document }) => {
   const config = statusConfig[document.status] || statusConfig.processing
   const navigate = useNavigate()
+  const { jobId } = useParams()
 
   return (
     <div className="flex flex-col md:flex-row md:items-center justify-between p-4 bg-white border border-gray-100 rounded-xl hover:shadow-sm transition-shadow dark:bg-neutral-900 dark:border-neutral-800">
@@ -73,7 +74,7 @@ const ProcessingDocumentCard = ({ document }) => {
         <div className="w-28 flex justify-end">
           {document.actionRequired ? (
             <button 
-              onClick={() => navigate(`/dashboard/review/${document.id}`)}
+              onClick={() => navigate(`/dashboard/review/${jobId}`)}
               className="text-xs font-bold px-4 py-2 bg-black text-white rounded-full hover:bg-neutral-800 transition-colors dark:bg-[#F87103] dark:hover:bg-[#e06502]"
             >
               Review
