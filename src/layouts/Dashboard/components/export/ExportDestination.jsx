@@ -35,7 +35,7 @@ const ExportDestination = ({ destinations, selectedDestination, onSelect }) => {
                 </span>
                 <span className="text-xs text-gray-500 leading-relaxed dark:text-gray-400">
                   {dest.type === 'API' 
-                    ? 'Push structured data directly to the configured terminal operational system via API.'
+                    ? 'Manage your TradeSift integration and API configuration.'
                     : 'Download the mapped dataset locally as a formatted Excel spreadsheet.'}
                 </span>
               </div>

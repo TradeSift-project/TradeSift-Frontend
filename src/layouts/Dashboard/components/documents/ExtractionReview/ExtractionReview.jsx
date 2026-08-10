@@ -227,9 +227,9 @@ const ExtractionReview = ({ documentId = 'DOC-001', onBack, onSave }) => {
           className={`flex items-start gap-3 p-4 rounded-xl border ${
             validationResult.success
               ? validationResult.warning
-                ? 'bg-amber-50/50 border-amber-100 text-amber-800'
-                : 'bg-emerald-50/50 border-emerald-100 text-emerald-800'
-              : 'bg-rose-50/50 border-rose-100 text-rose-800'
+                ? 'bg-amber-50/50 border-amber-100 text-amber-800 dark:bg-amber-900/10 dark:border-amber-900/30 dark:text-amber-500'
+                : 'bg-emerald-50/50 border-emerald-100 text-emerald-800 dark:bg-emerald-900/10 dark:border-emerald-900/30 dark:text-emerald-400'
+              : 'bg-rose-50/50 border-rose-100 text-rose-800 dark:bg-rose-900/10 dark:border-rose-900/30 dark:text-rose-400'
           }`}
         >
           {validationResult.success ? (

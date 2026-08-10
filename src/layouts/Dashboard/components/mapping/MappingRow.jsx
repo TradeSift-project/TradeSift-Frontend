@@ -12,7 +12,7 @@ const MappingRow = ({ mapping }) => {
             TradeSift Standard
           </span>
           {!mapping.standardField && (
-            <span className="text-[10px] font-semibold text-red-500 bg-red-50 px-2 py-0.5 rounded-md">
+            <span className="text-[10px] font-semibold text-red-500 bg-red-50 px-2 py-0.5 rounded-md dark:bg-red-900/20 dark:text-red-400">
               Unassigned
             </span>
           )}
@@ -39,7 +39,7 @@ const MappingRow = ({ mapping }) => {
             Target Terminal Field
           </span>
           {mapping.isRequired && (
-            <span className="text-[9px] font-bold uppercase tracking-[0.5px] text-red-600 bg-red-50 border border-red-100 px-1.5 py-0.5 rounded-sm">
+            <span className="text-[9px] font-bold uppercase tracking-[0.5px] text-red-600 bg-red-50 border border-red-100 px-1.5 py-0.5 rounded-sm dark:text-red-400 dark:bg-red-900/20 dark:border-red-900/30">
               Required
             </span>
           )}
@@ -56,7 +56,7 @@ const MappingRow = ({ mapping }) => {
         <div className="flex items-center justify-between mt-1">
           <MappingStatusBadge status={mapping.status} />
           {mapping.validationMessage && (
-            <div className="flex items-center gap-1.5 text-[10px] text-red-500 bg-red-50/50 px-2 py-1 rounded-md">
+            <div className="flex items-center gap-1.5 text-[10px] text-red-500 bg-red-50/50 px-2 py-1 rounded-md dark:text-red-400 dark:bg-red-900/20">
               <AlertTriangle size={12} />
               <span>{mapping.validationMessage}</span>
             </div>

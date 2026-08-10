@@ -1,8 +1,6 @@
 export const TARGET_SYSTEMS = [
   { id: 'TOS-Z', name: 'Terminal OS Zodiac', type: 'ERP' },
-  { id: 'TOS-N', name: 'Terminal OS Navis', type: 'ERP' },
-  { id: 'API-CUSTOM', name: 'Custom JSON API', type: 'API' },
-  { id: 'EXCEL-STD', name: 'Standard Excel Export', type: 'Excel' }
+  { id: 'TOS-N', name: 'Terminal OS Navis', type: 'ERP' }
 ]
 
 export const MOCK_MAPPING_DATA = {

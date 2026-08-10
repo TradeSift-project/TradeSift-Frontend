@@ -16,7 +16,8 @@ import {
   Settings2,
   Percent,
   Play,
-  Truck
+  Truck,
+  Terminal
 } from 'lucide-react'
 
 export const NAV_ITEMS = [
@@ -25,6 +26,7 @@ export const NAV_ITEMS = [
   { label: 'Operations', icon: Package, path: '/dashboard/operations', soon: false },
   { label: 'Gate Operations', icon: Truck, path: '/dashboard/gate', soon: true },
   { label: 'Integrations', icon: Link, path: '/dashboard/integrations', soon: true },
+  { label: 'Terminal API', icon: Terminal, path: '/dashboard/terminal-api', soon: false },
   { label: 'Settings', icon: Settings, path: '/dashboard/settings', soon: false },
 ]
 

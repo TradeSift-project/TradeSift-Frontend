@@ -13,7 +13,6 @@ import { getOperationById } from '../../services/operationService'
 import JobContextHeader from './components/shared/JobContextHeader'
 import ExportReadiness from './components/export/ExportReadiness'
 import ExportDestination from './components/export/ExportDestination'
-import ApiExport from './components/export/ApiExport'
 import ExcelExport from './components/export/ExcelExport'
 import ExportPreview from './components/export/ExportPreview'
 import ExportActions from './components/export/ExportActions'
@@ -26,7 +25,7 @@ const Export = () => {
   const [loading, setLoading] = useState(true)
   const [job, setJob] = useState(null)
   
-  const [selectedDestination, setSelectedDestination] = useState(EXPORT_DESTINATIONS[0].id)
+  const [selectedDestination, setSelectedDestination] = useState('excel-standard')
   const [isExporting, setIsExporting] = useState(false)
   const [exportComplete, setExportComplete] = useState(false)
   const [exportError, setExportError] = useState(false)
@@ -71,6 +70,14 @@ const Export = () => {
     fetchJob()
     return () => { isMounted = false }
   }, [jobId])
+
+  const handleDestinationSelect = (id) => {
+    if (id === 'api-terminal') {
+      navigate(`/dashboard/terminal-api/${jobId || job?.id || ''}`)
+      return
+    }
+    setSelectedDestination(id)
+  }
 
   const handleExport = async () => {
     if (!MOCK_EXPORT_DATA.isReady) {
@@ -236,15 +243,10 @@ const Export = () => {
             <ExportDestination 
               destinations={EXPORT_DESTINATIONS}
               selectedDestination={selectedDestination}
-              onSelect={setSelectedDestination}
+              onSelect={handleDestinationSelect}
             />
             
-            {selectedDestination === 'api-terminal' ? (
-              <ApiExport 
-                endpoint={MOCK_EXPORT_DATA.apiEndpoint}
-                fieldsCount={MOCK_EXPORT_DATA.summary.fieldsMapped}
-              />
-            ) : (
+            {selectedDestination === 'excel-standard' && (
               <ExcelExport 
                 filename={MOCK_EXPORT_DATA.excelFilename}
                 fieldsCount={MOCK_EXPORT_DATA.summary.fieldsMapped}

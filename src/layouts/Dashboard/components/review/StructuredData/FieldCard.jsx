@@ -8,11 +8,11 @@ const FieldCard = ({ field, onChange }) => {
       
       {/* Field Name */}
       <div className="col-span-3">
-        <span className="text-xs font-bold text-gray-700 uppercase tracking-wider block truncate dark:text-gray-300" title={field.name}>
-          {field.name}
+        <span className="text-xs font-bold text-gray-700 uppercase tracking-wider block truncate dark:text-gray-300" title={field.name || field.label}>
+          {field.name || field.label}
         </span>
         <span className="text-[10px] font-medium text-gray-400 truncate mt-0.5 block">
-          {field.sourceDocument}
+          {field.sourceDocument || field.sourceDoc}
         </span>
       </div>
 

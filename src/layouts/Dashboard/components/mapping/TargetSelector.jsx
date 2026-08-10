@@ -16,12 +16,12 @@ const TargetSelector = ({ systems, selectedSystem, onSelect }) => {
             onClick={() => onSelect(sys.id)}
             className={`flex items-center gap-3 px-5 py-3 rounded-xl border transition ${
               selectedSystem === sys.id 
-                ? 'bg-[#FDF6F0] border-[#F87103] text-[#F87103] shadow-sm'
-                : 'bg-white border-gray-200 text-gray-700 hover:border-gray-300 hover:bg-gray-50'
-            } dark:text-gray-300 dark:border-neutral-700`}
+                ? 'bg-[#FDF6F0] border-[#F87103] text-[#F87103] shadow-sm dark:bg-[#F87103]/10 dark:border-[#F87103] dark:text-[#F87103]'
+                : 'bg-white border-gray-200 text-gray-700 hover:border-gray-300 hover:bg-gray-50 dark:bg-neutral-900 dark:border-neutral-700 dark:text-gray-300 dark:hover:bg-neutral-800'
+            }`}
           >
             <div className={`flex items-center justify-center p-1.5 rounded-lg ${
-              selectedSystem === sys.id ? 'bg-white' : 'bg-gray-100'
+              selectedSystem === sys.id ? 'bg-white dark:bg-transparent' : 'bg-gray-100 dark:bg-neutral-800'
             }`}>
               <Server size={16} />
             </div>

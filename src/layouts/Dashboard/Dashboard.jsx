@@ -27,6 +27,7 @@ import { dashboardService } from '../../services/dashboardService'
 import { mapDashboardSummaryToUI } from '../../services/dashboardMapper'
 import NewOperationModal from '../../components/modal/NewOperationModal'
 import Settings from './Settings'
+import TerminalApi from './TerminalApi'
 import { AlertCircle, RefreshCw } from 'lucide-react'
 
 const Dashboard = () => {
@@ -264,6 +265,14 @@ const Dashboard = () => {
               <Route
                 path="settings"
                 element={<Settings />}
+              />
+              <Route
+                path="terminal-api"
+                element={<TerminalApi />}
+              />
+              <Route
+                path="terminal-api/:jobId"
+                element={<TerminalApi />}
               />
             </Routes>
             </div>

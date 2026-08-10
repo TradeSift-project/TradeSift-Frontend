@@ -22,54 +22,54 @@ const MappingSummary = ({ summary }) => {
         </div>
 
         {/* Mapped */}
-        <div className="flex flex-col gap-1 p-4 rounded-[16px] bg-emerald-50/50 border border-emerald-100 shadow-sm">
+        <div className="flex flex-col gap-1 p-4 rounded-[16px] bg-emerald-50/50 border border-emerald-100 shadow-sm dark:bg-emerald-900/10 dark:border-emerald-900/30">
           <span className="text-[10px] font-bold uppercase tracking-[0.5px] text-emerald-600 flex items-center gap-1.5">
             <CheckCircle2 size={12} />
             Mapped
           </span>
-          <span className="text-xl font-bold text-emerald-700">{summary.mapped}</span>
+          <span className="text-xl font-bold text-emerald-700 dark:text-emerald-400">{summary.mapped}</span>
         </div>
 
         {/* Missing */}
-        <div className="flex flex-col gap-1 p-4 rounded-[16px] bg-red-50/50 border border-red-100 shadow-sm">
+        <div className="flex flex-col gap-1 p-4 rounded-[16px] bg-red-50/50 border border-red-100 shadow-sm dark:bg-red-900/10 dark:border-red-900/30">
           <span className="text-[10px] font-bold uppercase tracking-[0.5px] text-red-600 flex items-center gap-1.5">
             <XCircle size={12} />
             Missing
           </span>
-          <span className="text-xl font-bold text-red-700">{summary.missing}</span>
+          <span className="text-xl font-bold text-red-700 dark:text-red-400">{summary.missing}</span>
         </div>
 
         {/* Invalid */}
-        <div className="flex flex-col gap-1 p-4 rounded-[16px] bg-orange-50/50 border border-orange-100 shadow-sm">
+        <div className="flex flex-col gap-1 p-4 rounded-[16px] bg-orange-50/50 border border-orange-100 shadow-sm dark:bg-orange-900/10 dark:border-orange-900/30">
           <span className="text-[10px] font-bold uppercase tracking-[0.5px] text-orange-600 flex items-center gap-1.5">
             <AlertTriangle size={12} />
             Invalid
           </span>
-          <span className="text-xl font-bold text-orange-700">{summary.invalid}</span>
+          <span className="text-xl font-bold text-orange-700 dark:text-orange-400">{summary.invalid}</span>
         </div>
 
         {/* Required Remaining */}
-        <div className="flex flex-col gap-1 p-4 rounded-[16px] bg-blue-50/50 border border-blue-100 shadow-sm">
+        <div className="flex flex-col gap-1 p-4 rounded-[16px] bg-blue-50/50 border border-blue-100 shadow-sm dark:bg-blue-900/10 dark:border-blue-900/30">
           <span className="text-[10px] font-bold uppercase tracking-[0.5px] text-blue-600 flex items-center gap-1.5">
             <AlertTriangle size={12} />
             Required Left
           </span>
-          <span className="text-xl font-bold text-blue-700">{summary.requiredRemaining}</span>
+          <span className="text-xl font-bold text-blue-700 dark:text-blue-400">{summary.requiredRemaining}</span>
         </div>
       </div>
 
       {/* Readiness Banner */}
       <div className={`mt-2 p-4 rounded-[16px] border flex items-center gap-3 ${
         isReady 
-          ? 'bg-emerald-50 border-emerald-200 text-emerald-800'
-          : 'bg-red-50 border-red-200 text-red-800'
+          ? 'bg-emerald-50 border-emerald-200 text-emerald-800 dark:bg-emerald-900/10 dark:border-emerald-900/30 dark:text-emerald-500'
+          : 'bg-red-50 border-red-200 text-red-800 dark:bg-red-900/10 dark:border-red-900/30 dark:text-red-500'
       }`}>
         {isReady ? (
           <>
             <CheckCircle2 className="text-emerald-600 shrink-0" size={20} />
             <div>
               <p className="font-bold text-sm">Ready for Export</p>
-              <p className="text-xs text-emerald-700/80 mt-0.5">All required fields are mapped and valid.</p>
+              <p className="text-xs text-emerald-700/80 mt-0.5 dark:text-emerald-400/80">All required fields are mapped and valid.</p>
             </div>
           </>
         ) : (
@@ -77,7 +77,7 @@ const MappingSummary = ({ summary }) => {
             <AlertTriangle className="text-red-600 shrink-0" size={20} />
             <div>
               <p className="font-bold text-sm">Mapping Incomplete</p>
-              <p className="text-xs text-red-700/80 mt-0.5">
+              <p className="text-xs text-red-700/80 mt-0.5 dark:text-red-400/80">
                 {summary.requiredRemaining > 0 ? `${summary.requiredRemaining} required fields still need configuration.` : 'Please resolve invalid mappings.'}
               </p>
             </div>

@@ -20,12 +20,12 @@ const ERPMappings = ({ mappings, unmapped }) => {
       </div>
 
       {unmapped && unmapped.length > 0 && (
-        <div className="flex flex-col bg-white rounded-xl border border-amber-200 shadow-sm overflow-hidden dark:bg-neutral-900">
-          <div className="flex items-center justify-between px-4 py-3 bg-amber-50/50 border-b border-amber-100">
-            <h3 className="text-xs font-bold text-amber-700 uppercase tracking-wider">Unmapped Fields ({unmapped.length})</h3>
+        <div className="flex flex-col bg-white rounded-xl border border-amber-200 shadow-sm overflow-hidden dark:bg-neutral-900/50 dark:border-amber-900/30">
+          <div className="flex items-center justify-between px-4 py-3 bg-amber-50/50 border-b border-amber-100 dark:bg-amber-900/10 dark:border-amber-900/30">
+            <h3 className="text-xs font-bold text-amber-700 uppercase tracking-wider dark:text-amber-500">Unmapped Fields ({unmapped.length})</h3>
             <button 
               onClick={() => window.location.href = window.location.pathname.replace('approved-data', 'mapping')}
-              className="text-[10px] font-bold uppercase tracking-wider text-amber-700 hover:text-amber-800 underline"
+              className="text-[10px] font-bold uppercase tracking-wider text-amber-700 hover:text-amber-800 underline dark:text-amber-500 dark:hover:text-amber-400"
             >
               Review Mapping
             </button>
