@@ -11,7 +11,7 @@ export default defineConfig({
       '/api': {
         target: 'https://backend-tradesift.onrender.com',
         changeOrigin: true,
-        cookieDomainRewrite: "https://trade-sift.vercel.app/"
+        cookieDomainRewrite: "localhost"
       }
     }
   }
