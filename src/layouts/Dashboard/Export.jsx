@@ -6,9 +6,11 @@ import { toast } from 'sonner'
 import { CheckCircle2, AlertTriangle } from 'lucide-react'
 
 import { mockUnifiedJob } from './constants/workflowConstants'
-import { EXPORT_DESTINATIONS, MOCK_EXPORT_DATA } from './constants/exportConstants'
+import { EXPORT_DESTINATIONS } from './constants/exportConstants'
 import OperationNotFound from './components/shared/OperationNotFound'
 import { getOperationById } from '../../services/operationService'
+import { reviewService } from '../../services/reviewService'
+import { documentService } from '../../services/documentService'
 
 import JobContextHeader from './components/shared/JobContextHeader'
 import ExportReadiness from './components/export/ExportReadiness'
@@ -30,6 +32,19 @@ const Export = () => {
   const [exportComplete, setExportComplete] = useState(false)
   const [exportError, setExportError] = useState(false)
   const [fetchError, setFetchError] = useState(false)
+  
+  const [exportData, setExportData] = useState({
+    summary: {
+      documents: 0,
+      fieldsApproved: 0,
+      fieldsMapped: 0,
+      requiredRemaining: 0,
+      targetSystem: 'TOS-Z'
+    },
+    previewData: [],
+    isReady: false,
+    excelFilename: 'TradeSift_Export.xlsx'
+  })
 
   useEffect(() => {
     let isMounted = true
@@ -60,6 +75,57 @@ const Export = () => {
         }
 
         setJob(mergedJob)
+
+        let extractions = []
+        try {
+          const extRes = await reviewService.getExtractionData(jobId)
+          if (extRes.success && extRes.data) {
+            extractions = Array.isArray(extRes.data) ? extRes.data : [extRes.data]
+          }
+        } catch (e) {
+          console.warn('No extractions found', e)
+        }
+
+        let documentCount = 0
+        try {
+          const docRes = await documentService.listOperationDocuments(jobId)
+          if (docRes?.data?.documents) {
+            documentCount = docRes.data.documents.length
+          }
+        } catch (e) {
+          console.warn('No documents found', e)
+        }
+
+        let previewData = []
+        let fieldId = 1
+        extractions.forEach(ext => {
+          const fieldsData = {
+            ...(ext.originalFields || {}),
+            ...(ext.editedFields || {})
+          }
+          Object.entries(fieldsData).forEach(([key, value]) => {
+            previewData.push({
+              id: fieldId++,
+              standardField: key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase()),
+              targetField: key,
+              standardValue: String(value || '')
+            })
+          })
+        })
+
+        setExportData({
+          summary: {
+            documents: documentCount,
+            fieldsApproved: previewData.length,
+            fieldsMapped: previewData.length,
+            requiredRemaining: 0,
+            targetSystem: 'ERP Integration'
+          },
+          previewData: previewData,
+          isReady: true, // or previewData.length > 0 if you want to block empty exports
+          excelFilename: `TradeSift_${backendJob?.operationType || 'Export'}_${mergedJob.id}.xlsx`
+        })
+
       } catch (err) {
         console.error('Failed to load export context:', err)
       } finally {
@@ -80,7 +146,7 @@ const Export = () => {
   }
 
   const handleExport = async () => {
-    if (!MOCK_EXPORT_DATA.isReady) {
+    if (!exportData.isReady) {
       toast.error('Cannot export: mapping incomplete.')
       return
     }
@@ -157,7 +223,7 @@ const Export = () => {
             </div>
             <div className="flex flex-col gap-1">
               <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider dark:text-gray-400">Fields Exported</span>
-              <span className="text-sm font-semibold text-gray-900 dark:text-white">{MOCK_EXPORT_DATA.summary.fieldsMapped} Fields</span>
+              <span className="text-sm font-semibold text-gray-900 dark:text-white">{exportData.summary.fieldsMapped} Fields</span>
             </div>
           </div>
         </div>
@@ -234,8 +300,8 @@ const Export = () => {
       
       <div className="flex flex-col gap-8 pointer-events-auto" style={{ opacity: isExporting ? 0.6 : 1, pointerEvents: isExporting ? 'none' : 'auto' }}>
         <ExportReadiness 
-          summary={MOCK_EXPORT_DATA.summary} 
-          isReady={MOCK_EXPORT_DATA.isReady} 
+          summary={exportData.summary} 
+          isReady={exportData.isReady} 
         />
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -248,14 +314,14 @@ const Export = () => {
             
             {selectedDestination === 'excel-standard' && (
               <ExcelExport 
-                filename={MOCK_EXPORT_DATA.excelFilename}
-                fieldsCount={MOCK_EXPORT_DATA.summary.fieldsMapped}
+                filename={exportData.excelFilename}
+                fieldsCount={exportData.summary.fieldsMapped}
               />
             )}
           </div>
           
           <div className="flex flex-col">
-            <ExportPreview data={MOCK_EXPORT_DATA.previewData} />
+            <ExportPreview data={exportData.previewData} />
           </div>
         </div>
       </div>
@@ -265,7 +331,7 @@ const Export = () => {
           destinationId={selectedDestination}
           onBack={() => navigate(`/dashboard/mapping/${job.id}`)}
           onExport={handleExport}
-          isReady={MOCK_EXPORT_DATA.isReady}
+          isReady={exportData.isReady}
         />
       )}
     </motion.div>

@@ -24,25 +24,32 @@ const ExportPreview = ({ data }) => {
           </span>
         </div>
         
-        {data.map(row => (
-          <div key={row.id} className="grid grid-cols-[1fr_auto_1fr_1fr] items-center gap-4 px-6 py-4 border-b border-gray-100 last:border-0 hover:bg-neutral-50/50 transition dark:border-neutral-800 dark:hover:bg-neutral-800/50">
-            <span className="text-xs font-semibold text-gray-600 dark:text-gray-400">
-              {row.standardField}
-            </span>
-            
-            <div className="text-gray-300">
-              <ArrowRight size={14} />
-            </div>
-            
-            <span className="text-sm font-bold text-gray-900 dark:text-white">
-              {row.targetField}
-            </span>
-            
-            <span className="text-sm font-mono text-gray-700 bg-gray-50 border border-gray-100 px-2 py-1 rounded w-fit dark:bg-neutral-800/50 dark:text-gray-300 dark:border-neutral-800">
-              {row.standardValue}
-            </span>
+        {data.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-12 text-center text-gray-500 dark:text-gray-400">
+            <span className="text-sm font-semibold">No fields to export</span>
+            <span className="text-xs mt-1">There are no approved or extracted fields available for this operation.</span>
           </div>
-        ))}
+        ) : (
+          data.map(row => (
+            <div key={row.id} className="grid grid-cols-[1fr_auto_1fr_1fr] items-center gap-4 px-6 py-4 border-b border-gray-100 last:border-0 hover:bg-neutral-50/50 transition dark:border-neutral-800 dark:hover:bg-neutral-800/50">
+              <span className="text-xs font-semibold text-gray-600 dark:text-gray-400">
+                {row.standardField}
+              </span>
+              
+              <div className="text-gray-300">
+                <ArrowRight size={14} />
+              </div>
+              
+              <span className="text-sm font-bold text-gray-900 dark:text-white">
+                {row.targetField}
+              </span>
+              
+              <span className="text-sm font-mono text-gray-700 bg-gray-50 border border-gray-100 px-2 py-1 rounded w-fit dark:bg-neutral-800/50 dark:text-gray-300 dark:border-neutral-800">
+                {row.standardValue}
+              </span>
+            </div>
+          ))
+        )}
       </div>
     </div>
   )

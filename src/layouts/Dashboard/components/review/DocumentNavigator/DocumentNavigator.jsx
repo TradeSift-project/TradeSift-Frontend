@@ -34,7 +34,9 @@ const DocumentNavigator = ({ documents }) => {
                 <FileText size={14} className="text-gray-400" />
               </div>
               <div className="flex flex-col flex-1 min-w-0">
-                <span className="text-sm font-bold text-gray-900 truncate dark:text-white">{doc.type}</span>
+                <span className="text-sm font-bold text-gray-900 truncate dark:text-white" title={doc.name}>
+                  {doc.name}
+                </span>
                 <div className="flex items-center gap-1.5 mt-0.5">
                   <Icon size={12} className={iconColor} />
                   <span className={`text-[10px] font-semibold uppercase tracking-wider ${iconColor.replace('500', '700')}`}>

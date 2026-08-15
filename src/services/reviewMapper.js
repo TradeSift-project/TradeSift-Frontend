@@ -1,4 +1,4 @@
-import { mockUnifiedJob } from '../layouts/Dashboard/constants/workflowConstants'
+
 
 /**
  * Maps the backend extractions array into the UI Review model.
@@ -17,11 +17,13 @@ export const mapExtractionDataToUI = (extractions = [], backendDocs = []) => {
     const docExtraction = extractions.find(e => e.documentId === doc.id)
     return {
       id: doc.id,
-      name: doc.originalFileName.split('.')[0],
+      name: doc.originalFileName?.split('.')[0] || 'Unknown Document',
+      fileName: doc.originalFileName,
       type: docExtraction?.documentType || 'Unknown',
       status: docExtraction ? (docExtraction.status === 'APPROVED' ? 'approved' : 'requires_review') : 'pending',
-      confidenceScore: docExtraction?.confidence || 0,
-      pages: 1 // mocked
+      health: docExtraction ? (docExtraction.confidence > 0.8 ? 'Verified' : 'Low Confidence') : 'Missing',
+      confidenceScore: docExtraction?.confidence || null,
+      pages: 1 // TODO: backend doesn't provide page count yet
     }
   })
 
@@ -37,12 +39,20 @@ export const mapExtractionDataToUI = (extractions = [], backendDocs = []) => {
   
   if (extractions.length > 0) {
     extractions.forEach(ext => {
-      const fieldsData = ext.editedFields || ext.originalFields || {}
+      const fieldsData = {
+        ...(ext.originalFields || {}),
+        ...(ext.editedFields || {})
+      }
       
       const fields = Object.entries(fieldsData).map(([key, value]) => {
         // We guess status based on if it's edited or not
         const isEdited = ext.editedFields && ext.editedFields[key] !== undefined && ext.editedFields[key] !== ext.originalFields?.[key]
         
+        let conf = ext.confidence || 0.85
+        if (conf <= 1.0) {
+          conf = Math.round(conf * 100)
+        }
+
         return {
           id: `${ext.id}-${key}`,
           extractionId: ext.id,
@@ -50,7 +60,7 @@ export const mapExtractionDataToUI = (extractions = [], backendDocs = []) => {
           label: key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase()), // camelCase to Title Case
           aiValue: String(ext.originalFields?.[key] || ''),
           editableValue: String(value || ''),
-          confidence: ext.confidence || 0.85,
+          confidence: conf,
           status: isEdited ? 'manually-edited' : 'verified',
           sourceDoc: ext.documentType || 'Document'
         }
@@ -72,12 +82,32 @@ export const mapExtractionDataToUI = (extractions = [], backendDocs = []) => {
     // So if extractions is empty, mappedSections remains []
   }
 
+  // Calculate real summary instead of using mock
+  let fieldsExtracted = 0
+  let verified = 0
+  let needReview = 0
+
+  mappedSections.forEach(section => {
+    section.fields.forEach(f => {
+      fieldsExtracted++
+      if (f.status === 'verified' || f.status === 'manually-edited') {
+        verified++
+      } else {
+        needReview++
+      }
+    })
+  })
+
   return {
     documents: mappedDocuments,
     sections: mappedSections,
-    // Keep mocked validation and comparisons for now, since they don't exist in backend API
-    issues: JSON.parse(JSON.stringify(mockUnifiedJob.review.validationIssues)),
-    comparisons: JSON.parse(JSON.stringify(mockUnifiedJob.review.comparisons)),
-    summary: JSON.parse(JSON.stringify(mockUnifiedJob.review.reviewSummary))
+    issues: [], // Backend does not support validation issues yet
+    comparisons: [], // Backend does not support cross-doc comparisons yet
+    summary: {
+      documents: mappedDocuments.length,
+      fieldsExtracted,
+      verified,
+      needReview
+    }
   }
 }

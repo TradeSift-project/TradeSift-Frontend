@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { AlertTriangle, AlertCircle, Save, ArrowLeft, Database, CheckCircle } from 'lucide-react'
 import { reviewService } from '../../../../../services/reviewService'
-import { MOCK_EXTRACTIONS, MOCK_CROSS_DOC_ISSUES } from '../../../constants/documentExtractionConstants'
+import { documentService } from '../../../../../services/documentService'
+import { mapExtractionDataToUI } from '../../../../../services/reviewMapper'
 import DocumentPreview from '../DocumentPreview'
 import ExtractionSection from './ExtractionSection'
 import ExtractionSummary from './ExtractionSummary'
@@ -10,12 +11,14 @@ import StructuredDataPreview from '../StructuredDataPreview'
 import { toast } from 'sonner'
 
 const ExtractionReview = ({ documentId = 'DOC-001', onBack, onSave }) => {
-  const docData = MOCK_EXTRACTIONS[documentId] || MOCK_EXTRACTIONS['DOC-001']
   const [sections, setSections] = useState([])
   const [validationResult, setValidationResult] = useState(null)
   const [crossDocIssues, setCrossDocIssues] = useState([])
   const [showPreview, setShowPreview] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [docName, setDocName] = useState('Loading...')
+  const [docType, setDocType] = useState('Unknown')
+  const [extractionId, setExtractionId] = useState(null)
 
   useEffect(() => {
     let isMounted = true
@@ -23,16 +26,35 @@ const ExtractionReview = ({ documentId = 'DOC-001', onBack, onSave }) => {
     const fetchExtractionData = async () => {
       try {
         setLoading(true)
-        // Note: the backend will eventually return sections and cross-doc issues directly.
-        // For now we still fall back to mock constants while calling the placeholder service.
-        const res = await reviewService.getExtractionData(documentId)
+        // 1. Fetch document to get operationId
+        const docRes = await documentService.getDocument(documentId)
+        if (!docRes.success || !docRes.data) throw new Error('Document not found')
+        const operationId = docRes.data.operationId
+        const fileName = docRes.data.originalFileName
+
+        // 2. Fetch extractions for this operation
+        const extRes = await reviewService.getExtractionData(operationId)
+        let extractions = []
+        if (extRes.success && extRes.data) {
+          extractions = Array.isArray(extRes.data) ? extRes.data : [extRes.data]
+        }
+
+        const mappedData = mapExtractionDataToUI(extractions, [docRes.data])
         
         if (isMounted) {
-          if (docData && docData.sections) {
-            setSections(JSON.parse(JSON.stringify(docData.sections)))
+          setDocName(fileName)
+          
+          const thisExtraction = extractions.find(e => e.documentId === documentId)
+          if (thisExtraction) {
+            setExtractionId(thisExtraction.id)
+            setDocType(thisExtraction.documentType || 'Unknown')
+            const docSections = mappedData.sections.filter(s => s.id === `section-${thisExtraction.id}`)
+            setSections(docSections)
+          } else {
+            setSections([])
           }
-          const issues = MOCK_CROSS_DOC_ISSUES[documentId] || []
-          setCrossDocIssues(JSON.parse(JSON.stringify(issues)))
+          
+          setCrossDocIssues([]) // Backend does not support cross-doc issues yet
           setValidationResult(null)
         }
       } catch (err) {
@@ -149,8 +171,28 @@ const ExtractionReview = ({ documentId = 'DOC-001', onBack, onSave }) => {
     }
   }
 
-  const handleSaveAndMap = () => {
+  const handleSaveAndMap = async () => {
     handleValidate()
+    
+    // Save to backend
+    if (extractionId) {
+      try {
+        const editedFields = {}
+        sections.forEach(section => {
+          section.fields.forEach(field => {
+            if (field.status === 'manually-edited') {
+              editedFields[field.originalKey] = field.editableValue
+            }
+          })
+        })
+        await reviewService.updateExtractionData(extractionId, { editedFields })
+        toast.success('Saved extraction changes.')
+      } catch (err) {
+        toast.error('Failed to save changes.')
+        console.error(err)
+      }
+    }
+
     // Open structured data preview modal before exit
     setShowPreview(true)
   }
@@ -179,7 +221,7 @@ const ExtractionReview = ({ documentId = 'DOC-001', onBack, onSave }) => {
           </button>
           <div className="flex flex-col">
             <h2 className="font-geist text-base font-bold text-[#0B0D12] flex items-center gap-2 dark:text-white">
-              Review Extraction: <span className="text-gray-500 font-normal dark:text-gray-400">{docData.fileName}</span>
+              Review Extraction: <span className="text-gray-500 font-normal dark:text-gray-400">{docName}</span>
             </h2>
             <p className="text-[10px] text-gray-400">
               Verify values mapped to ERP destination fields
@@ -250,7 +292,7 @@ const ExtractionReview = ({ documentId = 'DOC-001', onBack, onSave }) => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
         
         {/* Left Column: PDF preview panel */}
-        <DocumentPreview docName={docData.fileName} type={docData.documentType} />
+        <DocumentPreview docName={docName} type={docType} />
 
         {/* Right Column: Editable fields forms */}
         <div className="flex flex-col gap-6 rounded-[24px] border border-[#E5E6E8] bg-white p-5 shadow-sm max-h-[570px] overflow-y-auto dark:bg-neutral-900 dark:border-neutral-800">
@@ -300,8 +342,8 @@ const ExtractionReview = ({ documentId = 'DOC-001', onBack, onSave }) => {
           onSave?.(sections)
           onBack?.()
         }}
-        documentName={docData.fileName}
-        documentType={docData.documentType}
+        documentName={docName}
+        documentType={docType}
         fields={sections.flatMap((s) => s.fields)}
         onExport={(format) => {
           toast.success(`Successfully exported document schema as ${format.toUpperCase()}!`)
