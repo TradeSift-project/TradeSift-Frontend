@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { fadeUp } from '../../animations/variants'
 import { getOperations } from '../../services/operationService'
 import NewOperationModal from '../../components/modal/NewOperationModal'
+import { MAX_DOCUMENTS_PER_OPERATION } from './constants/documentConstants'
 
 const OperationsList = () => {
   const navigate = useNavigate()
@@ -182,7 +183,7 @@ const OperationsList = () => {
                         <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
                           <FileText size={16} className="text-gray-400" />
                           <span className="font-semibold">{op.documents?.length || 0}</span>
-                          <span className="text-xs text-gray-400">/ 20</span>
+                          <span className="text-xs text-gray-400">/ {MAX_DOCUMENTS_PER_OPERATION}</span>
                         </div>
                       </td>
                       <td className="px-4 md:px-6 py-4">

@@ -1,4 +1,4 @@
-import { Download, Server, Settings2 } from 'lucide-react'
+import { Download, Settings2 } from 'lucide-react'
 import ExportButton from './ExportButton'
 import { toast } from 'sonner'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -21,7 +21,7 @@ const ExportSection = () => {
           window.open(res.data.downloadUrl, '_blank')
         }
       }
-    } catch (err) {
+    } catch {
       toast.error('Failed to export data')
     } finally {
       setIsExporting(false)

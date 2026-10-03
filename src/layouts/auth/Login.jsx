@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
-import { useNavigate, useSearchParams } from "react-router";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import AuthHero from "./components/AuthHero";
 import AuthLayout from "./components/AuthLayout";
@@ -55,7 +55,7 @@ export default function Login() {
         if (isSubmitting) return;
         setIsSubmitting(true);
 
-        const success = await handleLoginSubmit(
+        await handleLoginSubmit(
             e,
             formData,
             setError,

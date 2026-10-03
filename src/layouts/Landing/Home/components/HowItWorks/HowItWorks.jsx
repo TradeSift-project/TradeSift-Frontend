@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { AlertCircle, CheckCircle2, AlertTriangle, FileText, Info } from 'lucide-react'
+import { CheckCircle2, AlertTriangle, Info } from 'lucide-react'
 import { fadeUp, fadeLeft, staggerContainer } from '../../../../../animations/variants'
 
 const HowItWorks = () => {

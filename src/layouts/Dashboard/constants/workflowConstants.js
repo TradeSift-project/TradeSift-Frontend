@@ -1,3 +1,12 @@
+export const WORKFLOW_PIPELINE = [
+  { id: 'upload', label: 'Upload', status: 'completed' },
+  { id: 'processing', label: 'AI Processing', status: 'completed' },
+  { id: 'validation', label: 'Validation', status: 'completed' },
+  { id: 'review', label: 'Human Review', status: 'current' },
+  { id: 'approved', label: 'Approved Data', status: 'next' },
+  { id: 'export', label: 'ERP / Export', status: 'next' }
+]
+
 export const mockUnifiedJob = {
   id: 'IMP-2026-00124',
   workflowType: 'Import Gate-In',

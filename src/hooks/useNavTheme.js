@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { NavThemeContext } from '../context/NavThemeContext'
+import { NavThemeContext } from '../context/navTheme'
 
 export const useNavTheme = () => {
   const context = useContext(NavThemeContext)

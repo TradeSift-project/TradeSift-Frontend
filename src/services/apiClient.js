@@ -1,15 +1,24 @@
 import axios from "axios";
 import API_BASE_URL from "./apiConfig.js";
 
+// Generous enough for the Render backend to wake from a cold start
+const REQUEST_TIMEOUT_MS = 30000;
+
 const apiClient = axios.create({
     baseURL: API_BASE_URL,
     headers: {
         "Content-Type": "application/json",
-        "ngrok-skip-browser-warning":"true"
     },
-    timeout: 10000,
+    timeout: REQUEST_TIMEOUT_MS,
     withCredentials: true,
 });
+
+// Auth pages where a failed session must not trigger a redirect (prevents reload loops)
+const PUBLIC_PATHS = ['/login', '/signup', '/verify-otp', '/reset-password', '/'];
+
+const REFRESH_STAMP_KEY = 'tradesift_last_refresh';
+// Another tab refreshed this recently, so its new cookies are already shared with us
+const REFRESH_REUSE_WINDOW_MS = 10000;
 
 let isRefreshing = false;
 let failedQueue = [];
@@ -23,6 +32,43 @@ const processQueue = (error, token = null) => {
         }
     });
     failedQueue = [];
+};
+
+const readRefreshStamp = () => {
+    try {
+        return Number(localStorage.getItem(REFRESH_STAMP_KEY)) || 0;
+    } catch {
+        return 0;
+    }
+};
+
+const writeRefreshStamp = () => {
+    try {
+        localStorage.setItem(REFRESH_STAMP_KEY, String(Date.now()));
+    } catch {
+        // storage unavailable; cross-tab dedupe just won't apply
+    }
+};
+
+// The backend rotates refresh tokens, so two tabs refreshing with the same token makes the
+// second one fail and wipes the cookies for both. Serialise refreshes across tabs with a
+// Web Lock and skip the call when another tab just did it.
+const refreshSession = async () => {
+    const doRefresh = async () => {
+        if (Date.now() - readRefreshStamp() < REFRESH_REUSE_WINDOW_MS) return;
+        // Fresh axios instance so the refresh call is not intercepted
+        await axios.post(`${API_BASE_URL}/auth/refresh`, {}, {
+            withCredentials: true,
+            headers: { "Content-Type": "application/json" },
+            timeout: REQUEST_TIMEOUT_MS,
+        });
+        writeRefreshStamp();
+    };
+
+    if (navigator.locks?.request) {
+        return navigator.locks.request('tradesift-auth-refresh', doRefresh);
+    }
+    return doRefresh();
 };
 
 apiClient.interceptors.response.use(
@@ -53,52 +99,23 @@ apiClient.interceptors.response.use(
             isRefreshing = true;
 
             try {
-                // Call refresh endpoint using a fresh axios instance to avoid interceptor deadlocks
-                await axios.post(`${API_BASE_URL}/auth/refresh`, {}, {
-                    withCredentials: true,
-                    headers: {
-                        "Content-Type": "application/json",
-                        "ngrok-skip-browser-warning": "true"
-                    }
-                });
-                
-                // Process queued requests
+                await refreshSession();
                 processQueue(null);
-                
-                // Retry the original request
                 return apiClient(originalRequest);
             } catch (err) {
                 processQueue(err, null);
-                // Redirect to login if refresh fails
-                try {
-                    await axios.post(`${API_BASE_URL}/auth/logout`, {}, { withCredentials: true });
-                } catch (e) {
-                    // Ignore logout error if they're already unauthorized
-                }
-                
-                // Only redirect if not already on the login page to prevent infinite reload loops
-                if (window.location.pathname !== '/login') {
+
+                // Only a definitive auth rejection ends the session. Timeouts, network errors and
+                // 5xx (e.g. a cold-starting backend) must not log the user out.
+                const status = err.response?.status;
+                if ((status === 401 || status === 403) && !PUBLIC_PATHS.includes(window.location.pathname)) {
                     window.location.href = '/login';
                 }
-                
+
                 return Promise.reject(err);
             } finally {
                 isRefreshing = false;
             }
-        }
-
-        if (error.response && error.response.status === 401 && originalRequest._retry) {
-            // If it failed even after retry, clear session and redirect.
-            try {
-                await axios.post(`${API_BASE_URL}/auth/logout`, {}, { withCredentials: true });
-            } catch (e) {
-                // Ignore logout error
-            }
-
-            if (window.location.pathname !== '/login') {
-                window.location.href = '/login';
-            }
-            return Promise.reject(error);
         }
 
         if (error.response) {

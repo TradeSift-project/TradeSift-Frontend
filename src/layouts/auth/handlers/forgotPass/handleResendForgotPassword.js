@@ -1,6 +1,6 @@
 import { toast } from "sonner";
 
-import { resendForgotPasswordOtp } from "../../services/forgotPassword/resendForgotPassword";
+import { resendForgotPasswordOtp } from "../../services/authService";
 
 export const handleResendForgotPasswordOtp = async (
     email,

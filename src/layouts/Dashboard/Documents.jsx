@@ -5,7 +5,7 @@ import DocumentsStats from './components/documents/DocumentsStats'
 import DocumentsToolbar from './components/documents/DocumentsToolbar'
 import DocumentsTable from './components/documents/DocumentsTable'
 import DocumentEmptyState from './components/documents/DocumentEmptyState'
-import { X, Cpu, RefreshCw, FileText, CheckCircle2, AlertCircle } from 'lucide-react'
+import { X, RefreshCw, FileText, CheckCircle2, AlertCircle } from 'lucide-react'
 import { toast } from 'sonner'
 import { documentService } from '../../services/documentService'
 import { mapDocumentsToUI } from '../../services/documentMapper'
@@ -35,25 +35,18 @@ const Documents = () => {
     }
   }
 
-  const fetchDocuments = async () => {
-    try {
-      setLoading(true)
-      setError(null)
-      const res = await documentService.getAllUserDocuments()
-      if (res.success) {
+  const fetchDocuments = () =>
+    documentService.getAllUserDocuments()
+      .then((res) => {
+        if (!res.success) throw new Error(res.message || 'Failed to fetch documents')
         // Handle mapping backend docs to UI docs
-        const mappedDocs = mapDocumentsToUI(res.data.documents || [])
-        setDocuments(mappedDocs)
-      } else {
-        throw new Error(res.message || 'Failed to fetch documents')
-      }
-    } catch(err) {
-      console.error(err)
-      setError('Unable to load document history.')
-    } finally {
-      setLoading(false)
-    }
-  }
+        setDocuments(mapDocumentsToUI(res.data.documents || []))
+      })
+      .catch((err) => {
+        console.error(err)
+        setError('Unable to load document history.')
+      })
+      .finally(() => setLoading(false))
 
   useEffect(() => {
     fetchDocuments()
@@ -138,7 +131,11 @@ const Documents = () => {
           <h3 className="font-bold text-gray-900 mb-1 dark:text-white">Unable to load documents</h3>
           <p className="text-sm text-gray-500 mb-6 dark:text-gray-400">{error}</p>
           <button
-            onClick={fetchDocuments}
+            onClick={() => {
+              setLoading(true)
+              setError(null)
+              fetchDocuments()
+            }}
             className="flex items-center gap-2 px-6 py-2 rounded-full border border-gray-200 text-sm font-bold text-gray-700 hover:bg-gray-50 transition dark:text-gray-300 dark:border-neutral-700 dark:hover:bg-neutral-800"
           >
             <RefreshCw size={16} />

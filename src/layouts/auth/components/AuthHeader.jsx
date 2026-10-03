@@ -1,4 +1,3 @@
-import React from 'react'
 
 const AuthHeader = ({ title, subtitle }) => {
   return (

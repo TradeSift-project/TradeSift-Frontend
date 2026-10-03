@@ -1,11 +1,7 @@
 import { Check, AlertTriangle, XCircle, AlertCircle } from 'lucide-react'
 
 const ConfidenceBadge = ({ status, confidence }) => {
-  let bg = ''
-  let text = ''
-  let border = ''
-  let icon = null
-  let label = ''
+  let bg, text, border, icon, label
 
   switch (status) {
     case 'high':

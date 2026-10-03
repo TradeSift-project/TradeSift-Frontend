@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Camera, X, RotateCcw, Check } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
@@ -9,21 +9,6 @@ const CameraCapture = ({ onCapture, onCancel }) => {
   const [error, setError] = useState(null)
   const [capturedImage, setCapturedImage] = useState(null)
   const [capturedBlob, setCapturedBlob] = useState(null)
-
-  const startCamera = useCallback(async () => {
-    try {
-      const mediaStream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: 'environment' }
-      })
-      setStream(mediaStream)
-      if (videoRef.current) {
-        videoRef.current.srcObject = mediaStream
-      }
-    } catch (err) {
-      console.error('Camera access error:', err)
-      setError('Camera unavailable or permission denied.')
-    }
-  }, [])
 
   useEffect(() => {
     let activeStream = null
@@ -46,11 +31,7 @@ const CameraCapture = ({ onCapture, onCancel }) => {
     initCamera()
     
     return () => {
-      if (activeStream) {
-        activeStream.getTracks().forEach(track => track.stop())
-      } else if (stream) {
-        stream.getTracks().forEach(track => track.stop())
-      }
+      activeStream?.getTracks().forEach(track => track.stop())
     }
   }, [])
 

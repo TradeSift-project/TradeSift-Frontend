@@ -1,7 +1,7 @@
 import { toast } from "sonner";
 
 import { validateLogin } from "../../validations/validateLogin";
-import { login } from "../../services/login/loginService";
+import { login } from "../../services/authService";
 
 
 export const handleLoginSubmit = async (

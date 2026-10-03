@@ -6,17 +6,6 @@ import Logo from '../../../../../../assets/Logo.png'
 import { Link } from 'react-router-dom'
 import { NAV_LINKS } from '../../constants/landingConstants'
 
-const Chevron = () => (
-  <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M5.54 5.54a.72.72 0 0 1-1.06 0L.23 1.29A.76.76 0 0 1 .76 0a.76.76 0 0 1 .53.23l3.72 3.72L8.73.23a.76.76 0 0 1 1.06 1.06L5.54 5.54Z"
-      fill="currentColor"
-    />
-  </svg>
-)
-
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const { theme, variant } = useNavTheme()

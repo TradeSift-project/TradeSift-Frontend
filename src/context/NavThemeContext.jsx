@@ -1,10 +1,5 @@
-import { createContext, useState, useEffect, useRef } from 'react'
-
-export const NavThemeContext = createContext({
-  theme: 'dark',
-  variant: 'transparent',
-  activeSection: null,
-})
+import { useState, useEffect, useRef } from 'react'
+import { NavThemeContext } from './navTheme'
 
 export const NavThemeProvider = ({ children }) => {
   const [navigationState, setNavigationState] = useState({
@@ -163,6 +158,8 @@ export const NavThemeProvider = ({ children }) => {
         cancelAnimationFrame(frameId.current)
       }
     }
+    // Mount-only: the helpers read refs and a stable setter, so re-subscribing is unnecessary
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

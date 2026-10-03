@@ -1,13 +1,13 @@
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { FileText } from 'lucide-react'
 import DocumentUpload from './components/documents/DocumentUpload'
 import JobContextHeader from './components/shared/JobContextHeader'
 import { getOperationById } from '../../services/operationService'
+import { mapOperationToJob } from '../../services/jobMapper'
 import { useEffect, useState } from 'react'
 
 const UploadOperation = () => {
   const { operationId } = useParams()
-  const navigate = useNavigate()
   const [job, setJob] = useState(null)
 
   useEffect(() => {
@@ -16,12 +16,7 @@ const UploadOperation = () => {
       try {
         const res = await getOperationById(operationId)
         if (res.success && isMounted) {
-          setJob({
-            id: res.data.id,
-            workflowType: res.data.operationType === 'GATE_IN' ? 'Import Gate-In' : 'Export Gate-Out',
-            description: res.data.notes || res.data.referenceNo || 'No reference',
-            status: res.data.status
-          })
+          setJob(mapOperationToJob(res.data))
         }
       } catch (err) {
         console.error('Failed to fetch operation:', err)

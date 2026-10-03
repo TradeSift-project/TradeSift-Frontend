@@ -1,5 +1,5 @@
 import { toast } from "sonner";
-import { verifyLoginOtp } from "../../services/login/loginVerifyOtpServices";
+import { verifyLoginOtp } from "../../services/authService";
 
 export const handleVerifyLoginOtp = async (
     email,

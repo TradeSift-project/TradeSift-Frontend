@@ -5,7 +5,7 @@ import ComingSoonModal from '../../components/modal/ComingSoonModal'
 import Sidebar from './components/layout/Sidebar'
 import DashboardHeader from './components/layout/DashboardHeader'
 import HeaderActions from './components/layout/DashboardHeader/HeaderActions'
-import { Menu, X } from 'lucide-react'
+import { Menu } from 'lucide-react'
 import StatsGrid from './components/overview/StatsGrid'
 import ActiveWorkflows from './components/overview/ActiveWorkflows'
 import RecentDocuments from './components/overview/RecentDocuments'
@@ -22,7 +22,7 @@ import Export from './Export'
 import UploadOperation from './UploadOperation'
 import OperationsList from './OperationsList'
 import OperationWorkspace from './OperationWorkspace'
-import { getMe, logoutUser } from '../../services/userService'
+import useAuth from '../../hooks/useAuth'
 import { dashboardService } from '../../services/dashboardService'
 import { mapDashboardSummaryToUI } from '../../services/dashboardMapper'
 import NewOperationModal from '../../components/modal/NewOperationModal'
@@ -37,45 +37,23 @@ const Dashboard = () => {
   const [showComingSoon, setShowComingSoon] = useState(false)
   const [showNewOpModal, setShowNewOpModal] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [user, setUser] = useState(null)
+  const { user, logout } = useAuth()
   const [dashboardData, setDashboardData] = useState(null)
   const [dashboardLoading, setDashboardLoading] = useState(true)
   const [dashboardError, setDashboardError] = useState(null)
 
-  useEffect(() => {
-    let isMounted = true
-    getMe()
+
+  const fetchDashboardData = () =>
+    dashboardService.getDashboardSummary()
       .then((res) => {
-        if (isMounted && res.success && res.data) {
-          setUser(res.data)
-        }
+        if (!res.success) throw new Error(res.message || 'Failed to fetch dashboard summary')
+        setDashboardData(mapDashboardSummaryToUI(res.data))
       })
       .catch((err) => {
-        console.error('Failed to fetch user profile:', err)
+        console.error(err)
+        setDashboardError('Unable to load dashboard data.')
       })
-
-    return () => {
-      isMounted = false
-    }
-  }, [])
-
-  const fetchDashboardData = async () => {
-    try {
-      setDashboardLoading(true)
-      setDashboardError(null)
-      const res = await dashboardService.getDashboardSummary()
-      if (res.success) {
-        setDashboardData(mapDashboardSummaryToUI(res.data))
-      } else {
-        throw new Error(res.message || 'Failed to fetch dashboard summary')
-      }
-    } catch (err) {
-      console.error(err)
-      setDashboardError('Unable to load dashboard data.')
-    } finally {
-      setDashboardLoading(false)
-    }
-  }
+      .finally(() => setDashboardLoading(false))
 
   useEffect(() => {
     // Only fetch if we are on the root dashboard route, but for simplicity we fetch it when dashboard mounts
@@ -83,14 +61,16 @@ const Dashboard = () => {
     fetchDashboardData()
   }, [])
 
-  useEffect(() => {
-    // Close mobile menu on route change
+  // Close mobile menu on route change (adjusting state during render avoids an extra effect pass)
+  const [menuPath, setMenuPath] = useState(location.pathname)
+  if (menuPath !== location.pathname) {
+    setMenuPath(location.pathname)
     setIsMobileMenuOpen(false)
-  }, [location.pathname])
+  }
 
   const handleLogout = async () => {
     try {
-      await logoutUser()
+      await logout()
       toast.success('Logged out successfully.')
       navigate('/login')
     } catch (err) {
@@ -188,7 +168,11 @@ const Dashboard = () => {
                         <h3 className="font-bold text-gray-900 mb-1 dark:text-white">Unable to load dashboard data.</h3>
                         <p className="text-sm text-gray-500 mb-6 dark:text-gray-400">{dashboardError}</p>
                         <button
-                          onClick={fetchDashboardData}
+                          onClick={() => {
+                            setDashboardLoading(true)
+                            setDashboardError(null)
+                            fetchDashboardData()
+                          }}
                           className="flex items-center gap-2 px-6 py-2 rounded-full border border-gray-200 text-sm font-bold text-gray-700 hover:bg-gray-50 transition dark:text-gray-300 dark:border-neutral-700 dark:hover:bg-neutral-800"
                         >
                           <RefreshCw size={16} />

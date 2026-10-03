@@ -1,5 +1,4 @@
 import EditableField from './EditableField'
-import ConfidenceBadge from '../ConfidenceBadge'
 import StatusBadge from '../StatusBadge'
 
 const FieldCard = ({ field, onChange }) => {

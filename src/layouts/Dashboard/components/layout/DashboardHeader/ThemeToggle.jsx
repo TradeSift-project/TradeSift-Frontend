@@ -2,21 +2,16 @@ import { useState, useEffect } from 'react'
 import { Moon, Sun } from 'lucide-react'
 
 const ThemeToggle = () => {
-  const [isDark, setIsDark] = useState(false)
-
-  useEffect(() => {
+  const [isDark, setIsDark] = useState(() => {
     // Check initial preference
     const storedTheme = localStorage.getItem('tradesift-theme')
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+    return storedTheme === 'dark' || (!storedTheme && prefersDark)
+  })
 
-    if (storedTheme === 'dark' || (!storedTheme && prefersDark)) {
-      setIsDark(true)
-      document.documentElement.classList.add('dark')
-    } else {
-      setIsDark(false)
-      document.documentElement.classList.remove('dark')
-    }
-  }, [])
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', isDark)
+  }, [isDark])
 
   const toggleTheme = () => {
     setIsDark((prev) => {

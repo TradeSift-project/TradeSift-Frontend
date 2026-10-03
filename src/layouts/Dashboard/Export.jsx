@@ -5,7 +5,7 @@ import { staggerContainer, fadeUp } from '../../animations/variants'
 import { toast } from 'sonner'
 import { CheckCircle2, AlertTriangle } from 'lucide-react'
 
-import { mockUnifiedJob } from './constants/workflowConstants'
+import { mapOperationToJob } from '../../services/jobMapper'
 import { EXPORT_DESTINATIONS } from './constants/exportConstants'
 import OperationNotFound from './components/shared/OperationNotFound'
 import { getOperationById } from '../../services/operationService'
@@ -59,20 +59,14 @@ const Export = () => {
             if (isMounted) setFetchError(true)
             return
           }
-        } catch (e) {
+        } catch {
           if (isMounted) setFetchError(true)
           return
         }
 
         if (!isMounted) return
 
-        const mergedJob = {
-          ...mockUnifiedJob,
-          id: backendJob?.id || jobId || mockUnifiedJob.id,
-          workflowType: backendJob?.operationType === 'GATE_IN' ? 'Import Gate-In' : 'Export Gate-Out',
-          description: backendJob?.notes || backendJob?.referenceNo || 'Electronics Components',
-          status: 'Ready for Export'
-        }
+        const mergedJob = mapOperationToJob(backendJob, 'Ready for Export')
 
         setJob(mergedJob)
 

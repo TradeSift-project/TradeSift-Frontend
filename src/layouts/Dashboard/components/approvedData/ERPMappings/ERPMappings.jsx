@@ -1,6 +1,10 @@
+import { useNavigate, useLocation } from 'react-router-dom'
 import MappingRow from './MappingRow'
 
 const ERPMappings = ({ mappings, unmapped }) => {
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
+
   return (
     <div className="flex flex-col mt-8">
       <div className="flex flex-col mb-4">
@@ -24,7 +28,7 @@ const ERPMappings = ({ mappings, unmapped }) => {
           <div className="flex items-center justify-between px-4 py-3 bg-amber-50/50 border-b border-amber-100 dark:bg-amber-900/10 dark:border-amber-900/30">
             <h3 className="text-xs font-bold text-amber-700 uppercase tracking-wider dark:text-amber-500">Unmapped Fields ({unmapped.length})</h3>
             <button 
-              onClick={() => window.location.href = window.location.pathname.replace('approved-data', 'mapping')}
+              onClick={() => navigate(pathname.replace('approved-data', 'mapping'))}
               className="text-[10px] font-bold uppercase tracking-wider text-amber-700 hover:text-amber-800 underline dark:text-amber-500 dark:hover:text-amber-400"
             >
               Review Mapping

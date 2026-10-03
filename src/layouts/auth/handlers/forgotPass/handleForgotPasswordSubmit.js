@@ -1,7 +1,7 @@
 import { toast } from "sonner";
 
 import { validateForgotPassword } from "../../validations/validateForgotPassword";
-import { forgotPassword } from "../../services/forgotPassword/forgotPasswordServices.js";
+import { forgotPassword } from "../../services/authService";
 
 export const handleForgotPasswordSubmit = async (
     e,

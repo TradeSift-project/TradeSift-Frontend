@@ -1,7 +1,7 @@
 import { toast } from "sonner";
 
 import { validateResetPassword } from "../../validations/validateResetPassword";
-import { resetPassword } from "../../services/forgotPassword/resetForgotPasswordServices";
+import { resetPassword } from "../../services/authService";
 
 export const handleResetPasswordSubmit = async (
     email,

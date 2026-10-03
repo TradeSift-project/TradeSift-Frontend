@@ -1,5 +1,5 @@
 import AlertCard from './AlertCard'
-import { ATTENTION_ITEMS } from '../../../constants/dashboardConstants'
+
 
 const OperationalAlerts = ({ alerts = [], onResolveItem }) => {
   return (

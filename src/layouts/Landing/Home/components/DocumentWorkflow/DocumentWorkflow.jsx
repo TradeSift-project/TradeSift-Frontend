@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { ArrowRight, FileText, Cpu, CheckSquare, Database, ArrowDown } from 'lucide-react'
+import { ArrowRight, FileText, CheckSquare, Database, ArrowDown } from 'lucide-react'
 import { fadeUp, staggerContainer } from '../../../../../animations/variants'
 
 const DocumentWorkflow = () => {

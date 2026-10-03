@@ -1,6 +1,6 @@
 
 import { toast } from "sonner";
-import { resendLoginOtp } from "../../services/login/loginResendOtpServices";
+import { resendLoginOtp } from "../../services/authService";
 
 
 export const handleResendLoginOtp = async (

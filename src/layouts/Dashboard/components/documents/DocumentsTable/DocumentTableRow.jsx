@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { MoreVertical, Eye, FileEdit, Download, Trash2 } from 'lucide-react'
+import { MoreVertical, Eye, FileEdit, Trash2 } from 'lucide-react'
 import DocumentTypeIcon from './DocumentTypeIcon'
 import DocumentStatusBadge from '../../overview/RecentDocuments/DocumentStatusBadge'
 

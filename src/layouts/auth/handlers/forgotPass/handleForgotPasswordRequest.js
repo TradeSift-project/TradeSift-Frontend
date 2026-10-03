@@ -1,6 +1,6 @@
 import { toast } from "sonner";
 
-import { forgotPassword } from "../../services/forgotPassword/forgotPasswordServices";
+import { forgotPassword } from "../../services/authService";
 
 export const handleForgotPasswordRequest = async (
     email,

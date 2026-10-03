@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Server, Globe, Box, Check, Copy } from 'lucide-react'
+import { Server, Globe, Box, Copy } from 'lucide-react'
 import { getOperationById } from '../../../../services/operationService'
 import { reviewService } from '../../../../services/reviewService'
 import { toast } from 'sonner'
@@ -30,7 +30,7 @@ const TerminalApiIntegration = ({ jobId }) => {
           if (extRes.success) {
             extractionData = extRes.data
           }
-        } catch(e) {
+        } catch {
           console.warn("Could not load extraction data for API preview")
         }
 
@@ -40,7 +40,7 @@ const TerminalApiIntegration = ({ jobId }) => {
             extractions: extractionData
           })
         }
-      } catch (e) {
+      } catch {
         if (isMounted) setError(true)
       } finally {
         if (isMounted) setLoading(false)

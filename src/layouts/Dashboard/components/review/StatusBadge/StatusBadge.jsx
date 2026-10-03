@@ -1,11 +1,7 @@
 import { CheckCircle2, Sparkles, AlertTriangle, CircleDashed, Edit3 } from 'lucide-react'
 
 const StatusBadge = ({ status }) => {
-  let bg = ''
-  let text = ''
-  let border = ''
-  let icon = null
-  let label = ''
+  let bg, text, border, icon, label
 
   switch (status) {
     case 'verified':

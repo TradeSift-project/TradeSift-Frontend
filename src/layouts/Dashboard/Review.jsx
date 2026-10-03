@@ -13,7 +13,7 @@ import ValidationPanel from './components/review/Validation/ValidationPanel'
 import ComparisonPanel from './components/review/Comparison/ComparisonPanel'
 import ActionBar from './components/review/ActionBar'
 
-import { mockUnifiedJob } from './constants/workflowConstants'
+import { mapOperationToJob } from '../../services/jobMapper'
 
 import { getOperationById } from '../../services/operationService'
 import { documentService } from '../../services/documentService'
@@ -50,7 +50,7 @@ const Review = () => {
             if (isMounted) setError(true)
             return
           }
-        } catch (e) {
+        } catch {
           if (isMounted) setError(true)
           return
         }
@@ -60,7 +60,9 @@ const Review = () => {
           if (docRes?.data?.documents) {
             backendDocs = docRes.data.documents
           }
-        } catch(e) {}
+        } catch {
+          // Documents are optional for review; continue with extractions only
+        }
 
         try {
           const extRes = await reviewService.getExtractionData(jobId)
@@ -74,11 +76,7 @@ const Review = () => {
         if (!isMounted) return
 
         const mergedJob = {
-          ...mockUnifiedJob,
-          id: backendJob.id,
-          workflowType: backendJob.operationType === 'GATE_IN' ? 'Import Gate-In' : 'Export Gate-Out',
-          description: backendJob.notes || backendJob.referenceNo || 'No reference',
-          status: 'Needs Review',
+          ...mapOperationToJob(backendJob, 'Needs Review'),
           extractions // keeping raw extractions in state for save/approve actions
         }
 

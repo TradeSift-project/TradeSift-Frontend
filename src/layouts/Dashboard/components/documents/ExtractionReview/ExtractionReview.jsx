@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { AlertTriangle, AlertCircle, Save, ArrowLeft, Database, CheckCircle } from 'lucide-react'
+import { AlertCircle, Save, ArrowLeft, Database } from 'lucide-react'
 import { reviewService } from '../../../../../services/reviewService'
 import { documentService } from '../../../../../services/documentService'
 import { mapExtractionDataToUI } from '../../../../../services/reviewMapper'

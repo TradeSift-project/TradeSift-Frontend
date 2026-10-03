@@ -2,7 +2,7 @@
 
 import { toast } from "sonner";
 
-import { verifyForgotPasswordOtp } from "../../services/forgotPassword/verifyForgotPasswordServices";
+import { verifyForgotPasswordOtp } from "../../services/authService";
 
 export const handleVerifyForgotPasswordOtp = async (
     email,

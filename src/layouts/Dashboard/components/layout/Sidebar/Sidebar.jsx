@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import SidebarLogo from './SidebarLogo'
 import SidebarNavigation from './SidebarNavigation'
@@ -6,12 +6,9 @@ import SidebarSuggestions from './SidebarSuggestions'
 import SidebarFooter from './SidebarFooter'
 
 const Sidebar = ({ onSoonClick, user, onLogout }) => {
-  const [isCollapsed, setIsCollapsed] = useState(false)
-
-  useEffect(() => {
-    const stored = localStorage.getItem('tradesift-sidebar-collapsed')
-    if (stored === 'true') setIsCollapsed(true)
-  }, [])
+  const [isCollapsed, setIsCollapsed] = useState(
+    () => localStorage.getItem('tradesift-sidebar-collapsed') === 'true'
+  )
 
   const toggleCollapse = () => {
     setIsCollapsed(prev => {

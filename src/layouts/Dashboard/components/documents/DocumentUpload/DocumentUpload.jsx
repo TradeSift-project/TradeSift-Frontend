@@ -5,6 +5,7 @@ import { toast } from 'sonner'
 import { createOperation } from '../../../../../services/operationService'
 import { documentService } from '../../../../../services/documentService'
 import CameraCapture from './CameraCapture'
+import { MAX_DOCUMENTS_PER_OPERATION } from '../../../constants/documentConstants'
 
 const DocumentUpload = ({ onDocumentProcessed, operationId }) => {
   const navigate = useNavigate()
@@ -13,7 +14,7 @@ const DocumentUpload = ({ onDocumentProcessed, operationId }) => {
   const [files, setFiles] = useState([])
   const fileInputRef = useRef(null)
 
-  const MAX_DOCUMENTS = 20
+  const MAX_DOCUMENTS = MAX_DOCUMENTS_PER_OPERATION
   const isLimitReached = files.length >= MAX_DOCUMENTS
 
   const handleDrag = (e) => {

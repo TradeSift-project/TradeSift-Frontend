@@ -1,3 +1,5 @@
+// Placeholder service: apiClient and params are used by the commented real calls below
+/* eslint-disable no-unused-vars */
 import apiClient from './apiClient'
 import { MOCK_ACTIVITIES } from '../layouts/Dashboard/constants/activityConstants'
 

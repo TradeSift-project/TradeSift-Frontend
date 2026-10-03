@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { Link, useLocation, useNavigate } from "react-router";
-import { toast } from "sonner";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
 
 import Logo from "../../../assets/Logo.png";
 import { fadeUp } from "../../animations/variants";

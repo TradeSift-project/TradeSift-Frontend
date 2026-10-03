@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
-import { FileText, Table, CheckSquare, Search, Tag, CornerDownRight } from 'lucide-react'
-import { fadeUp, fadeLeft, fadeRight, scaleIn, staggerContainer } from '../../../../../animations/variants'
+import { CornerDownRight } from 'lucide-react'
+import { fadeUp, fadeRight, scaleIn, staggerContainer } from '../../../../../animations/variants'
 
 const SupportedDocuments = () => {
   return (

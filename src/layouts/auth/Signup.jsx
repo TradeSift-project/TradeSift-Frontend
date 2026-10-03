@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { toast } from "sonner";
+
 
 import AuthHero from "./components/AuthHero";
 import AuthLayout from "./components/AuthLayout";
@@ -9,7 +9,7 @@ import { fadeUp } from "../../animations/variants";
 import { handleSignupSubmit } from "./handlers/signup/handleSignupSubmit";
 import useAutoClearError from "./hooks/useAutoClearer";
 import { handleFormNavigation } from "./handlers/handleKeyDown";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 
 export default function Signup() {

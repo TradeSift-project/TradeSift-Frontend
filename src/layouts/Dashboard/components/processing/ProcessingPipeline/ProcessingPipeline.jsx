@@ -10,7 +10,6 @@ const ProcessingPipeline = ({ stages }) => {
           const isLast = idx === stages.length - 1
           const isCompleted = stage.status === 'completed'
           const isProcessing = stage.status === 'processing'
-          const isPending = stage.status === 'pending'
           const isReview = stage.status === 'requires_review'
           const isFailed = stage.status === 'failed'
 

@@ -1,5 +1,5 @@
 import DocumentRow from './DocumentRow'
-import { RECENT_DOCUMENTS } from '../../../constants/dashboardConstants'
+
 
 const RecentDocuments = ({ documents }) => {
   const currentDocuments = documents || []

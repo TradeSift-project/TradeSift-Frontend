@@ -10,10 +10,10 @@ import ERPMappings from './components/approvedData/ERPMappings'
 import ExportSection from './components/approvedData/ExportSection'
 
 import { mockUnifiedJob } from './constants/workflowConstants'
+import { mapOperationToJob } from '../../services/jobMapper'
 
 import { useParams } from 'react-router-dom'
 import { getOperationById } from '../../services/operationService'
-import { approvedDataService } from '../../services/approvedDataService'
 import OperationNotFound from './components/shared/OperationNotFound'
 
 const ApprovedData = () => {
@@ -35,30 +35,18 @@ const ApprovedData = () => {
             if (isMounted) setError(true)
             return
           }
-        } catch (e) {
+        } catch {
           if (isMounted) setError(true)
           return
         }
 
         if (!isMounted) return
 
-        // Merge with approved data from backend (currently mock placeholder)
-        let approvedPayload = null
-        try {
-          const approvedRes = await approvedDataService.getApprovedData(jobId)
-          if (approvedRes.success) {
-            approvedPayload = approvedRes.data
-          }
-        } catch (err) {
-          console.error('Failed to get approved data', err)
-        }
-
+        // TODO(backend): approvedDataService.getApprovedData is still a placeholder;
+        // swap mockUnifiedJob.approved for its response once the endpoint exists
         const mergedJob = {
-          ...mockUnifiedJob,
-          id: backendJob?.id || jobId || mockUnifiedJob.id,
-          workflowType: backendJob?.operationType === 'GATE_IN' ? 'Import Gate-In' : 'Export Gate-Out',
-          description: backendJob?.notes || backendJob?.referenceNo || 'Electronics Components',
-          status: 'Approved'
+          ...mapOperationToJob(backendJob, 'Approved'),
+          approved: mockUnifiedJob.approved
         }
 
         setJob(mergedJob)

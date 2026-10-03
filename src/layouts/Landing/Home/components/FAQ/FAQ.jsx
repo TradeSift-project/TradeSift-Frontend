@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { fadeUp, collapse, staggerContainer } from '../../../../../animations/variants'
 import { FAQS } from '../../constants/landingConstants'

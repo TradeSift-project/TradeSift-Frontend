@@ -1,4 +1,4 @@
-import { Package, FileText, Play, Cpu, AlertTriangle, CheckCircle, UploadCloud, ArrowRightLeft } from 'lucide-react'
+import { Package, FileText, Play, Cpu, AlertTriangle, CheckCircle, ArrowRightLeft } from 'lucide-react'
 
 const ActivityIcon = ({ type }) => {
   switch (type) {

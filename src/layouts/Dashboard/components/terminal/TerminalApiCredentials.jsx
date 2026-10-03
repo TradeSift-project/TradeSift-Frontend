@@ -1,4 +1,4 @@
-import { KeyRound, Lock, AlertTriangle } from 'lucide-react'
+import { KeyRound, AlertTriangle } from 'lucide-react'
 
 const TerminalApiCredentials = () => {
   return (

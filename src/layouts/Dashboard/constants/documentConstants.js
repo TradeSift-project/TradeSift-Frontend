@@ -1,4 +1,6 @@
-import { FileText, Table, CheckSquare, FileCheck, Cpu, Workflow } from 'lucide-react'
+
+
+export const MAX_DOCUMENTS_PER_OPERATION = 20
 
 export const DOCUMENT_STATS = [
   { label: 'Total Documents', value: 124, status: 'info' },

@@ -27,7 +27,7 @@ const ActiveWorkflows = ({ mockData }) => {
     fetchOperations()
     
     return () => { isMounted = false }
-  }, [])
+  }, [mockData])
 
   if (loading) {
     return (

@@ -7,7 +7,7 @@ import { CheckCircle2 } from 'lucide-react'
 
 import { getOperationById } from '../../services/operationService'
 import OperationNotFound from './components/shared/OperationNotFound'
-import { mockUnifiedJob } from './constants/workflowConstants'
+import { mapOperationToJob } from '../../services/jobMapper'
 import { TARGET_SYSTEMS, MOCK_MAPPING_DATA } from './constants/mappingConstants'
 
 import JobContextHeader from './components/shared/JobContextHeader'
@@ -25,8 +25,9 @@ const Mapping = () => {
   const [error, setError] = useState(false)
   
   const [selectedSystem, setSelectedSystem] = useState(MOCK_MAPPING_DATA.targetSystem)
-  const [mappings, setMappings] = useState(MOCK_MAPPING_DATA.mappings)
-  const [summary, setSummary] = useState(MOCK_MAPPING_DATA.summary)
+  // TODO(backend): replace with mappingService.getMappingData once the endpoint exists
+  const mappings = MOCK_MAPPING_DATA.mappings
+  const summary = MOCK_MAPPING_DATA.summary
 
   useEffect(() => {
     let isMounted = true
@@ -41,20 +42,14 @@ const Mapping = () => {
             if (isMounted) setError(true)
             return
           }
-        } catch (e) {
+        } catch {
           if (isMounted) setError(true)
           return
         }
 
         if (!isMounted) return
 
-        const mergedJob = {
-          ...mockUnifiedJob,
-          id: backendJob?.id || jobId || mockUnifiedJob.id,
-          workflowType: backendJob?.operationType === 'GATE_IN' ? 'Import Gate-In' : 'Export Gate-Out',
-          description: backendJob?.notes || backendJob?.referenceNo || 'Electronics Components',
-          status: 'Approved' // Shows this has passed review
-        }
+        const mergedJob = mapOperationToJob(backendJob, 'Approved') // Shows this has passed review
 
         setJob(mergedJob)
       } catch (err) {

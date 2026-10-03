@@ -13,5 +13,5 @@ export default function useAutoClearError(
         }, delay);
 
         return () => clearTimeout(timer);
-    }, [error]);
+    }, [error, setError, delay]);
 }

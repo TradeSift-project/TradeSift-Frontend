@@ -1,4 +1,4 @@
-import { CheckCircle2, AlertTriangle, Check, LayoutTemplate, FileText } from 'lucide-react'
+import { CheckCircle2, AlertTriangle, Check, LayoutTemplate } from 'lucide-react'
 
 const ExportReadiness = ({ summary, isReady }) => {
   return (

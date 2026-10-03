@@ -10,7 +10,7 @@ import ProcessingSummary from './components/processing/ProcessingSummary'
 import ProcessingDocuments from './components/processing/ProcessingDocuments'
 import ProcessingIssues from './components/processing/ProcessingIssues'
 
-import { mockUnifiedJob } from './constants/workflowConstants'
+import { mapOperationToJob } from '../../services/jobMapper'
 import { mapProcessingStatusToUI } from '../../services/processingMapper'
 
 import { getOperationById } from '../../services/operationService'
@@ -52,10 +52,7 @@ const Processing = () => {
         const updateStateFromStatus = (statusData) => {
           const mapped = mapProcessingStatusToUI(statusData, backendDocs)
           const mergedJob = {
-            ...mockUnifiedJob,
-            id: backendJob.id,
-            workflowType: backendJob.operationType === 'GATE_IN' ? 'Import Gate-In' : 'Export Gate-Out',
-            description: backendJob.notes || backendJob.referenceNo || 'No reference',
+            ...mapOperationToJob(backendJob),
             ...mapped
           }
           setJob(mergedJob)
@@ -76,7 +73,7 @@ const Processing = () => {
         try {
           const statusRes = await processingService.getProcessingStatus(jobId)
           if (statusRes.success) statusData = statusRes.data
-        } catch(err) {
+        } catch {
           // It might not exist yet if it just got queued
         }
 

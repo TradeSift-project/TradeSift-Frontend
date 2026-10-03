@@ -1,4 +1,4 @@
-import { FileSpreadsheet, Send, FileCode, CheckCircle2 } from 'lucide-react'
+import { FileSpreadsheet, FileCode, CheckCircle2 } from 'lucide-react'
 
 const StructuredDataPreview = ({ isOpen, onClose, documentName, documentType, fields = [], onExport }) => {
   if (!isOpen) return null

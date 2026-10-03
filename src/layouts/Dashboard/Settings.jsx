@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { toast } from 'sonner'
-import { getMe, updateUser, logoutUser } from '../../services/userService'
+import { updateUser } from '../../services/userService'
+import useAuth from '../../hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
 import { User, Bell, Monitor, LogOut, Loader2, Save } from 'lucide-react'
 import ThemeToggle from './components/layout/DashboardHeader/ThemeToggle'
@@ -9,43 +10,20 @@ import ThemeToggle from './components/layout/DashboardHeader/ThemeToggle'
 const Settings = () => {
   const navigate = useNavigate()
   
-  const [loading, setLoading] = useState(true)
+  const { user: authUser, setUser: setAuthUser, logout } = useAuth()
   const [saving, setSaving] = useState(false)
-  const [user, setUser] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    organisation: ''
-  })
+  const [user, setUser] = useState(() => ({
+    firstName: authUser?.firstName || '',
+    lastName: authUser?.lastName || '',
+    email: authUser?.email || '',
+    organisation: authUser?.organisation || ''
+  }))
   
   const [notifPrefs, setNotifPrefs] = useState({
     emailAlerts: true,
     desktopAlerts: false,
     dailyDigest: true
   })
-
-  useEffect(() => {
-    let isMounted = true
-    getMe()
-      .then(res => {
-        if (isMounted && res.success && res.data) {
-          setUser({
-            firstName: res.data.firstName || '',
-            lastName: res.data.lastName || '',
-            email: res.data.email || '',
-            organisation: res.data.organisation || ''
-          })
-        }
-      })
-      .catch(() => {
-        toast.error('Failed to load user profile.')
-      })
-      .finally(() => {
-        if (isMounted) setLoading(false)
-      })
-
-    return () => { isMounted = false }
-  }, [])
 
   const handleProfileChange = (e) => {
     const { name, value } = e.target
@@ -58,9 +36,10 @@ const Settings = () => {
     try {
       const res = await updateUser(user)
       if (res.success) {
+        setAuthUser(prev => ({ ...prev, ...user }))
         toast.success('Profile updated successfully.')
       }
-    } catch (err) {
+    } catch {
       toast.error('Failed to update profile.')
     } finally {
       setSaving(false)
@@ -75,20 +54,12 @@ const Settings = () => {
 
   const handleLogout = async () => {
     try {
-      await logoutUser()
+      await logout()
       toast.success('Logged out successfully.')
       navigate('/login')
-    } catch (err) {
+    } catch {
       navigate('/login')
     }
-  }
-
-  if (loading) {
-    return (
-      <div className="flex h-[400px] items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-amber-500" />
-      </div>
-    )
   }
 
   return (

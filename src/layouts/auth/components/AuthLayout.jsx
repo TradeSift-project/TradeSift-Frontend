@@ -1,5 +1,4 @@
-import React from "react";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 import Logo from "../../../../assets/Logo.png";
@@ -8,7 +7,7 @@ import AuthHeader from "./AuthHeader";
 import AuthDivider from "./AuthDivider";
 import AuthFooter from "./AuthFooter";
 import AuthOAButtons from "./AuthOAButtons";
-import { initiateGoogleOAuth } from "../services/googleAuth/googleAuthService";
+import { initiateGoogleOAuth } from "../services/authService";
 import AuthError from "./AuthError";
 import SignupForm from "./SignupForm";
 import LoginForm from "./LoginForm";
